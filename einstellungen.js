@@ -19,7 +19,7 @@ window.FIREBASE_CONFIG = {
 };
 
 // 2) Support-Adresse (wird z. B. gesperrten Nutzern angezeigt)
-window.SUPPORT_MAIL = "deine-support-adresse@gmail.com";
+window.SUPPORT_MAIL = "maxhofmann1710@gmail.com";
 
 // 3) Impressum (Pflicht, wenn du die App öffentlich anbietest)
-window.IMPRESSUM = "Vorname Nachname, Straße und Hausnummer, PLZ Ort, E-Mail: deine-support-adresse@gmail.com";
+window.IMPRESSUM = "Max Hofmanm, Am Bückeberg 15, 31749 Auetal/Rolfshagen, E-Mail: maxhofmann1710@gmail.com";
