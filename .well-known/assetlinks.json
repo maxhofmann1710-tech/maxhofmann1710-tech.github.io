@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "de.abowaechter.app",
+    "sha256_cert_fingerprints": [
+      "90:6A:0B:E3:29:6C:3E:09:B0:07:D6:90:0B:4C:11:E5:29:82:6B:E1:6D:11:B3:94:A5:8F:66:6C:CE:AA:06:14"
+    ]
+  }
+}]
