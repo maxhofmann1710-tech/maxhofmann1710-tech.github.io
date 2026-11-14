@@ -10,8 +10,8 @@
 //    ganz unten "Meine Apps" > Web-App > "Konfiguration".
 //    Ersetze jede Zeile mit dem passenden Wert (Anführungszeichen bleiben).
 window.FIREBASE_CONFIG = {
-  apiKey: "HIER_EINFUEGEN",
-  authDomain: "HIER_EINFUEGEN",
+  apiKey: "AIzaSyAuDHStPr6r2FE3EaBxyJgxpXEbsKdfZ3M",
+  authDomain: "abbowaechter.firebaseapp.com",
   projectId: "HIER_EINFUEGEN",
   storageBucket: "HIER_EINFUEGEN",
   messagingSenderId: "HIER_EINFUEGEN",
