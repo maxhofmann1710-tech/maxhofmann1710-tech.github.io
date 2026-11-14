@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AboWächter</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#5b5bd6"><meta name="description" content="AboWächter: Nie wieder eine Kündigungsfrist verpassen.">
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="einstellungen.js"></script>
+<style>
+:root{--bg:#f3f4fa;--card:#fff;--tx:#17182b;--mu:#6c6f8a;--bd:#e5e7f2;--ac:#5b5bd6;--ac2:#8b5cf6;--onac:#fff;--red:#c4262e;--redbg:#fde8ea;--amb:#8f5b00;--ambbg:#fff1d0;--ok:#1f7a45;--okbg:#e2f5ea;--sh:0 4px 18px rgba(40,40,100,.08);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1020;--card:#191a2e;--tx:#eef0ff;--mu:#9a9dc0;--bd:#2a2c47;--ac:#8b8bff;--ac2:#b08cff;--onac:#0f1020;--red:#ffb4b8;--redbg:#4b1d22;--amb:#ffd990;--ambbg:#4a3813;--ok:#9ae6b8;--okbg:#17382a;--sh:0 4px 18px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#0f1020;--card:#191a2e;--tx:#eef0ff;--mu:#9a9dc0;--bd:#2a2c47;--ac:#8b8bff;--ac2:#b08cff;--onac:#0f1020;--red:#ffb4b8;--redbg:#4b1d22;--amb:#ffd990;--ambbg:#4a3813;--ok:#9ae6b8;--okbg:#17382a;--sh:0 4px 18px rgba(0,0,0,.35)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:92px}
+main{max-width:520px;margin:0 auto;padding:16px}
+h1{font-size:24px;font-weight:600;margin:0 0 4px}
+h2{font-size:18px;font-weight:600;margin:2px 0 12px}
+.mu{color:var(--mu);font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.hero{background:linear-gradient(135deg,var(--hg1,var(--ac)),var(--hg2,var(--ac2)));color:#fff;border-radius:22px;padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
+.hero h1{color:#fff}.hero .mu{color:rgba(255,255,255,.85)}
+.hero .nx{margin-top:14px;background:rgba(255,255,255,.18);border-radius:14px;padding:12px}
+label{display:block;font-size:13px;color:var(--mu);margin:12px 0 5px}
+input,select{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px}
+input:focus,select:focus{outline:2px solid var(--ac);outline-offset:0}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;color:var(--tx)}
+.pri{width:100%;margin-top:16px;padding:14px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-weight:600}
+.sec{width:100%;margin-top:10px;padding:12px;background:transparent;border:1px solid var(--bd)}
+.err{color:var(--red);font-size:13px;min-height:18px;margin-top:8px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.row{display:flex;align-items:center;gap:10px}
+.info{flex:1;min-width:0}
+.name{font-weight:600;overflow-wrap:anywhere}
+.badge{font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;white-space:nowrap}
+.red{background:var(--redbg);color:var(--red)}.amb{background:var(--ambbg);color:var(--amb)}.ok{background:var(--okbg);color:var(--ok)}
+.hero .badge{background:rgba(255,255,255,.25);color:#fff}
+.del{background:transparent;color:var(--mu);font-size:22px;padding:2px 8px}
+.empty{text-align:center;color:var(--mu);padding:28px 0}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 0 14px;padding-bottom:4px}
+.chip{background:var(--card);border:1px solid var(--bd);padding:7px 14px;border-radius:99px;white-space:nowrap;font-size:14px}
+.chip.on{background:var(--ac);color:var(--onac);border-color:var(--ac)}
+.seg{display:flex;background:var(--bg);border-radius:14px;padding:4px;margin-bottom:6px}
+.seg button{flex:1;background:transparent;padding:10px;color:var(--mu);font-weight:600}
+.seg button.on{background:var(--card);color:var(--ac);box-shadow:var(--sh)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.kv:last-child{border:0}
+.big{font-size:28px;font-weight:600}
+.tg{min-width:64px;padding:8px 12px;background:var(--bg);border:1px solid var(--bd);color:var(--mu);font-weight:600}
+.tg.on{background:var(--ac);border-color:var(--ac);color:var(--onac)}
+.wheel{position:relative;width:230px;height:230px;margin:10px auto;border-radius:50%;background:conic-gradient(hsl(0 90% 55%),hsl(60 90% 55%),hsl(120 90% 55%),hsl(180 90% 55%),hsl(240 90% 55%),hsl(300 90% 55%),hsl(360 90% 55%));-webkit-mask:radial-gradient(circle closest-side,transparent 56%,#000 57%);mask:radial-gradient(circle closest-side,transparent 56%,#000 57%);touch-action:none;cursor:pointer}
+.knob{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 6px rgba(0,0,0,.45)}
+.pv{height:14px;border-radius:99px;background:linear-gradient(90deg,var(--ac),var(--ac2));margin:6px 0 12px}
+.sw{width:36px;height:36px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1px var(--bd);flex:none}
+input[type=range]{padding:0;accent-color:var(--ac)}
+.bar{height:10px;border-radius:99px;background:var(--bg);overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2));border-radius:99px}
+.stats{display:flex;gap:8px;margin-top:12px}.stats div{flex:1;background:rgba(255,255,255,.16);border-radius:12px;padding:8px;text-align:center}.stats b{display:block;font-size:15px}.stats span{font-size:12px;opacity:.9}
+.mini{padding:9px 12px;background:var(--bg);border:1px solid var(--bd);border-radius:10px;font-size:14px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.cp .card{padding:11px;margin-bottom:9px}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{animation:up .22s ease both}
+button{transition:transform .12s,opacity .12s}button:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){.card{animation:none}button{transition:none}}
+textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px;resize:vertical}
+.ck{display:flex;align-items:center;gap:10px;color:var(--tx);font-size:15px;margin:14px 0}.ck input{width:auto}
+.legal{max-height:260px;overflow:auto;border:1px solid var(--bd);border-radius:12px;padding:12px;margin:12px 0;font-size:14px}.legal p{margin:0 0 10px}
+.fq{border-bottom:1px solid var(--bd);padding:10px 0}.fq summary{cursor:pointer;font-weight:600}.fq p{margin:8px 0 0}
+#wm{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;opacity:.07;z-index:50}
+#ver{position:fixed;left:8px;bottom:calc(68px + env(safe-area-inset-bottom,0px));font-size:11px;color:var(--mu);opacity:.65;pointer-events:none;z-index:60}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.wd{text-align:center;font-size:12px;color:var(--mu)}
+.cd{aspect-ratio:1;border-radius:10px;background:var(--bg);border:1px solid transparent;padding:2px;font-size:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--tx)}
+.cd.today{border-color:var(--ac)}.cd.sel{background:var(--ac);color:var(--onac)}
+.dots{display:flex;gap:2px;height:6px}.dot{display:inline-block;width:6px;height:6px;border-radius:50%}
+.dk{background:#e5484d}.dp{background:#3b82f6}.dr{background:#f59e0b}
+.fab{position:fixed;right:14px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-weight:700;box-shadow:var(--sh);z-index:40}
+.foot{display:flex;align-items:center;justify-content:center;gap:6px;margin:28px 0 8px;font-size:11px;color:var(--mu);opacity:.7}
+.hero .badge.plus,.badge.plus{background:linear-gradient(135deg,#f5b301,#ff7a18);color:#fff}
+#lgb{position:fixed;right:14px;bottom:16px;width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--bd);color:var(--tx);box-shadow:var(--sh);z-index:45;display:flex;align-items:center;justify-content:center}
+#lgb.up{bottom:calc(132px + env(safe-area-inset-bottom,0px))}
+#lgm{position:fixed;right:14px;bottom:62px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:6px;box-shadow:var(--sh);z-index:46}
+#lgm.up{bottom:calc(178px + env(safe-area-inset-bottom,0px))}
+#lgm button{display:block;width:100%;text-align:left;padding:10px 14px;background:transparent}#lgm button.on{color:var(--ac);font-weight:600}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;background:#fff;color:#1f1f1f;border:1px solid #dadce0;font-weight:600}
+.orl{display:flex;align-items:center;gap:10px;color:var(--mu);font-size:13px;margin:14px 0 4px}.orl:before,.orl:after{content:"";flex:1;height:1px;background:var(--bd)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:transparent;padding:6px 0;font-size:11px;color:var(--mu)}
+nav button.on{color:var(--ac);font-weight:600}
+</style></head>
+<body><main id="app"></main>
+<script>
+var $=function(i){return document.getElementById(i)};
+function h(t,c,x,k){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;(k||[]).forEach(function(y){e.appendChild(y)});return e}
+function rd(k,f){try{var v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(x){return f}}
+function wr(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(x){}}
+var ACC=rd("aw_acc",{}),CUR=rd("aw_cur",null),items=[],tab="v",filt="Alle",armed=false,note="",mode="in";
+var CATS=["Streaming","Musik","Gaming","Software","Handy & Internet","Versicherung","Wohnen & Energie","Finanzen","Fitness","Bildung","Sonstiges"];
+var BADW=["arschloch","wichser","hurensohn","hurentochter","fotze","schlampe","scheisskerl","drecksau","missgeburt","vollidiot","fickdich","verpissdich","neger","nigger","nigga","kanake","zigeuner","untermensch","schwuchtel","judensau","heilhitler","siegheil","auslanderraus","hitler"];
+var TOK=["idiot","depp","trottel","spast","mongo","nazi","hure","penner","fotzen"];
+var MSG="Bitte keine Beleidigungen oder hasserfüllten Begriffe verwenden.";
+function norm(s){return s.toLowerCase().replace(/ä/g,"a").replace(/ö/g,"o").replace(/ü/g,"u").replace(/ß/g,"ss").replace(/0/g,"o").replace(/1/g,"i").replace(/3/g,"e").replace(/4/g,"a").replace(/5/g,"s").replace(/7/g,"t").replace(/@/g,"a").replace(/\$/g,"s").replace(/!/g,"i")}
+function bad(s){var n=norm(s),sq=n.replace(/[^a-z]/g,""),w=n.split(/[^a-z]+/);
+return BADW.some(function(x){return sq.indexOf(x)>-1})||TOK.some(function(x){return w.indexOf(x)>-1})}
+function me(){return ACC[CUR]}
+function ensure(m){if(m.notif===undefined)m.notif=true;if(!m.lead)m.lead=3;if(m.day===undefined)m.day=true;if(!m.since)m.since=Date.now()}
+function saveAcc(){wr("aw_acc",ACC)}
+function save(){wr("aw_d_"+CUR,items)}
+function days(d){var t=new Date();t.setHours(0,0,0,0);return Math.round((new Date(d+"T00:00:00")-t)/86400000)}
+function fmt(n){return n.toLocaleString(LC(),{minimumFractionDigits:2,maximumFractionDigits:2})}
+function dt(d){return new Date(d+"T00:00:00").toLocaleDateString(LC())}
+function setErr(m){var e=$("e");if(e)e.textContent=L(m)}
+function clr(){var e=$("e");if(e)e.textContent=""}
+async function hash(m,p){var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("aw:"+m+":"+p));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+async function auth(){if(CLOUD)return authCloud();
+var m=$("lm").value.trim().toLowerCase(),p=$("lp").value,u=mode==="reg"?$("lu").value.trim():"",hs;
+if(!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(m))return setErr("Bitte eine gültige E-Mail eingeben.");
+if(p.length<8)return setErr("Das Passwort braucht mindestens 8 Zeichen.");
+try{hs=await hash(m,p)}catch(x){return setErr("Dieser Browser kann das Passwort nicht verarbeiten.")}
+if(mode==="reg"){
+if(ACC[m]&&ACC[m].pw)return setErr("Zu dieser E-Mail gibt es schon ein Konto. Bitte anmelden.");
+if(u.length<3)return setErr("Der Nutzername braucht mindestens 3 Zeichen.");
+if(bad(u))return setErr(MSG);
+ACC[m]=Object.assign(ACC[m]||{},{user:u,pw:hs})}
+else{var a=ACC[m];if(!a)return setErr("Kein Konto mit dieser E-Mail. Bitte registrieren.");
+if(!a.pw)a.pw=hs;else if(a.pw!==hs)return setErr("E-Mail oder Passwort stimmt nicht.")}
+ensure(ACC[m]);saveAcc();UNL=true;CUR=m;wr("aw_cur",m);items=rd("aw_d_"+m,[]);NOTES=rd("aw_n_"+m,[]);TPLS=rd("aw_t_"+m,[]);tab="v";filt="Alle";armed=false;note="";render();fire()}
+function logout(){if(CLOUD&&FBU){cloudSaveNow().then(function(){firebase.auth().signOut()},function(){firebase.auth().signOut()});return}UNL=false;CUR=null;wr("aw_cur",null);items=[];render()}
+function loginView(){
+var a=$("app");a.textContent="";
+var hero=h("div","hero");var lgo=h("div");lgo.innerHTML=logoSvg(56);lgo.style.marginBottom="10px";hero.appendChild(lgo);hero.appendChild(h("h1",null,"AboWächter"));hero.appendChild(h("div","mu","Behalte deine Kündigungsfristen im Blick. Melde dich an oder registriere dich, um zu starten."));a.appendChild(hero);
+var c=h("div","card"),sg=h("div","seg");
+[["in","Anmelden"],["reg","Registrieren"]].forEach(function(t){var b=h("button",mode===t[0]?"on":"",t[1]);b.onclick=function(){mode=t[0];render()};sg.appendChild(b)});
+c.appendChild(sg);
+var f=h("div");f.innerHTML=(mode==="reg"?'<label for="lu">Nutzername</label><input id="lu" type="text" maxlength="30" autocomplete="username">':'')+'<label for="lm">E-Mail</label><input id="lm" type="email" autocomplete="email"><label for="lp">Passwort (mind. 8 Zeichen)</label><input id="lp" type="password" autocomplete="'+(mode==="reg"?"new-password":"current-password")+'"><div class="err" id="e"></div>';
+c.appendChild(f);
+var b=h("button","pri",mode==="reg"?"Konto erstellen":"Anmelden");b.id="lgo";b.onclick=auth;c.appendChild(b);
+if(CLOUD){if(mode==="in"){var fg=h("button","sec","Passwort vergessen?");fg.onclick=pwReset;c.appendChild(fg)}
+c.appendChild(h("div","orl",null,[h("span",null,"oder")]));
+var gb=h("button","gbtn");gb.id="gbtn";gb.innerHTML='<svg width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';gb.appendChild(h("span",null,"Mit Google anmelden"));gb.onclick=gLogin;c.appendChild(gb)}
+c.appendChild(h("p","mu",CLOUD?"Mit deinem Konto sind deine Verträge sicher gespeichert und auf all deinen Geräten verfügbar.":"Ein Konto ist nötig, damit Verträge und Notizen deinem Profil zugeordnet werden. Alle Daten bleiben auf diesem Gerät."));
+var why=h("p","mu",CLOUD?"Dein Konto sorgt dafür, dass deine Daten nicht verloren gehen, wenn du das Handy wechselst oder die App neu installierst. Die Daten werden geschützt bei Google Firebase gespeichert. Der Support kann sie nur zur Hilfe bei Problemen einsehen. Passwörter kann niemand sehen.":"Die App speichert deine Daten pro Konto getrennt, damit andere Personen am selben Gerät sie nicht sehen.");why.style.display="none";
+var wb=h("button","sec","Warum muss ich mich anmelden?");wb.onclick=function(){why.style.display=why.style.display==="none"?"block":"none"};c.appendChild(wb);c.appendChild(why);
+if(ABO_AKTIV)c.appendChild(h("p","mu","Plus: Erster Monat kostenlos, danach 4,99 € pro Monat für deinen eigenen KI-Agenten."));
+a.appendChild(c);
+["lu","lm","lp"].forEach(function(i){if($(i))$(i).oninput=clr});if(LOGERR){setErr(LOGERR);LOGERR=""}}
+var ICO={v:"M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01",u:"M5 20V11M12 20V4M19 20v-6",b:"M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 004 0",k:"M12 12a4 4 0 100-8 4 4 0 000 8M4 21a8 8 0 0116 0",d:"M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0M14 4v4M10 10v4M16 16v4",n:"M5 4h14v16H5zM9 9h6M9 13h6",c:"M4 6h16v14H4zM4 10h16M9 3v4M15 3v4"};
+function tabs(){
+var n=h("nav");
+[["v","Verträge"],["u","Übersicht"],["c","Kalender"],["n","Notizen"],["b","Erinnerung"],["d","Mehr"]].forEach(function(t){
+var b=h("button",tab===t[0]?"on":"");
+b.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="'+ICO[t[0]]+'"/></svg>';
+b.appendChild(h("span",null,t[1]));b.onclick=function(){tab=t[0];SUB=null;armed=false;note="";render()};n.appendChild(b)});
+return n}
+function badgeFor(it){
+if(it.x){var q=days(it.d);return h("span","badge red",q>1?"Gekündigt · löscht sich in "+q+" Tagen":q===1?"Gekündigt · löscht sich morgen":"Gekündigt · löscht sich heute")}if(it.rt==="R"&&rOpen(it)<=0)return h("span","badge ok","Abbezahlt");var n=days(it.d),cls=n<=me().lead?"red":n<=30?"amb":"ok",tx=n<0?"Frist vorbei":n===0?"Heute letzter Tag":"noch "+n+" Tage";
+return h("span","badge "+cls,tx)}
+function sorted(){return items.slice().sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0})}
+function viewV(box){
+var c=h("div","card");
+c.innerHTML='<h2>Neuer Eintrag</h2><label for="ty">Art</label><select id="ty"><option value="Vertrag">Vertrag</option><option value="Ratenzahlung">Ratenzahlung</option></select><label>Schnellauswahl</label><div class="chips" id="qk"></div><label for="n">Name des Vertrags</label><input id="n" type="text" maxlength="60"><label for="k" id="kl">Kosten pro Zahlung</label><input id="k" type="number" inputmode="decimal" min="0" step="0.01"><label for="g">Kategorie</label><select id="g"></select><label for="p">Zahlweise</label><label class="ck"><input id="alt" type="checkbox">Alternative Zahlungstermine</label><label for="p">Zahlweise</label><select id="p"></select><div id="cw" style="display:none"><label for="c">Alle wie viele Tage?</label><input id="c" type="number" inputmode="numeric" min="1" max="3650" value="7"></div><div id="dw" style="display:none"><label for="dm">Zahltag im Monat (1 bis 31)</label><input id="dm" type="number" inputmode="numeric" min="1" max="31" value="1"></div><label for="s" id="sl">Nächste oder erste Zahlung am (optional)</label><input id="s" type="date"><div id="ew" style="display:none"><label for="en">Zahlungen laufen bis (optional)</label><input id="en" type="date"></div><div id="rw" style="display:none"><label for="tt">Gesamtbetrag</label><input id="tt" type="number" inputmode="decimal" min="0" step="0.01"><label for="nr">Anzahl der Raten</label><input id="nr" type="number" inputmode="numeric" min="1" max="600" value="12"></div><div id="dwv"><label for="d">Letzter Tag zum Kündigen</label><input id="d" type="date"></div><label for="o">Notiz (optional)</label><input id="o" type="text" maxlength="120"><div class="err" id="e"></div>';
+box.appendChild(c);
+var shown=NEW||EDIT;c.style.display=shown?"":"none";quickAdd(box);var qc=box.lastChild;box.insertBefore(qc,c);qc.style.display=shown?"":"none";var nb=h("button","pri","+ Neuer Eintrag");nb.style.display=shown?"none":"";nb.onclick=function(){NEW=true;render()};box.insertBefore(nb,c);CATS.forEach(function(x){var o=document.createElement("option");o.textContent=x;o.value=x;$("g").appendChild(o)});formInit();
+var b=h("button","pri",EDIT?"Änderungen speichern":"Vertrag speichern");
+b.onclick=function(){
+var n=$("n").value.trim(),k=parseFloat($("k").value.replace(",",".")),d=$("d").value;
+if(!n)return setErr("Bitte einen Namen eingeben.");
+if(bad(n)||bad($("o").value))return setErr(MSG);
+if(isNaN(k)||k<0)return setErr("Bitte die monatlichen Kosten eingeben.");
+var R=$("ty").value==="Ratenzahlung",tt=parseFloat($("tt").value.replace(",",".")),nr=parseInt($("nr").value,10);
+if(R){if(!(k>0))return setErr("Bitte die Höhe einer Rate eingeben.");if(!(tt>0))return setErr("Bitte den Gesamtbetrag eingeben.");if(!(nr>=1))return setErr("Bitte die Anzahl der Raten eingeben.");d=lastDate({p:$("p").value,dm:parseInt($("dm").value,10)||1,c:parseInt($("c").value,10)||7,s:$("s").value},nr)}
+else if(!d)return setErr("Bitte das Datum der Kündigungsfrist wählen.");
+if($("p").value==="Fester Tag im Monat"){var dmv=parseInt($("dm").value,10);if(!(dmv>=1&&dmv<=31))return setErr("Bitte einen Zahltag von 1 bis 31 eingeben.")}
+if($("alt").checked&&$("en").value&&$("s").value&&$("en").value<$("s").value)return setErr("Das Enddatum liegt vor der ersten Zahlung.");
+commit({rt:R?"R":"V",tot:R?tt:0,nr:R?nr:0,n:n,k:k,d:d,g:$("g").value,p:$("p").value,alt:$("alt").checked,dm:parseInt($("dm").value,10)||1,en:$("alt").checked?$("en").value:"",c:Math.min(3650,Math.max(1,parseInt($("c").value,10)||7)),s:$("s").value,o:$("o").value.trim()})};
+c.appendChild(b);
+var tb=h("button","sec","Als Vorlage speichern");tb.onclick=saveTpl;c.appendChild(tb);
+if(EDIT||NEW){var cb=h("button","sec","Abbrechen");cb.onclick=function(){EDIT=null;NEW=false;render()};c.appendChild(cb)}
+["n","k","d"].forEach(function(i){$(i).oninput=clr});
+addSearch(box);var ch=h("div","chips");["Alle","Ratenzahlungen"].concat(CATS,CATR.slice(0,5)).forEach(function(x){var y=h("button","chip"+(filt===x?" on":""),x);y.onclick=function(){filt=x;render()};ch.appendChild(y)});box.appendChild(ch);
+var list=view();
+list.forEach(function(it){box.appendChild(rowCard(it))});
+if(!list.length)box.appendChild(h("div","empty","Keine Verträge in dieser Ansicht."))}
+function viewU(box){
+var sum=0,cat={};
+items.forEach(function(i){if(i.x)return;sum+=mon(i);cat[i.g]=(cat[i.g]||0)+mon(i)});
+var k=h("div","card");k.appendChild(h("h2",null,"Kosten"));
+k.appendChild(kvr("Pro Tag",sum/30.4375));k.appendChild(kvr("Pro Woche",sum*7/30.4375));k.appendChild(h("div","kv",null,[h("span",null,"Pro Monat"),h("span",null,fmt(sum)+" "+cs()+"")]));
+k.appendChild(h("div","kv",null,[h("span",null,"Pro Jahr"),h("span",null,fmt(sum*12)+" "+cs()+"")]));
+box.appendChild(k);
+var c=h("div","card");c.appendChild(h("h2",null,"Nach Kategorie"));
+var any=false;CATS.concat(CATR).filter(function(v,ix,a){return a.indexOf(v)===ix}).forEach(function(g){if(cat[g]){any=true;catRow(c,g,cat[g],sum)}});
+if(!any)c.appendChild(h("div","mu","Noch keine Verträge."));
+box.appendChild(c)}
+function tg(label,sub,on,fn){
+var b=h("button","tg"+(on?" on":""),on?"Ein":"Aus");b.onclick=fn;
+return h("div","kv",null,[h("div",null,null,[h("div",null,label),h("div","mu",sub)]),b])}
+function permTxt(){return window.Notification?({granted:"erlaubt",denied:"blockiert",default:"noch nicht erlaubt"})[Notification.permission]:"nicht unterstützt"}
+function push(t){try{if(window.Notification&&Notification.permission==="granted"){if(navigator.serviceWorker&&navigator.serviceWorker.controller){navigator.serviceWorker.ready.then(function(r){r.showNotification("AboWächter",{body:L(t),icon:"icon-192.png",badge:"icon-192.png"})});return true}new Notification("AboWächter",{body:L(t)});return true}}catch(x){}return false}
+function fire(){
+var m=me();if(!m||!m.notif)return;
+var S=rd("aw_s_"+CUR,{}),ch=false;
+items.forEach(function(i){if(i.x||i.rt==="R")return;var n=days(i.d);
+[[m.lead2>m.lead&&n>m.lead&&n<=m.lead2,"M","In "+n+" Tagen läuft die Frist ab: "+i.n],[n>0&&n<=m.lead,"L","Noch "+n+" Tage bis zur Kündigungsfrist: "+i.n],[m.day&&n===0,"D","Heute ist der letzte Tag zum Kündigen: "+i.n]].forEach(function(r){
+var key=i.id+r[1];if(r[0]&&!S[key]){S[key]=1;ch=true;push(r[2])}})});
+items.forEach(function(i){if(i.rt!=="R"||i.x||rOpen(i)<=0)return;var np=nextPay(i);if(!np)return;var n=days(iso(np)),key=i.id+"R"+iso(np);if(n>=0&&n<=m.lead&&!S[key]){S[key]=1;ch=true;push("Rate fällig in "+n+" Tagen: "+i.n)}});
+if(m.bw!==false&&m.budget>0&&msum()>m.budget&&Date.now()>(m.bsn||0)&&Date.now()-(S.bl||0)>(m.bwi||3)*36e5){S.bl=Date.now();ch=true;push("Budget überschritten: "+fmt(msum())+" von "+fmt(m.budget)+" "+cs())}
+if(ch)wr("aw_s_"+CUR,S)}
+function viewB(box){
+var m=me(),due=sorted().filter(function(i){return !i.x&&days(i.d)<=m.lead});
+var c=h("div","card");c.appendChild(h("h2",null,"Bald fällig"));
+if(!due.length)c.appendChild(h("div","mu","Nichts fällig in den nächsten "+m.lead+" Tagen."));
+due.forEach(function(i){c.appendChild(h("div","kv",null,[h("span","name",i.n),badgeFor(i)]))});
+box.appendChild(c);
+var s=h("div","card");s.appendChild(h("h2",null,"Benachrichtigungen"));
+s.appendChild(tg("Erinnerungen","Vor und am Fristtag",m.notif,function(){m.notif=!m.notif;saveAcc();render();fire()}));
+s.appendChild(h("label",null,"Vorab erinnern"));
+var sel=h("select");[1,2,3,5,7,14].forEach(function(v){var o=h("option",null,v+(v===1?" Tag vorher":" Tage vorher"));o.value=v;if(m.lead===v)o.selected=true;sel.appendChild(o)});
+sel.onchange=function(){m.lead=parseInt(sel.value,10);saveAcc();render();fire()};s.appendChild(sel);
+s.appendChild(h("label",null,"Frühe Vorwarnung"));var s2=h("select");[[0,"Aus"],[7,"7 Tage vorher"],[14,"14 Tage vorher"],[30,"30 Tage vorher"]].forEach(function(v){var o=h("option",null,v[1]);o.value=v[0];if((m.lead2||0)===v[0])o.selected=true;s2.appendChild(o)});s2.onchange=function(){m.lead2=parseInt(s2.value,10);saveAcc();render();fire()};s.appendChild(s2);
+s.appendChild(tg("Am Fristtag","Zusätzlich am letzten Tag erinnern",m.day,function(){m.day=!m.day;saveAcc();render()}));
+s.appendChild(h("div","kv",null,[h("span",null,"Browser-Erlaubnis"),h("span","mu",permTxt())]));
+s.appendChild(tg("Budget-Warnung","Wiederholt sich, bis du sie ausschaltest",m.bw!==false,function(){m.bw=(m.bw===false);saveAcc();render()}));
+s.appendChild(h("label",null,"Budget-Warnung wiederholen alle"));var s3=h("select");[1,3,12,24].forEach(function(v){var o=h("option",null,v+(v===1?" Stunde":" Stunden"));o.value=v;if((m.bwi||3)===v)o.selected=true;s3.appendChild(o)});s3.onchange=function(){m.bwi=parseInt(s3.value,10);saveAcc()};s.appendChild(s3);
+var p=h("button","sec","Benachrichtigungen erlauben");
+p.onclick=function(){try{Notification.requestPermission().then(function(){render();fire()})}catch(x){note="Dieser Browser unterstützt keine Benachrichtigungen.";render()}};
+s.appendChild(p);
+var t=h("button","sec","Test-Benachrichtigung senden");
+t.onclick=function(){note=push("Das ist eine Testmeldung.")?"Testmeldung gesendet.":"Nicht möglich: Erlaubnis fehlt oder der Browser blockiert es.";render()};
+s.appendChild(t);
+if(note)s.appendChild(h("p","mu",note));
+s.appendChild(h("p","mu","Meldungen kommen nur, solange die App im Browser offen ist. Bei geschlossener App sind sie in dieser Web-Version nicht möglich, dafür braucht es eine installierte Android-App."));
+box.appendChild(s)}
+function viewK(box){
+var m=me(),c=h("div","card");c.appendChild(h("h2",null,"Konto"));
+c.appendChild(h("div","kv",null,[h("span","mu","E-Mail"),h("span",null,CUR)]));acctLines(c);
+c.appendChild(h("div","kv",null,[h("span","mu","Status"),h("span",PLUSB()?"badge plus":null,PLUSB()?"Mitglied +":"Mitglied")]));
+c.appendChild(h("div","kv",null,[h("span","mu","Mitglied seit"),h("span",null,new Date(m.since).toLocaleDateString(LC()))]));
+c.appendChild(h("div","kv",null,[h("span","mu","Verträge"),h("span",null,String(items.length))]));
+c.appendChild(h("div","kv",null,[h("span","mu","Nutzungsbedingungen"),h("span",null,m.eula?"Zugestimmt am "+new Date(m.eula).toLocaleDateString(LC()):"Nicht zugestimmt")]));
+var l=h("label",null,"Nutzername ändern");l.setAttribute("for","nu");c.appendChild(l);
+var i=h("input");i.id="nu";i.value=m.user;i.maxLength=30;c.appendChild(i);
+var e=h("div","err");e.id="e";c.appendChild(e);
+var s=h("button","sec","Nutzernamen speichern");
+s.onclick=function(){var v=i.value.trim();if(v.length<3)return setErr("Mindestens 3 Zeichen.");if(bad(v))return setErr(MSG);var T=(m.unc||[]).filter(function(x){return Date.now()-x<14*864e5});if(v!==m.user&&T.length>=2)return setErr("Der Nutzername lässt sich nur 2 Mal pro 14 Tage ändern.");if(v!==m.user){T.push(Date.now());m.unc=T}m.user=v;saveAcc();note="Gespeichert.";render()};
+c.appendChild(s);if(note)c.appendChild(h("p","mu",note));
+var o=h("button","sec","Abmelden");o.onclick=logout;c.appendChild(o);
+var d=h("button","sec",armed?"Wirklich alle Daten löschen? Nochmal tippen":"Konto und Daten löschen");
+d.onclick=function(){if(!armed){armed=true;render();return}
+if(CLOUD&&FBU){cloudDelete();return}try{localStorage.removeItem("aw_d_"+CUR);localStorage.removeItem("aw_s_"+CUR);localStorage.removeItem("aw_n_"+CUR)}catch(x){}delete ACC[CUR];saveAcc();armed=false;logout()};
+c.appendChild(d);box.appendChild(c)}
+var UI=rd("aw_ui",{hue:255,sat:70,theme:"auto",fs:16}),PRE=[255,330,170,25,210,130],Q="",SORT="Frist";
+function sv(){wr("aw_ui",UI)}
+var NEW=false,OPEN=null,DEL=null,EDIT=null,UNL=false,PAYS={"täglich":1,"wöchentlich":7,"alle 2 Wochen":14,"monatlich":30.4375,"vierteljährlich":91.3125,"halbjährlich":182.625,"jährlich":365.25,"Eigener Rhythmus":0,"Fester Tag im Monat":30.4375},MO={"monatlich":1,"vierteljährlich":3,"halbjährlich":6,"jährlich":12},TPL=[{n:"Mitternacht",hue:235,sat:60,lt:-12,theme:"dark"},{n:"Ozean",hue:195,sat:75,lt:-4,theme:"light"},{n:"Sunset",hue:335,sat:80,lt:0,theme:"dark"},{n:"Wald",hue:150,sat:55,lt:-14,theme:"dark"},{n:"Sakura",hue:340,sat:70,lt:16,theme:"light"}];
+function cs(){return UI.cur||"€"}
+function dd(i){return i.p==="Eigener Rhythmus"?Math.max(1,i.c||7):(PAYS[i.p]||30.4375)}
+function mon(i){return i.rt==="R"&&rOpen(i)<=0?0:i.k/dd(i)*30.4375}
+var SUB=null,HC="Erste Schritte",HQ="",NOTES=[],NQ="",NF="Alle",NE=null,NDEL=null,VER="1.2",QK=[["Netflix","Streaming","monatlich"],["Spotify","Musik","monatlich"],["Fitnessstudio","Fitness","monatlich"],["Handyvertrag","Handy & Internet","monatlich"],["Haftpflicht","Versicherung","jährlich"],["Strom","Wohnen & Energie","monatlich"]];
+var EULA=["1. Nutzungsrecht: Du erhältst ein einfaches, nicht übertragbares Recht, AboWächter privat zu nutzen.","2. Urheberrecht: Die App, ihr Design und ihr Quelltext sind urheberrechtlich geschützt. Kopieren, Nachbauen, Weiterverkaufen und das Entfernen von Urheberhinweisen oder Wasserzeichen sind nicht erlaubt.","3. Inhalte: Du bist für deine Eingaben verantwortlich. Beleidigungen, Hass, Rassismus und rechtswidrige Inhalte sind verboten und werden gefiltert.","4. Keine Gewähr: Du trägst Fristen und Beträge selbst ein. Erinnerungen können ausfallen. Prüfe wichtige Fristen immer zusätzlich im Vertrag. Für verpasste Kündigungen wird nicht gehaftet, außer bei Vorsatz und grober Fahrlässigkeit.","5. Datenspeicherung: Deine Daten liegen nur lokal auf deinem Gerät. Löschst du Browserdaten oder die App, sind sie weg. Sichere sie regelmäßig.","6. Änderungen: Funktionen und diese Bedingungen können sich ändern. Bei wesentlichen Änderungen wirst du erneut um Zustimmung gebeten.","7. Beendigung: Du kannst dein Konto jederzeit löschen. Bei Verstößen kann die Nutzung beendet werden.","8. Recht: Es gilt deutsches Recht, soweit zwingende Verbraucherschutzvorschriften nichts anderes bestimmen."];
+var PRIV=["Es werden keine Daten an einen Server gesendet. E-Mail, Nutzername, Verträge und Notizen bleiben auf deinem Gerät. Passwort und PIN werden nur als Hash gespeichert. Benachrichtigungen nutzen die Funktion deines Browsers."];
+var RIGHTS=["Auskunft und Export: Mehr, Einstellungen, Daten.","Berichtigung: Verträge und Notizen kannst du jederzeit bearbeiten.","Löschung: Mehr, Konto, Konto und Daten löschen.","Widerruf der Zustimmung: Unten auf dieser Seite. Danach wirst du abgemeldet und musst erneut zustimmen.","Keine Weitergabe: Deine Daten werden nicht an Dritte übermittelt."];
+var HELP={"Erste Schritte":[["Wie lege ich einen Vertrag an?","Öffne Verträge, gib Name, Kosten, Kategorie und den letzten Kündigungstag ein und tippe auf Vertrag speichern."],["Was ist der letzte Kündigungstag?","Der letzte Tag, an dem deine Kündigung rechtzeitig beim Anbieter ankommen muss. Er steht im Vertrag."],["Brauche ich ein Konto?","Ja, die Anmeldung ist Pflicht. Das Konto liegt nur auf deinem Gerät."]],
+"Verträge & Fristen":[["Wie bearbeite ich einen Vertrag?","Tippe in der Liste auf den Vertrag und dann auf Bearbeiten."],["Was heißt Als gekündigt markieren?","Der Vertrag zählt nicht mehr zu den Kosten und löst keine Erinnerung aus. Die gesparte Summe steht in der Übersicht."],["Was bedeuten die Farben?","Rot: die Frist liegt innerhalb deines Erinnerungs-Vorlaufs. Gelb: unter 30 Tage. Grün: es ist noch Zeit."]],
+"Zahlungsrhythmen":[["Was sind alternative Zahlungstermine?","Mit dem Haken wählst du zum Beispiel einen festen Zahltag im Monat, einen eigenen Rhythmus in Tagen oder ein Enddatum. Ohne Haken wählst du wöchentlich, monatlich oder jährlich."],["Wie wird die nächste Zahlung berechnet?","Aus dem Datum der ersten Zahlung und dem Rhythmus. Bei festem Zahltag zählt dieser Tag, in kürzeren Monaten der letzte Tag des Monats."],["Warum fehlt eine Zahlung im Kalender?","Trage die nächste Zahlung beim Vertrag ein und prüfe, ob das Enddatum schon vorbei ist."]],
+"Erinnerungen":[["Wann bekomme ich eine Erinnerung?","Vor der Frist, am Fristtag und optional als frühe Vorwarnung. Die Zeiten stellst du unter Erinnerung ein."],["Warum kommt keine Meldung?","Erlaube Benachrichtigungen im Browser. Meldungen kommen nur, solange die App geöffnet ist."]],
+"Notizen":[["Wie nutze ich den Notizblock?","Öffne Notizen, schreibe Titel und Text, wähle Farbe und optional einen Vertrag und speichere."],["Was kann ich mit Notizen machen?","Anheften, archivieren, kopieren, bearbeiten, löschen, suchen und nach Angeheftet oder Archiv filtern."]],
+"Design":[["Wie ändere ich die Farben?","Mehr, Einstellungen: Farbrad, Vorlagen, Helligkeit, Intensität und farbiger Hintergrund."]],
+"Konto & Sicherheit":[["Was macht die App-PIN?","Sie sperrt die App beim Öffnen. Du legst sie unter Mehr, Konto fest."],["Passwort vergessen?","Es gibt keine Zurücksetzen-Mail, weil das Konto nur auf deinem Gerät liegt. Lege notfalls ein neues Konto an."]],
+"Daten & Datenschutz":[["Wo liegen meine Daten?","Nur auf deinem Gerät. Sichere sie unter Mehr, Einstellungen, Daten."],["Wie lösche ich alles?","Mehr, Konto, Konto und Daten löschen."]]};
+var LOG=[["1.2","14.11.2026",["Anmeldung mit Google oder E-Mail","Daten in der Cloud, auf allen Geräten gleich","Passwort vergessen per E-Mail","KI-Agent jetzt kostenlos für alle","Benachrichtigungen auf Android"]],["1.1","14.11.2026",["Vier Sprachen mit Sprachknopf auf jeder Seite","Schnell-Eingabe mit Vorschau, Raten und Preis-Erkennung","Neues Logo und installierbare App"]],["1.0","13.11.2026",["Notizblock mit Farben, Anheften, Archiv und Suche","Alternative Zahlungstermine mit festem Zahltag und Enddatum","Hilfe-Center mit Themen und Suche","Nutzungsbedingungen mit Zustimmung im Konto","Neues Menü Mehr, Update-Log und Wasserzeichen"]],["0.9","13.11.2026",["Farbrad, Vorlagen und Helligkeit","Eigene Zahlungsrhythmen und Zahlungskalender","Verträge bearbeiten, Favoriten, Duplizieren","App-PIN und Passwort ändern"]],["0.8","13.11.2026",["Registrieren und Anmelden","Erinnerungen vor der Frist","Inhaltsfilter gegen Beleidigungen","Übersicht mit Budget"]]];
+function wm(){}
+function eulaView(){var a=$("app");a.textContent="";var c=h("div","card");c.appendChild(h("h2",null,"Nutzungsbedingungen"));
+c.appendChild(h("div","mu","Bitte lies die Bedingungen und bestätige sie, um die App zu nutzen."));
+var bx=h("div","legal");EULA.forEach(function(p){bx.appendChild(h("p",null,p))});c.appendChild(bx);
+var l=h("label","ck"),k=h("input");k.type="checkbox";l.appendChild(k);l.appendChild(document.createTextNode("Ich habe die Bedingungen gelesen und stimme zu."));c.appendChild(l);
+var e=h("div","err");c.appendChild(e);
+var b=h("button","pri","Zustimmen und fortfahren");b.onclick=function(){if(!k.checked){e.textContent=L("Bitte stimme den Bedingungen zu.");return}me().eula=Date.now();saveAcc();render()};c.appendChild(b);
+var o=h("button","sec","Ablehnen und abmelden");o.onclick=logout;c.appendChild(o);a.appendChild(c)}
+function acc(box,title,arr){var d=h("details","fq",null,[h("summary",null,title)]);arr.forEach(function(p){d.appendChild(h("p","mu",p))});box.appendChild(d)}
+function viewLaw(box){var c=h("div","card");c.appendChild(h("h2",null,"Rechtliches"));notice(c);
+acc(c,"Nutzungsbedingungen (EULA)",EULA);acc(c,"Datenschutz",PRIV);acc(c,"Deine Rechte",RIGHTS);if(ABO_AKTIV)acc(c,"Mitgliedschaft und Kündigung",["Die Mitgliedschaft kostet nach dem Probezeitraum 4,99 € pro Monat und lässt sich jederzeit unter Mehr, Mitgliedschaft Plus beenden. Im Testmodus wird nichts abgebucht."]);acc(c,"Impressum",[window.IMPRESSUM||"Platzhalter: Vor dem Upload trägst du hier Name, Anschrift und Kontakt des Anbieters ein."]);
+c.appendChild(h("div","kv",null,[h("span","mu","Zustimmung"),h("span",null,me().eula?new Date(me().eula).toLocaleDateString(LC())+" (Version "+VER+")":"fehlt")]));
+var b=h("button","sec","Zustimmung widerrufen und abmelden");b.onclick=function(){delete me().eula;saveAcc();logout()};c.appendChild(b);
+c.appendChild(h("p","mu","Hinweis: Dies sind einfache Standardtexte und keine Rechtsberatung."));box.appendChild(c)}
+function viewHelp(box){var c=h("div","card");c.appendChild(h("h2",null,"Hilfe"));
+var qi=h("input");qi.id="hq";qi.placeholder="Suchbegriff eingeben";qi.value=HQ;qi.oninput=function(){HQ=qi.value;render();var z=$("hq");z.focus();z.setSelectionRange(HQ.length,HQ.length)};c.appendChild(qi);
+var ch=h("div","chips");ch.style.marginTop="12px";Object.keys(HELP).forEach(function(k){var b=h("button","chip"+(HC===k&&!HQ?" on":""),k);b.onclick=function(){HC=k;HQ="";render()};ch.appendChild(b)});c.appendChild(ch);
+var q=HQ.toLowerCase(),n=0;
+Object.keys(HELP).forEach(function(k){if(!q&&k!==HC)return;HELP[k].forEach(function(p){if(q&&(p[0]+" "+p[1]).toLowerCase().indexOf(q)<0)return;n++;c.appendChild(h("details","fq",null,[h("summary",null,p[0]),h("p","mu",p[1])]))})});
+if(!n)c.appendChild(h("div","empty","Nichts gefunden."));box.appendChild(c)}
+function viewLog(box){LOG.forEach(function(v){var c=h("div","card");c.appendChild(h("div","top",null,[h("h2",null,"Version "+v[0]),h("span","mu",v[1])]));
+var u=h("ul");v[2].forEach(function(t){u.appendChild(h("li",null,t))});c.appendChild(u);box.appendChild(c)})}
+function viewAb(box){var c=h("div","card");c.appendChild(h("h2",null,"Über AboWächter"));
+[["Version",VER],["Speicherort",CLOUD?"Dein Konto (Google Firebase)":"Nur dieses Gerät"],["Urheberrecht","© 2026 AboWächter"]].forEach(function(r){c.appendChild(h("div","kv",null,[h("span","mu",r[0]),h("span",null,r[1])]))});
+c.appendChild(h("p","mu","Alle Rechte vorbehalten. Kopieren, Nachbauen und Weitergeben der App sind nicht erlaubt. Am Ende jeder Seite steht das Logo mit Name und Version."));box.appendChild(c)}
+function viewMore(box){
+var T={ai:["KI & Hilfe",ABO_AKTIV?"Helfer kostenlos, Agent mit Plus":"Helfer und Agent, kostenlos",viewAg],mem:["AboWächter Plus",TRIAL+" Tage kostenlos testen",viewMem],set:["Einstellungen","Design, Budget, Währung, Daten",viewD],acc:["Konto & Sicherheit","Profil, PIN, Passwort, Zustimmung",function(b){viewK(b);sec(b)}],help:["Hilfe","Antworten nach Themen",viewHelp],law:["Rechtliches","Bedingungen, Datenschutz, Rechte",viewLaw],log:["Neuigkeiten","Update-Log",viewLog],ab:["Über die App","Version und Urheberrecht",viewAb]};
+if(!ABO_AKTIV)delete T.mem;if(SUB&&T[SUB]){var bk=h("button","sec","‹ Zurück");bk.style.margin="0 0 12px";bk.onclick=function(){SUB=null;note="";armed=false;render()};box.appendChild(bk);T[SUB][2](box);return}
+Object.keys(T).forEach(function(k){var c=h("div","card row",null,[h("div","info",null,[h("div","name",T[k][0]),h("div","mu",T[k][1])]),h("span","mu","›")]);c.style.cursor="pointer";c.onclick=function(){SUB=k;render()};box.appendChild(c)})}
+var NC=["Gelb","Grün","Blau","Rosa","Grau"],NH={"Gelb":48,"Grün":140,"Blau":215,"Rosa":335,"Grau":0};
+function nsave(){wr("aw_n_"+CUR,NOTES)}
+function viewN(box){
+var e=NE&&NOTES.filter(function(x){return x.id===NE})[0]||{},c=h("div","card");
+c.innerHTML='<h2>'+(e.id?"Notiz bearbeiten":"Neue Notiz")+'</h2><label for="nt">Titel</label><input id="nt" maxlength="60"><label for="nb">Text</label><textarea id="nb" rows="5" maxlength="2000"></textarea><div class="mu" id="nn">0 / 2000</div><label for="nc">Farbe</label><select id="nc"></select><label for="nv">Zu Vertrag (optional)</label><select id="nv"></select><div class="err" id="e"></div>';
+box.appendChild(c);
+NC.forEach(function(x){var o=h("option",null,x);o.value=x;c.querySelector("#nc").appendChild(o)});
+var nv=c.querySelector("#nv");var k0=h("option",null,"Keiner");k0.value="Keiner";nv.appendChild(k0);items.forEach(function(i){var o=h("option",null,i.n);o.value=i.id;nv.appendChild(o)});
+if(e.id){$("nt").value=e.t||"";$("nb").value=e.b||"";$("nc").value=e.c||"Gelb";nv.value=e.v||"Keiner"}
+function cnt(){$("nn").textContent=$("nb").value.length+" / 2000"}cnt();$("nb").oninput=function(){cnt();clr()};$("nt").oninput=clr;
+var b=h("button","pri",e.id?"Änderungen speichern":"Notiz speichern");
+b.onclick=function(){var t=$("nt").value.trim(),x=$("nb").value.trim();
+if(!t&&!x)return setErr("Bitte einen Titel oder Text eingeben.");
+if(bad(t+" "+x))return setErr(MSG);
+var o={t:t,b:x,c:$("nc").value,v:nv.value==="Keiner"?"":nv.value,u:Date.now()};
+if(e.id)Object.assign(e,o);else{o.id=Date.now()+"-"+Math.floor(Math.random()*1e6);NOTES.push(o)}
+NE=null;nsave();render()};
+c.appendChild(b);
+if(e.id){var cb=h("button","sec","Abbrechen");cb.onclick=function(){NE=null;render()};c.appendChild(cb)}
+var sr=h("div","row"),qi=h("input");qi.id="nq";qi.placeholder="Notizen suchen";qi.value=NQ;sr.style.marginBottom="12px";
+qi.oninput=function(){NQ=qi.value;render();var z=$("nq");z.focus();z.setSelectionRange(NQ.length,NQ.length)};sr.appendChild(qi);box.appendChild(sr);
+var ch=h("div","chips");["Alle","Angeheftet","Archiv"].forEach(function(f){var y=h("button","chip"+(NF===f?" on":""),f);y.onclick=function(){NF=f;render()};ch.appendChild(y)});box.appendChild(ch);
+var q=NQ.toLowerCase(),l=NOTES.filter(function(n){return(NF==="Archiv"?n.a:!n.a&&(NF!=="Angeheftet"||n.p))&&(!q||((n.t||"")+" "+(n.b||"")).toLowerCase().indexOf(q)>-1)});
+l.sort(function(a,b){return(b.p?1:0)-(a.p?1:0)||b.u-a.u});
+l.forEach(function(n){var d=h("div","card"),ct=items.filter(function(i){return i.id===n.v})[0];
+d.style.borderLeft="6px solid hsl("+NH[n.c||"Gelb"]+" 70% 55%)";
+d.appendChild(h("div","name",(n.p?"📌 ":"")+(n.t||"Ohne Titel")));
+if(n.b)d.appendChild(h("div","mu",n.b)).style.whiteSpace="pre-wrap";
+if(ct)d.appendChild(h("div","mu","Vertrag: "+ct.n));
+d.appendChild(h("div","mu",new Date(n.u).toLocaleDateString(LC())+" · "+(n.b||"").length+" Zeichen"));
+var a=h("div","acts");
+function mb(t,fn){var k=h("button","mini",t);k.onclick=fn;a.appendChild(k)}
+mb("Bearbeiten",function(){NE=n.id;window.scrollTo(0,0);render()});
+mb(n.p?"Lösen":"Anheften",function(){n.p=!n.p;nsave();render()});
+mb(n.a?"Zurückholen":"Archivieren",function(){n.a=!n.a;nsave();render()});
+mb("Kopieren",function(){try{navigator.clipboard.writeText((n.t?n.t+"\n":"")+(n.b||""))}catch(x){}});
+mb(NDEL===n.id?"Sicher löschen?":"Löschen",function(){if(NDEL!==n.id){NDEL=n.id;render();return}NOTES.splice(NOTES.indexOf(n),1);NDEL=null;nsave();render()});
+d.appendChild(a);box.appendChild(d)});
+if(!l.length)box.appendChild(h("div","empty","Keine Notizen in dieser Ansicht."))}
+function clampD(y,m,d){return new Date(y,m,Math.min(d,new Date(y,m+1,0).getDate()))}
+function stepD(i,d){if(i.p==="Fester Tag im Monat")return clampD(d.getFullYear(),d.getMonth()+1,i.dm||1);var x=new Date(d);if(MO[i.p])x.setMonth(x.getMonth()+MO[i.p]);else x.setDate(x.getDate()+dd(i));return x}
+function nextPay(i){var t=new Date();t.setHours(0,0,0,0);var d,g=0;
+if(i.p==="Fester Tag im Monat"){d=clampD(t.getFullYear(),t.getMonth(),i.dm||1);if(d<t)d=stepD(i,d)}
+else{if(!i.s)return null;d=new Date(i.s+"T00:00:00");while(d<t&&g++<4000)d=stepD(i,d)}
+if(i.en&&d>new Date(i.en+"T00:00:00"))return null;return d}
+function evs(span){var out=[],t=new Date();t.setHours(0,0,0,0);var end=new Date(t);end.setDate(end.getDate()+span);
+items.forEach(function(i){if(i.x)return;var d=nextPay(i),g=0,en=i.en?new Date(i.en+"T00:00:00"):null;while(d&&d<=end&&(!en||d<=en)&&g++<60){out.push({i:i,d:new Date(d)});d=stepD(i,d)}});
+return out.sort(function(a,b){return a.d-b.d})}
+function payOpts(){var alt=$("alt").checked,L=alt?["täglich","alle 2 Wochen","Fester Tag im Monat","vierteljährlich","halbjährlich","Eigener Rhythmus"]:["wöchentlich","monatlich","jährlich"],p=$("p"),cur=p.value;
+p.textContent="";L.forEach(function(v){var o=h("option",null,v);o.value=v;p.appendChild(o)});p.value=L.indexOf(cur)>-1?cur:(alt?L[2]:"monatlich");
+$("cw").style.display=p.value==="Eigener Rhythmus"?"block":"none";$("dw").style.display=p.value==="Fester Tag im Monat"?"block":"none";$("ew").style.display=alt?"block":"none";trAll()}
+var TRIAL=30,CATR=["Ratenkauf","Kredit","Handy-Raten","Möbel & Technik","Steuern & Gebühren","Sonstiges"],TPLS=[],CY=new Date().getFullYear(),CMo=new Date().getMonth(),CD=null,AG=[],AGB=false;
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function rPaid(i){return(i.pays||[]).reduce(function(s,p){return s+p.a},0)}
+function rOpen(i){return i.rt==="R"?Math.max(0,(i.tot||0)-rPaid(i)):0}
+function openR(){return items.filter(function(i){return i.rt==="R"&&!i.x&&rOpen(i)>0}).length}
+function msum(){var s=0;items.forEach(function(i){if(!i.x)s+=mon(i)});return s}
+function purge(){var n=items.length;items=items.filter(function(i){return !(i.x&&days(i.d)<0)});if(items.length!==n)save()}
+function rinfo(i){return fmt(i.k)+" "+cs()+" Rate · "+(i.pays||[]).length+"/"+i.nr+" Raten · offen "+fmt(rOpen(i))+" "+cs()}
+function pbar(i){var b=h("div","bar"),f=h("div","fill");f.style.width=Math.min(100,Math.round(rPaid(i)/(i.tot||1)*100))+"%";b.style.margin="8px 0 0";b.appendChild(f);return b}
+function payLines(c,i){var p=i.pays||[];
+if(i.x)c.appendChild(h("div","kv",null,[h("span","mu","Wird gelöscht am"),h("span",null,dt(i.d))]));
+if(i.rt==="R"){c.appendChild(h("div","kv",null,[h("span","mu","Bezahlt"),h("span",null,fmt(rPaid(i))+" "+cs()+" ("+p.length+" von "+i.nr+" Raten)")]));c.appendChild(h("div","kv",null,[h("span","mu","Noch offen"),h("b",null,fmt(rOpen(i))+" "+cs())]))}
+if(p.length)c.appendChild(h("div","kv",null,[h("span","mu","Zuletzt bezahlt"),h("span",null,dt(p[p.length-1].d)+" · "+fmt(p[p.length-1].a)+" "+cs())]))}
+function payIt(i){i.pays=i.pays||[];i.pays.push({d:iso(new Date()),a:i.k});save();render()}
+function kvr(l,v){return h("div","kv",null,[h("span",null,l),h("span",null,fmt(v)+" "+cs())])}
+function rateCard(box){var o=0,pd=0,n=openR();items.forEach(function(i){if(i.rt==="R"&&!i.x){o+=rOpen(i);pd+=rPaid(i)}});
+var c=h("div","card");c.appendChild(h("h2",null,"Ratenzahlungen"));
+c.appendChild(h("div","kv",null,[h("span",null,"Offene Ratenzahlungen"),h("b",null,String(n))]));c.appendChild(kvr("Bereits bezahlt",pd));c.appendChild(kvr("Noch offen",o));box.appendChild(c)}
+function memAd(box){if(!ABO_AKTIV||agentOn()||UI.noad)return;var c=h("div","card");c.appendChild(h("div","mu","Plus: Dein KI-Agent verwaltet Verträge für dich. Erster Monat kostenlos, danach 4,99 € pro Monat."));
+var a=h("div","acts"),b=h("button","mini","Mehr erfahren"),n=h("button","mini","Nein danke");b.onclick=function(){tab="d";SUB="mem";render()};n.onclick=function(){UI.noad=1;sv();render()};a.appendChild(b);a.appendChild(n);c.appendChild(a);box.appendChild(c)}
+function tyOpts(){var R=$("ty").value==="Ratenzahlung",g=$("g"),cur=g.value,L=R?CATR:CATS;g.textContent="";L.forEach(function(x){var o=h("option",null,x);o.value=x;g.appendChild(o)});g.value=L.indexOf(cur)>-1?cur:L[L.length-1];
+$("rw").style.display=R?"block":"none";$("dwv").style.display=R?"none":"block";$("kl").textContent=R?"Höhe einer Rate":"Kosten pro Zahlung";$("sl").textContent=R?"Erste Fälligkeit":"Nächste oder erste Zahlung am (optional)";trAll()}
+function lastDate(o,nr){var t=new Date();t.setHours(0,0,0,0);var d=o.s?new Date(o.s+"T00:00:00"):(o.p==="Fester Tag im Monat"?clampD(t.getFullYear(),t.getMonth(),o.dm):t);for(var k=1;k<nr;k++)d=stepD(o,d);return iso(d)}
+function fillTpl(t){$("ty").value=t.ty||"Vertrag";tyOpts();$("n").value=t.n||"";$("k").value=t.k||"";$("g").value=t.g;$("alt").checked=!!t.alt;payOpts();$("p").value=t.p||"monatlich";payOpts();$("c").value=t.c||7;$("dm").value=t.dm||1;$("tt").value=t.tot||"";$("nr").value=t.nr||12;$("o").value=t.o||""}
+function saveTpl(){var n=$("n").value.trim();if(!n)return setErr("Gib zuerst einen Namen ein.");if(bad(n))return setErr(MSG);
+TPLS.push({ty:$("ty").value,n:n,k:parseFloat($("k").value.replace(",","."))||0,g:$("g").value,p:$("p").value,alt:$("alt").checked,dm:parseInt($("dm").value,10)||1,c:parseInt($("c").value,10)||7,tot:parseFloat($("tt").value)||0,nr:parseInt($("nr").value,10)||12,o:$("o").value.trim()});
+wr("aw_t_"+CUR,TPLS);tplChips();setErr("Vorlage gespeichert.")}
+function tplChips(){var q=$("qk");q.textContent="";
+QK.forEach(function(t){var b=h("button","chip",t[0]);b.onclick=function(){fillTpl({n:L(t[0]),g:t[1],p:t[2]})};q.appendChild(b)});
+TPLS.forEach(function(t,ix){var b=h("button","chip","★ "+t.n),x=h("button","chip","×");b.onclick=function(){fillTpl(t)};x.setAttribute("aria-label","Vorlage löschen");x.onclick=function(){TPLS.splice(ix,1);wr("aw_t_"+CUR,TPLS);tplChips()};q.appendChild(b);q.appendChild(x)})}
+function formInit(){var e=EDIT&&items.filter(function(x){return x.id===EDIT})[0];
+$("alt").onchange=payOpts;$("p").onchange=payOpts;$("ty").onchange=tyOpts;tyOpts();
+if(e){$("ty").value=e.rt==="R"?"Ratenzahlung":"Vertrag";tyOpts();$("alt").checked=!!e.alt||["monatlich","wöchentlich","jährlich"].indexOf(e.p||"monatlich")<0;payOpts();$("n").value=e.n;$("k").value=e.k;$("g").value=e.g;$("p").value=e.p||"monatlich";$("c").value=e.c||7;$("dm").value=e.dm||1;$("s").value=e.s||"";$("en").value=e.en||"";$("d").value=e.d;$("tt").value=e.tot||"";$("nr").value=e.nr||12;$("o").value=e.o||"";payOpts()}
+else{payOpts();tplChips()}}
+var QKW=[["Streaming",/(^|[^a-zäöüß0-9])(netflix|disney|prime video|sky\b|dazn|wow\b|paramount|joyn|rtl\+|streaming)/],["Musik",/(^|[^a-zäöüß0-9])(spotify|deezer|apple music|tidal|youtube music|musik)/],["Gaming",/(^|[^a-zäöüß0-9])(playstation|ps plus|xbox|game pass|nintendo|steam\b|gaming)/],["Software",/(^|[^a-zäöüß0-9])(adobe|microsoft|office|icloud|google one|dropbox|chatgpt|claude|antivirus|software)/],["Handy & Internet",/(^|[^a-zäöüß0-9])(telekom|vodafone|o2\b|1&1|congstar|aldi talk|handy|mobilfunk|internet|dsl\b|glasfaser)/],["Versicherung",/(^|[^a-zäöüß0-9])(versicherung|haftpflicht|hausrat|kfz|allianz|huk\b|rechtsschutz)/],["Wohnen & Energie",/(^|[^a-zäöüß0-9])(strom|gas\b|miete|wasser|heizung|rundfunk|gez\b)/],["Finanzen",/(^|[^a-zäöüß0-9])(bank|konto|kreditkarte|depot)/],["Fitness",/(^|[^a-zäöüß0-9])(fitness|gym\b|mcfit|clever fit|sportverein)/],["Bildung",/(^|[^a-zäöüß0-9])(kurs|schule|studium|babbel|duolingo|nachhilfe)/]];
+var QKR=[["Kredit",/kredit|darlehen/],["Handy-Raten",/handy|iphone|samsung|smartphone/],["Möbel & Technik",/möbel|sofa|couch|fernseher|laptop|küche|waschmaschine|\btv\b/],["Steuern & Gebühren",/steuer|gebühr|finanzamt/]];
+function qNum(x){x=x.replace(/\s/g,"");if(/^\d{1,3}(\.\d{3})+(,\d{1,2})?$/.test(x))x=x.replace(/\./g,"").replace(",",".");else x=x.replace(",",".");return parseFloat(x)}
+function parseQuick(raw){
+var s=" "+String(raw).replace(/\s+/g," ").trim()+" ",o={rt:"V",p:"monatlich",pays:[]},m,x,today=new Date();today.setHours(0,0,0,0);
+var N="(\\d{1,3}(?:\\.\\d{3})+(?:,\\d{1,2})?|\\d+(?:[.,]\\d{1,2})?)",low=s.toLowerCase();
+function cut(v){s=s.replace(v," ")}
+function mk(d,mo,y){if(!(d>=1&&d<=31&&mo>=1&&mo<=12))return null;var D;if(y){y=+y;if(y<100)y+=2000;D=new Date(y,mo-1,d)}else{D=new Date(today.getFullYear(),mo-1,d);if(D<today)D=new Date(today.getFullYear()+1,mo-1,d)}return iso(D)}
+if(m=s.match(/\s(?:notiz|note|hinweis)\s*:\s*(.+)$/i)){o.o=m[1].trim().slice(0,120);cut(m[0])}
+var re=/(\s(?:ab dem|ab|seit|start|erste zahlung|from|kündigen bis|bis zum|bis|until|frist))?\s*(?:(\d{4})-(\d{2})-(\d{2})|(\d{1,2})\.(\d{1,2})\.(\d{4}|\d{2})?)(?!\d)/gi,found=[];
+while(x=re.exec(s)){var v=x[2]?mk(+x[4],+x[3],x[2]):mk(+x[5],+x[6],x[7]);if(v)found.push([x[0],v,/^\s(ab|seit|start|erste|from)/i.test(x[1]||"")])}
+found.forEach(function(f){if(f[2])o.s=f[1];else if(!o.d)o.d=f[1];else if(!o.s)o.s=f[1];cut(f[0])});
+if(m=s.match(/\s(?:immer am|jeden|am|zum)\s(\d{1,2})\.(?!\d)/i)){if(+m[1]>=1&&+m[1]<=31){o.p="Fester Tag im Monat";o.dm=+m[1];o.fix=1}cut(m[0])}
+if(m=s.match(/\s(?:gesamtbetrag|insgesamt|gesamt|total|summe)\s*:?\s*(\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?|\d+(?:[.,]\d{1,2})?)\s*(?:€|euro|eur)?/i)){o.tot=qNum(m[1]);o.rt="R";cut(m[0])}
+if(m=s.match(/\s(\d+)\s*(?:x\s*)?(?:monatsraten|raten|rate\b|instal?lments)/i)){o.rt="R";o.nr=+m[1];cut(m[0])}
+else if(m=s.match(/\s(\d+)\s*x(?=\s|\d)/i)){o.rt="R";o.nr=+m[1];cut(m[0])}
+else if(m=s.match(/\s(ratenzahlung|ratenkauf|raten|rate|finanzierung)(?=\s)/i)){o.rt="R";cut(m[0])}
+var iv=null;
+if(m=s.match(/\salle\s(\d+)\s*tage?(?=\s)/i)){iv="Eigener Rhythmus";o.c=Math.max(1,+m[1]);cut(m[0])}
+else if(m=s.match(/\salle\s(\d+)\s*wochen?(?=\s)/i)){iv=+m[1]===1?"wöchentlich":+m[1]===2?"alle 2 Wochen":"Eigener Rhythmus";if(iv==="Eigener Rhythmus")o.c=+m[1]*7;cut(m[0])}
+else if(m=s.match(/\salle\s(\d+)\s*monate?(?=\s)/i)){iv={1:"monatlich",3:"vierteljährlich",6:"halbjährlich",12:"jährlich"}[+m[1]]||"Eigener Rhythmus";if(iv==="Eigener Rhythmus")o.c=+m[1]*30;cut(m[0])}
+else [["täglich",/\s(t[aä]glich|pro tag|daily)(?=\s)/i],["alle 2 Wochen",/\s(14[- ]t[aä]gig|zweiw[oö]chentlich)(?=\s)/i],["wöchentlich",/\s(w[oö]chentlich|pro woche|weekly)(?=\s)/i],["vierteljährlich",/\s(viertelj[aä]hrlich|pro quartal|quarterly)(?=\s)/i],["halbjährlich",/\s(halbj[aä]hrlich)(?=\s)/i],["jährlich",/\s(j[aä]hrlich|pro jahr|im jahr|yearly)(?=\s)/i],["monatlich",/\s(monatlich|pro monat|im monat|monthly|mtl\.?)(?=\s)/i]].some(function(r){var q=s.match(r[1]);if(q){iv=r[0];cut(q[0]);return true}});
+if(iv&&!(o.fix&&iv==="monatlich")){o.p=iv;if(o.fix)delete o.dm}
+var pr=s.match(new RegExp("(?:€|euro|eur)\\s*"+N+"(?!\\d)","i"))||s.match(new RegExp(N+"\\s*(?:€|euro|eur|\\$|£|chf)(?![a-zäöü])","i"));
+if(!pr)pr=s.match(/\s(\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?)(?=\s)/)||s.match(/\s(\d+[.,]\d{1,2})(?=\s)/);
+if(!pr){var all=s.match(/\s\d+(?=\s)/g);if(all){var lastI=all[all.length-1];pr=[lastI,lastI.trim()]}}
+if(pr){o.k=qNum(pr[1]);cut(pr[0])}
+else if(o.rt==="R"&&o.tot&&o.nr)o.k=Math.round(o.tot/o.nr*100)/100;
+if(!(o.k>=0)||isNaN(o.k))return{err:"Kein Betrag erkannt. Schreibe zum Beispiel 15 € oder 14,99.",raw:raw};
+if(o.rt==="R"){if(!(o.k>0))return{err:"Kein Betrag erkannt. Schreibe zum Beispiel 15 € oder 14,99.",raw:raw};if(!o.nr&&o.tot)o.nr=Math.max(1,Math.round(o.tot/o.k));if(!o.nr){o.nr=12;o.nest=1}if(!o.tot)o.tot=Math.round(o.k*o.nr*100)/100}
+var cl=(o.rt==="R"?CATR:CATS),g=null;
+cl.forEach(function(c){if(!g&&low.indexOf(c.toLowerCase())>-1)g=c});
+if(!g&&o.rt==="R")QKR.forEach(function(r){if(!g&&r[1].test(low))g=r[0]});
+if(!g&&o.rt!=="R")QKW.forEach(function(r){if(!g&&r[1].test(low))g=r[0]});
+o.g=g||(o.rt==="R"?"Ratenkauf":"Sonstiges");
+s=s.replace(/\s(kategorie|kostet|kosten|preis|je|pro|bis|ab|euro|eur|€)(?=\s)/gi," ").replace(/\s(kategorie|kostet|kosten|preis|je|pro|bis|ab|euro|eur|€)(?=\s)/gi," ");
+o.n=(s.replace(/\s+/g," ").replace(/^[\s,;:\-–·]+|[\s,;:\-–·]+$/g,"")||(o.rt==="R"?"Ratenzahlung":"Vertrag")).slice(0,60);
+if(bad(o.n+" "+(o.o||"")))return{err:MSG,raw:raw};
+if(o.rt==="R"){if(!o.s&&o.d)o.s=o.d;o.d=lastDate({p:o.p,dm:o.dm||1,c:o.c||7,s:o.s||""},o.nr)}
+else if(!o.d){o.d=iso(new Date(today.getTime()+30*864e5));o.dest=1}
+o.alt=["wöchentlich","monatlich","jährlich"].indexOf(o.p)<0;if(!o.dm)o.dm=1;if(!o.c)o.c=7;if(!o.s)o.s="";if(!o.o)o.o="";o.en="";
+return{o:o}}
+function qDesc(o){var per=o.p==="Eigener Rhythmus"?"alle "+o.c+" Tage":o.p==="Fester Tag im Monat"?"am "+o.dm+". jeden Monats":o.p,a=[L(fmt(o.k)+" "+cs()+" "+per),L(o.g)];
+if(o.rt==="R")a.push(L(o.nr+" Raten, gesamt "+fmt(o.tot)+" "+cs())+(o.nest?" "+L("(Anzahl geschätzt)"):""));else a.push(L("Kündigen bis")+" "+dt(o.d)+(o.dest?" "+L("(geschätzt)"):""));
+if(o.s)a.push(L(o.rt==="R"?"Erste Fälligkeit":"Nächste Zahlung")+" "+dt(o.s));if(o.o)a.push(L("Notiz")+": "+o.o);return a.join(" · ")}
+function qClean(o){delete o.fix;delete o.dest;delete o.nest;o.id=Date.now()+"-"+Math.floor(Math.random()*1e6);return o}
+function quickAdd(box){var c=h("div","card"),t=h("textarea"),pv=h("div"),e=h("div","err"),res=[];
+c.appendChild(h("h2",null,"Schnell-Eingabe"));
+c.appendChild(h("div","mu","Ein Eintrag pro Zeile. Erkannt werden Name, Preis (auch mit € oder ohne Komma), Zahlweise, Datum, Raten, Kategorie und Notiz."));
+var ex=h("div","chips");ex.style.marginTop="10px";ex.setAttribute("data-nt","1");
+["Netflix 15 € monatlich bis 15.12.2026","Handy 35€ 12 Raten ab 01.12.2026","Strom 58 Euro am 15.","Haftpflicht 89 jährlich Notiz: Vertrag im Ordner"].forEach(function(v){var b=h("button","chip",v);b.onclick=function(){t.value=(t.value.trim()?t.value.trim()+"\n":"")+v;upd()};ex.appendChild(b)});c.appendChild(ex);
+t.rows=3;t.maxLength=1500;t.id="qt";t.placeholder="Netflix 15 € monatlich bis 15.12.2026";t.setAttribute("data-nt","1");c.appendChild(t);
+pv.setAttribute("data-nt","1");pv.id="qp";c.appendChild(pv);c.appendChild(e);
+function upd(){pv.textContent="";e.textContent="";res=t.value.split(/\n|;/).map(function(v){return v.trim()}).filter(Boolean).slice(0,20).map(parseQuick);
+res.forEach(function(r){var d=h("div","kv");if(r.err)d.appendChild(h("span","err","„"+r.raw.slice(0,40)+"“: "+L(r.err)));else d.appendChild(h("div",null,null,[h("div","name",L(r.o.rt==="R"?"Ratenzahlung":"Vertrag")+": "+r.o.n),h("div","mu",qDesc(r.o))]));pv.appendChild(d)})}
+t.oninput=upd;
+var b=h("button","sec","Alle hinzufügen");b.id="qa";
+b.onclick=function(){upd();if(!res.length){e.textContent=L("Bitte mindestens einen Eintrag schreiben.");return}if(res.some(function(r){return r.err})){e.textContent=L("Bitte korrigiere die rot markierten Zeilen.");return}
+res.forEach(function(r){items.push(qClean(r.o))});NEW=false;save();render();fire()};
+c.appendChild(b);box.appendChild(c)}
+function bwBanner(){var m=me();if(m.bw===false||!(m.budget>0)||msum()<=m.budget||Date.now()<(m.bsn||0))return null;
+var c=h("div","card");c.style.borderColor="var(--red)";c.appendChild(h("div","name","Budget überschritten: "+fmt(msum())+" von "+fmt(m.budget)+" "+cs()));
+c.appendChild(h("div","mu","Soll die Warnung ausgeschaltet oder später wiederholt werden?"));
+var a=h("div","acts"),x=h("button","mini","Warnung deaktivieren"),l=h("button","mini","Später erinnern");
+x.onclick=function(){m.bw=false;saveAcc();render()};l.onclick=function(){m.bsn=Date.now()+(m.bwi||3)*36e5;saveAcc();render()};a.appendChild(x);a.appendChild(l);c.appendChild(a);return c}
+function occ(i,from,to){var o=[],d,g=0,x=0;if(i.p==="Fester Tag im Monat")d=clampD(from.getFullYear(),from.getMonth(),i.dm||1);else{if(!i.s)return o;d=new Date(i.s+"T00:00:00")}
+var en=i.en?new Date(i.en+"T00:00:00"):null;while(d<=to&&g++<1500){if(i.rt==="R"&&i.nr&&i.p!=="Fester Tag im Monat"&&x>=i.nr)break;x++;if(d>=from&&(!en||d<=en))o.push(new Date(d));d=stepD(i,d)}return o}
+function viewC(box){var first=new Date(CY,CMo,1),last=new Date(CY,CMo+1,0),map={},td=iso(new Date());
+function add(k,t,x){(map[k]=map[k]||[]).push({t:t,x:x})}
+items.forEach(function(i){if(i.x)return;if(i.rt!=="R")add(i.d,"k","Kündigen bis: "+i.n);occ(i,first,last).forEach(function(d){add(iso(d),i.rt==="R"?"r":"p",(i.rt==="R"?"Rate: ":"Zahlung: ")+i.n+" ("+fmt(i.k)+" "+cs()+")")})});
+var c=h("div","card"),hd=h("div","top"),pv=h("button","mini","‹"),nx=h("button","mini","›");
+pv.onclick=function(){CMo--;if(CMo<0){CMo=11;CY--}render()};nx.onclick=function(){CMo++;if(CMo>11){CMo=0;CY++}render()};
+hd.appendChild(pv);hd.appendChild(h("h2",null,first.toLocaleDateString(LC(),{month:"long",year:"numeric"})));hd.appendChild(nx);c.appendChild(hd);
+var g=h("div","cal");for(var wi=0;wi<7;wi++)g.appendChild(h("div","wd",new Date(2024,0,1+wi).toLocaleDateString(LC(),{weekday:"short"})));
+for(var k=0;k<(first.getDay()+6)%7;k++)g.appendChild(h("div"));
+for(var dn=1;dn<=last.getDate();dn++){(function(dn){var k2=iso(new Date(CY,CMo,dn)),b=h("button","cd"+(k2===td?" today":"")+(k2===CD?" sel":""),String(dn)),dt2=h("div","dots");
+(map[k2]||[]).slice(0,3).forEach(function(e){dt2.appendChild(h("span","dot d"+e.t))});b.appendChild(dt2);b.onclick=function(){CD=k2;render()};g.appendChild(b)})(dn)}
+c.appendChild(g);c.appendChild(h("p","mu","Rot: Kündigungsfrist · Blau: Zahlung · Gelb: Rate"));box.appendChild(c);
+var s=h("div","card");s.appendChild(h("h2",null,CD?dt(CD):"Tag antippen"));
+(map[CD]||[]).forEach(function(e){s.appendChild(h("div","kv",null,[h("span",null,e.x),h("span","dot d"+e.t)]))});
+if(CD&&!(map[CD]||[]).length)s.appendChild(h("div","mu","Keine Termine an diesem Tag."));box.appendChild(s)}
+var CHK=false,CANC=false,MSUC=false,PM="Google Play",AGT="h",AGM="local",HM=[{r:"b",t:"Hallo! Ich bin dein Helfer. Frag mich zum Beispiel: Wie lege ich eine Ratenzahlung an?"}];
+function memState(){var e=me().mem||{};if(!e.start)return "none";var n=Date.now();if(e.cancelled)return n<e.end?"cancelled":"expired";return n<e.trial?"trial":"active"}
+function agentOn(){if(!ABO_AKTIV)return true;var s=memState();return s==="trial"||s==="active"||s==="cancelled"}
+function nextBill(e){var t=e.trial;while(t<=Date.now())t+=30*864e5;return t}
+var PAYC=false;
+function trialUsed(){return !!(me().mem&&me().mem.trialUsed)||rd("aw_tu",[]).indexOf(CUR)>-1}
+function tuAdd(){var a=rd("aw_tu",[]);if(a.indexOf(CUR)<0){a.push(CUR);wr("aw_tu",a)}}
+function viewMem(box){var m=me(),e=m.mem||(m.mem={}),st=memState(),c=h("div","card"),fd=function(t){return new Date(t).toLocaleDateString(LC())},PMS=["Google Play","PayPal","Kreditkarte","Handyrechnung (Mobilfunkanbieter)"];
+var bt={none:"Nicht aktiv",expired:"Abgelaufen",trial:"Testphase",active:"Aktiv",cancelled:"Gekündigt"}[st];
+c.appendChild(h("div","top",null,[h("h2",null,"AboWächter Plus"),h("span","badge "+(st==="trial"||st==="active"?"ok":"amb"),bt)]));
+function checkout(){var free=!PAYC&&!trialUsed();c.appendChild(h("h2",null,"Abo bestätigen"));
+c.appendChild(h("div","kv",null,[h("span",null,"Heute zu zahlen"),h("b",null,free?"0,00 €":"4,99 €")]));
+c.appendChild(h("div","kv",null,[h("span",null,"Danach ab "+fd(Date.now()+(free?TRIAL:30)*864e5)),h("span",null,"4,99 € pro Monat")]));
+c.appendChild(h("label",null,"Zahlungsart"));
+PMS.forEach(function(v){var r=h("button","tg"+(PM===v?" on":""),v);r.style.cssText="display:block;width:100%;margin:6px 0;text-align:left";r.onclick=function(){PM=v;render()};c.appendChild(r)});
+if(PM.indexOf("Handy")===0)c.appendChild(h("p","mu","Wird über deine Mobilfunkrechnung abgerechnet, wenn dein Anbieter das unterstützt."));
+var l2=h("label","ck"),k=h("input");k.type="checkbox";l2.appendChild(k);l2.appendChild(document.createTextNode(free?"Ich starte die Testphase. Danach werden 4,99 € pro Monat berechnet, bis ich kündige. Die Testphase gibt es nur einmal.":"Ich kaufe Plus für 4,99 € pro Monat. Es verlängert sich monatlich, bis ich kündige."));c.appendChild(l2);
+var er=h("div","err");c.appendChild(er);
+var go=h("button","pri",free?"Testphase starten":"Jetzt für 4,99 € kaufen");
+go.onclick=function(){if(!k.checked){er.textContent=L("Bitte bestätige die Bedingungen des Abos.");return}var n=Date.now();m.mem={start:n,trial:free?n+TRIAL*864e5:n,method:PM,trialUsed:true};tuAdd();saveAcc();CHK=false;PAYC=false;MSUC=true;render()};c.appendChild(go);
+var cb=h("button","sec","Abbrechen");cb.onclick=function(){CHK=false;PAYC=false;render()};c.appendChild(cb)}
+function buy(label){var b=h("button","pri",label);b.onclick=function(){CHK=true;PAYC=true;render()};c.appendChild(b)}
+if(MSUC){c.appendChild(h("div","big","Willkommen bei Plus!"));c.appendChild(h("p","mu",st==="trial"?"Deine Testphase läuft bis "+fd(e.trial)+". Danach kostet Plus 4,99 € pro Monat.":"Dein Abo ist aktiv. Nächste Abbuchung am "+fd(nextBill(e))+" (4,99 €)."));
+var g=h("button","pri","Zum KI-Agenten");g.onclick=function(){MSUC=false;tab="ag";AGT="p";render()};c.appendChild(g);var f=h("button","sec","Fertig");f.onclick=function(){MSUC=false;render()};c.appendChild(f)}
+else if(CHK)checkout();
+else if(st==="none"||st==="expired"){var u=h("ul");["KI-Agent verwaltet Verträge, Raten und Zahlungen für dich","Sparanalyse und fertige Kündigungsschreiben","Per Text oder Sprache steuern"].forEach(function(t){u.appendChild(h("li",null,t))});c.appendChild(u);
+c.appendChild(h("div","kv",null,[h("span",null,"Plus Monat"),h("b",null,"4,99 € pro Monat")]));
+if(trialUsed()){c.appendChild(h("p","mu","Die kostenlose Testphase wurde bereits genutzt. Plus gibt es jetzt nur noch mit Bezahlung."));buy("Plus kaufen (4,99 € pro Monat)")}
+else{c.appendChild(h("div","mu",TRIAL+" Tage kostenlos testen, jederzeit kündbar. Die Testphase gibt es nur einmal."));var b=h("button","pri",TRIAL+" Tage kostenlos testen");b.onclick=function(){CHK=true;PAYC=false;render()};c.appendChild(b)}
+c.appendChild(h("p","mu","Alles andere in der App bleibt kostenlos. Nur der Agent nutzt laufend KI-Rechenleistung, die Kosten verursacht."));
+var l=h("button","sec","Nein danke, später");l.onclick=function(){SUB=null;render()};c.appendChild(l)}
+else{c.appendChild(h("div","kv",null,[h("span","mu","Tarif"),h("span",null,"Plus Monat · 4,99 €")]));c.appendChild(h("div","kv",null,[h("span","mu","Beginn"),h("span",null,fd(e.start))]));
+if(st==="cancelled"){c.appendChild(h("div","kv",null,[h("span","mu","Aktiv bis"),h("b",null,fd(e.end))]));c.appendChild(h("p","mu","Es wird nichts mehr berechnet. Eine Reaktivierung ist nur mit Bezahlung möglich."));buy("Plus verlängern (4,99 €)")}
+else{c.appendChild(h("div","kv",null,[h("span","mu",st==="trial"?"Testphase bis":"Nächste Abbuchung"),h("b",null,fd(st==="trial"?e.trial:nextBill(e))+" · 4,99 €")]));
+c.appendChild(h("label",null,"Zahlungsart"));var s=h("select");PMS.forEach(function(v){var o=h("option",null,v);o.value=v;if(e.method===v)o.selected=true;s.appendChild(o)});s.onchange=function(){e.method=s.value;saveAcc()};c.appendChild(s);
+if(!CANC){var ca=h("button","sec","Abo kündigen");ca.onclick=function(){CANC=true;render()};c.appendChild(ca)}
+else{c.appendChild(h("p","name","Wirklich kündigen? Plus bleibt bis "+fd(st==="trial"?e.trial:nextBill(e))+" aktiv. Danach geht es nur noch mit Bezahlung weiter, eine zweite Testphase gibt es nicht."));
+var y=h("button","pri","Ja, kündigen");y.onclick=function(){e.cancelled=true;e.end=st==="trial"?e.trial:nextBill(e);CANC=false;saveAcc();render()};c.appendChild(y);var nn=h("button","sec","Abo behalten");nn.onclick=function(){CANC=false;render()};c.appendChild(nn)}}}
+c.appendChild(h("p","mu","Testmodus: Es wird nichts abgebucht, weil die echte Zahlung noch nicht angebunden ist."));box.appendChild(c)}
+function agTool(a){var act=String(a.action||""),it=a.id?items.filter(function(x){return x.id===String(a.id)})[0]:null;
+function fld(o){if(a.name!==undefined)o.n=String(a.name).slice(0,60);if(a.cost!==undefined)o.k=Math.max(0,+a.cost||0);if(/^\d{4}-\d{2}-\d{2}$/.test(a.deadline||""))o.d=a.deadline;if(a.category&&CATS.concat(CATR).indexOf(a.category)>-1)o.g=a.category;if(a.interval&&PAYS[a.interval]!==undefined)o.p=a.interval;if(a.note!==undefined)o.o=String(a.note).slice(0,120);if(bad(o.n+" "+(o.o||"")))throw new Error("Text nicht erlaubt")}
+if(act==="add"){var o={id:Date.now()+"-"+Math.floor(Math.random()*1e6),rt:"V",pays:[],n:"Vertrag",k:0,d:iso(new Date(Date.now()+30*864e5)),g:"Sonstiges",p:"monatlich"};fld(o);items.push(o);save();render();return "Hinzugefügt: "+o.n+", id "+o.id}
+if(!it)throw new Error("Vertrag nicht gefunden");
+if(act==="update"){fld(it)}else if(act==="delete"){items.splice(items.indexOf(it),1)}else if(act==="cancel"){it.x=true}else if(act==="pay"){it.pays=it.pays||[];it.pays.push({d:iso(new Date()),a:+a.amount||it.k})}else throw new Error("Unbekannte Aktion");
+save();render();return "Erledigt: "+act+" "+it.n}
+function findIt(t){var n=norm(t),b=null;items.forEach(function(i){var x=norm(i.n);if(x.length>1&&n.indexOf(x)>-1&&(!b||x.length>norm(b.n).length))b=i});return b}
+function parseQ(t){var dm=t.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/),d="";if(dm){d=dm[3]+"-"+String(dm[2]).padStart(2,"0")+"-"+String(dm[1]).padStart(2,"0");t=t.replace(dm[0],"")}
+var km=t.match(/(\d+(?:[.,]\d{1,2})?)/);if(!km)return null;
+var n=t.slice(0,km.index).replace(/\b(füge|fuege|lege|erstelle|neu|neuer|neuen|hinzu|an|vertrag|abo)\b/gi,"").replace(/\s+/g," ").trim()||"Vertrag";
+return{n:n.slice(0,60),k:parseFloat(km[1].replace(",",".")),p:/w[oö]chentlich/i.test(t)?"wöchentlich":/j[aä]hrlich/i.test(t)?"jährlich":"monatlich",d:d}}
+function agAnalyse(){var a=items.filter(function(i){return !i.x}),s=msum();if(!a.length)return "Du hast noch keine aktiven Verträge.";
+var top=a.slice().sort(function(x,y){return mon(y)-mon(x)}).slice(0,3),by={};a.forEach(function(i){(by[i.g]=by[i.g]||[]).push(i)});
+var o="Deine aktiven Verträge kosten "+fmt(s)+" "+cs()+" pro Monat ("+fmt(s*12)+" "+cs()+" pro Jahr).\n\nTeuerste:\n"+top.map(function(i){return "• "+i.n+": "+fmt(mon(i))+" "+cs()+" pro Monat"}).join("\n");
+var dup=Object.keys(by).filter(function(k){return by[k].length>1});if(dup.length)o+="\n\nMehrere Verträge in einer Kategorie: "+dup.join(", ")+". Prüfe, ob du alle brauchst.";
+var soon=a.filter(function(i){return i.rt!=="R"&&days(i.d)>=0&&days(i.d)<=30});if(soon.length)o+="\n\nFrist in den nächsten 30 Tagen: "+soon.map(function(i){return i.n+" ("+dt(i.d)+")"}).join(", ")+".";
+return o+"\n\nTipp: Wenn du den teuersten Vertrag kündigst, sparst du "+fmt(mon(top[0])*12)+" "+cs()+" pro Jahr."}
+function agLocal(t){var q=norm(t),it=findIt(t),H={blau:215,rot:0,gruen:140,pink:330,rosa:335,orange:25,lila:270,tuerkis:180};
+function need(){return "Welchen Vertrag meinst du? Nenne bitte den Namen."}
+if(/hinzu|(fuge|erstelle|lege|neu)\b.*\d/.test(q)){var pq=parseQuick(t.replace(/\b(füge|fuege|lege|erstelle|hinzufügen|hinzu|bitte|neuen vertrag|neuer vertrag)\b/gi," ").replace(/\san\s*$/i," "));if(pq.err)return pq.err===MSG?MSG:"Nenne mir bitte einen Betrag, zum Beispiel: Füge Disney+ 8,99 monatlich hinzu.";var o=qClean(pq.o);items.push(o);save();render();return "Erledigt: "+o.n+" mit "+fmt(o.k)+" "+cs()+" ("+o.p+") wurde hinzugefügt."}
+if(/schreiben|brief/.test(q)){if(!it)return need();return "Sehr geehrte Damen und Herren,\n\nhiermit kündige ich meinen Vertrag „"+it.n+"“ [Kundennummer: ____] fristgerecht, hilfsweise zum nächstmöglichen Zeitpunkt.\n\nBitte bestätigen Sie mir die Kündigung und das Vertragsende schriftlich.\n\nMit freundlichen Grüßen\n"+me().user}
+if(/kundig/.test(q)){if(!it)return need();agTool({action:"cancel",id:it.id});return it.n+" ist als gekündigt markiert und löscht sich am "+dt(it.d)+"."}
+if(/losch|entfern/.test(q)){if(!it)return need();agTool({action:"delete",id:it.id});return it.n+" wurde gelöscht."}
+if(/bezahl|gezahlt|zahlung|rate/.test(q)&&it){agTool({action:"pay",id:it.id});return "Zahlung für "+it.n+" eingetragen ("+fmt(it.k)+" "+cs()+")."}
+if(/spar|analyse|optimier/.test(q))return agAnalyse();
+if(/wie viel|kosten|ausgaben|summe/.test(q)){var s=msum();return "Deine Ausgaben:\nPro Tag: "+fmt(s/30.4375)+" "+cs()+"\nPro Woche: "+fmt(s*7/30.4375)+" "+cs()+"\nPro Monat: "+fmt(s)+" "+cs()+"\nPro Jahr: "+fmt(s*12)+" "+cs()}
+if(/bald|fallig|frist|ablauf/.test(q)){var l=sorted().filter(function(i){return !i.x&&i.rt!=="R"&&days(i.d)>=0}).slice(0,3);return l.length?"Als Nächstes:\n"+l.map(function(i){return "• "+i.n+": "+dt(i.d)+" (noch "+days(i.d)+" Tage)"}).join("\n"):"Aktuell läuft keine Frist."}
+if(/farbe|design|dunkel|hell/.test(q)){var k=Object.keys(H).filter(function(x){return q.indexOf(x)>-1})[0];if(k){UI.hue=H[k];sv();applyUI();render();return "Die Farbe ist jetzt "+k+"."}if(/dunkel/.test(q)){UI.theme="dark";sv();applyUI();render();return "Dunkler Modus ist an."}if(/hell/.test(q)){UI.theme="light";sv();applyUI();render();return "Heller Modus ist an."}}
+return "Das kann ich im Befehlsmodus:\n• Füge Disney+ 8,99 monatlich hinzu\n• Kündige Netflix\n• Zahlung für Handy eintragen\n• Kündigungsschreiben für Netflix\n• Sparanalyse\n• Was läuft bald ab?\n• Wie viel kosten meine Verträge?\n• Farbe blau"}
+async function aiAsk(){var sample=await claude.use("sample");if(!sample)throw{code:"unavailable"};
+var data=items.map(function(i){return{id:i.id,name:i.n,cost:i.k,interval:i.p,category:i.g,deadline:i.d,type:i.rt==="R"?"Ratenzahlung":"Vertrag",paid:rPaid(i),open:rOpen(i),cancelled:!!i.x}});
+var pre="Du bist der KI-Agent der App AboWächter. Heute ist "+iso(new Date())+". Antworte kurz auf Deutsch. Verträge des Nutzers (JSON): "+JSON.stringify(data)+". Nutze das Werkzeug manage_contract nur, wenn der Nutzer eine Änderung verlangt. Kategorien: "+CATS.join(", ")+". Intervalle: wöchentlich, monatlich, jährlich. Datumsformat JJJJ-MM-TT.";
+var arr=AG.slice(-8),i0=0;while(i0<arr.length&&arr[i0].r!=="u")i0++;arr=arr.slice(i0);
+var msgs=arr.map(function(x,ix){return{role:x.r==="u"?"user":"assistant",content:(ix===0?pre+"\n\n":"")+x.t}});
+var r=await sample(msgs,{modelTier:"quick",tools:[{name:"manage_contract",description:"Vertrag hinzufügen (add), ändern (update), löschen (delete), als gekündigt markieren (cancel) oder Zahlung eintragen (pay). Gibt eine Bestätigung zurück.",inputSchema:{type:"object",properties:{action:{type:"string",enum:["add","update","delete","cancel","pay"]},id:{type:"string"},name:{type:"string"},cost:{type:"number"},interval:{type:"string"},category:{type:"string"},deadline:{type:"string"},note:{type:"string"},amount:{type:"number"}},required:["action"]},execute:agTool}]});
+return r.text}
+async function agSend(txt){if(bad(txt)){AG.push({r:"a",t:MSG});render();return}
+AG.push({r:"u",t:txt});AGB=true;render();var out;
+if(AGM==="ai"){try{out=await aiAsk()}catch(e){AGM="local";out="Der KI-Modus hat nicht geantwortet ("+((e&&e.code)||"Fehler")+"). Ich wechsle in den Befehlsmodus.\n\n"+agLocal(txt)}}else out=agLocal(txt);
+AG.push({r:"a",t:out});AGB=false;render()}
+function helper(q){var n=norm(q),go=[["kalender","c","Kalender"],["notiz","n","Notizen"],["erinner","b","Erinnerung"],["ubersicht","u","Übersicht"],["ausgaben","u","Übersicht"],["vertrag","v","Verträge"]];
+if(/(offne|zeig|gehe|bring)/.test(n)){for(var i=0;i<go.length;i++)if(n.indexOf(go[i][0])>-1){tab=go[i][1];SUB=null;render();return go[i][2]+" geöffnet."}}
+var best=null,bs=0,w=n.split(/[^a-z]+/).filter(function(x){return x.length>3});
+Object.keys(HELP).forEach(function(k){HELP[k].forEach(function(p){var t=norm(p[0]+" "+p[1]),sc=0;w.forEach(function(x){if(t.indexOf(x)>-1)sc++});if(sc>bs){bs=sc;best=p}})});
+return best?L(best[0])+"\n"+L(best[1]):L("Dazu habe ich nichts gefunden. Probiere andere Wörter oder öffne Mehr, Hilfe.")}
+function chatBox(box,log,busy){log.forEach(function(x){var d=h("div","card",null,[h("div","mu",x.r==="u"?"Du":x.r==="a"?"Agent":"Helfer"),h("div",null,x.t)]);d.lastChild.style.whiteSpace="pre-wrap";if(x.r==="u")d.style.marginLeft="24px";box.appendChild(d)});if(busy)box.appendChild(h("div","empty","Denkt nach …"))}
+function inputRow(box,ph,fn){var t=h("textarea");t.rows=2;t.maxLength=400;t.placeholder=ph;box.appendChild(t);
+var s=h("button","pri","Senden");s.onclick=function(){var v=t.value.trim();if(v&&!AGB)fn(v)};box.appendChild(s);
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(SR){var mic=h("button","sec","Sprechen");mic.onclick=function(){try{var r=new SR();r.lang=LC();r.onresult=function(e){t.value=e.results[0][0].transcript};r.start()}catch(x){}};box.appendChild(mic)}}
+function viewAg(box){var sg=h("div","seg");[["h","Helfer"],["p",ABO_AKTIV?"Agent Plus":"Agent"]].forEach(function(t){var b=h("button",AGT===t[0]?"on":"",t[1]);b.onclick=function(){AGT=t[0];render()};sg.appendChild(b)});box.appendChild(sg);
+if(AGT==="h"){var c=h("div","card");c.appendChild(h("div","mu","Der Helfer ist kostenlos, erklärt dir die App und öffnet Menüs. Er läuft komplett auf deinem Gerät."));var q=h("div","chips");q.style.marginTop="10px";
+["Wie lege ich eine Ratenzahlung an?","Wie funktionieren Erinnerungen?","Öffne den Kalender"].forEach(function(t){var b=h("button","chip",t);b.onclick=function(){HM.push({r:"u",t:t});HM.push({r:"b",t:helper(t)});render()};q.appendChild(b)});c.appendChild(q);box.appendChild(c);
+chatBox(box,HM,false);inputRow(box,"Frag den Helfer …",function(v){HM.push({r:"u",t:v});HM.push({r:"b",t:bad(v)?MSG:helper(v)});render()});return}
+var m=me(),c2=h("div","card");
+if(!agentOn()){c2.appendChild(h("h2",null,"Agent Plus"));c2.appendChild(h("p","mu","Der Agent verwaltet deine Verträge per Text oder Sprache: hinzufügen, kündigen, Zahlungen eintragen, Sparanalyse und Kündigungsschreiben. Er gehört zu AboWächter Plus: "+TRIAL+" Tage kostenlos, danach 4,99 € pro Monat."));var pb=h("button","pri","Plus ansehen");pb.onclick=function(){tab="d";SUB="mem";render()};c2.appendChild(pb);box.appendChild(c2);return}
+c2.appendChild(tg("Zugriff erlauben","Der Agent darf meine Verträge lesen und ändern",!!m.agacc,function(){m.agacc=!m.agacc;saveAcc();render()}));
+c2.appendChild(h("div","kv",null,[h("span","mu","Modus"),h("b",null,AGM==="ai"?"KI-Modus":"Befehlsmodus (lokal)")]));
+var mb=h("button","sec",AGM==="ai"?"Zum Befehlsmodus wechseln":"KI-Modus testen (nur in claude.ai)");
+mb.onclick=async function(){if(AGM==="ai"){AGM="local";render();return}mb.textContent=L("Prüfe …");var ok=false;try{ok=typeof claude!=="undefined"&&!!(await claude.use("sample"))}catch(e){}AGM=ok?"ai":"local";if(!ok)AG.push({r:"a",t:"Der KI-Modus ist in diesem Fenster nicht verfügbar. Der Befehlsmodus bleibt aktiv."});render()};c2.appendChild(mb);box.appendChild(c2);
+if(!m.agacc)return;
+var q2=h("div","chips");[["Sparanalyse","Sparanalyse"],["Kündigungsschreiben","Kündigungsschreiben für "+(sorted().filter(function(i){return !i.x})[0]||{n:"Netflix"}).n],["Was läuft bald ab?","Was läuft bald ab?"],["Ausgaben","Wie viel kosten meine Verträge?"]].forEach(function(t){var b=h("button","chip",t[0]);b.onclick=function(){if(!AGB)agSend(t[1])};q2.appendChild(b)});box.appendChild(q2);
+chatBox(box,AG,AGB);inputRow(box,"Zum Beispiel: Füge Disney+ 8,99 monatlich hinzu",agSend);
+var cl=h("button","sec","Verlauf löschen");cl.onclick=function(){AG=[];render()};box.appendChild(cl)}
+function fab(){var b=h("button","fab","KI");b.setAttribute("aria-label","KI-Agent");b.onclick=function(){tab="ag";SUB=null;render()};return b}
+function foot(){var d=h("div","foot");d.innerHTML=logoSvg(18);d.appendChild(document.createTextNode("AboWächter · Version "+VER+" · © 2026"));return d}
+function greet(){var t=new Date().getHours();return t>=5&&t<11?"Guten Morgen":t>=11&&t<17?"Guten Tag":t>=17&&t<23?"Guten Abend":"Hallo"}
+function catRow(c,g,v,sum){c.appendChild(h("div","kv",null,[h("span",null,g),h("span","mu",fmt(v)+" "+cs()+" pro Monat")]));
+var b=h("div","bar"),f=h("div","fill");f.style.width=(sum?Math.round(v/sum*100):0)+"%";b.style.margin="2px 0 8px";b.appendChild(f);c.appendChild(b)}
+function payCard(box){var c=h("div","card"),e=evs(30),tot=0;c.appendChild(h("h2",null,"Zahlungen in 30 Tagen"));
+e.forEach(function(x){tot+=x.i.k});
+if(!e.length)c.appendChild(h("div","mu","Trage bei einem Vertrag die nächste Zahlung ein, dann erscheint sie hier."));
+e.slice(0,8).forEach(function(x){c.appendChild(h("div","kv",null,[h("span",null,x.d.toLocaleDateString(LC())+" · "+x.i.n),h("span","mu",fmt(x.i.k)+" "+cs())]))});
+if(e.length)c.appendChild(h("div","kv",null,[h("b",null,"Summe"),h("b",null,fmt(tot)+" "+cs())]));
+box.appendChild(c)}
+function stats(){var a=items.filter(function(i){return !i.x}),s=0,d=0,w=h("div","stats");
+a.forEach(function(i){s+=mon(i);if(days(i.d)<=me().lead)d++});
+[[a.length,"Aktiv"],[fmt(s)+" "+cs(),"pro Monat"],[d,"bald fällig"],[openR(),"Raten offen"]].forEach(function(t){w.appendChild(h("div",null,null,[h("b",null,String(t[0])),h("span",null,t[1])]))});
+return w}
+function commit(o){NEW=false;if(EDIT){var t=items.filter(function(x){return x.id===EDIT})[0];if(t)Object.assign(t,o);EDIT=null}
+else{o.pays=[];o.id=Date.now()+"-"+Math.floor(Math.random()*1e6);items.push(o)}
+save();render();fire()}
+function rowCard(it){
+var c=h("div","card"),r=h("div","row"),per=it.p==="Eigener Rhythmus"?"alle "+dd(it)+" Tage":it.p==="Fester Tag im Monat"?"am "+(it.dm||1)+". jeden Monats":(it.p||"monatlich");
+r.appendChild(h("div","info",null,[h("div","name",(it.f?"★ ":"")+it.n),h("div","mu",it.rt==="R"?rinfo(it):fmt(it.k)+" "+cs()+" "+per+" · "+it.g)]));
+r.appendChild(badgeFor(it));r.style.cursor="pointer";
+r.onclick=function(){OPEN=OPEN===it.id?null:it.id;DEL=null;render()};c.appendChild(r);if(it.rt==="R")c.appendChild(pbar(it));
+if(OPEN!==it.id)return c;
+var np=nextPay(it);
+c.appendChild(h("div","kv",null,[h("span","mu",it.rt==="R"?"Letzte Rate":"Kündigen bis"),h("span",null,dt(it.d))]));
+if(np)c.appendChild(h("div","kv",null,[h("span","mu","Nächste Zahlung"),h("span",null,np.toLocaleDateString(LC()))]));
+payLines(c,it);
+if(it.en)c.appendChild(h("div","kv",null,[h("span","mu","Läuft bis"),h("span",null,dt(it.en))]));
+c.appendChild(h("div","kv",null,[h("span","mu","Pro Monat"),h("span",null,fmt(mon(it))+" "+cs())]));
+c.appendChild(h("div","kv",null,[h("span","mu","Pro Jahr"),h("span",null,fmt(mon(it)*12)+" "+cs())]));
+if(it.o)c.appendChild(h("div","kv",null,[h("span","mu","Notiz"),h("span",null,it.o)]));
+var a=h("div","acts");
+function mb(t,fn){var b=h("button","mini",t);b.onclick=function(e){e.stopPropagation();fn()};a.appendChild(b)}
+mb(it.rt==="R"?"Rate bezahlt eintragen":"Zahlung eintragen",function(){payIt(it)});
+mb("Letzte Zahlung zurücknehmen",function(){if(it.pays)it.pays.pop();save();render()});
+mb("Bearbeiten",function(){EDIT=it.id;OPEN=null;window.scrollTo(0,0);render()});
+mb(it.f?"Favorit entfernen":"Favorit",function(){it.f=!it.f;save();render()});
+mb("Duplizieren",function(){var q=Object.assign({},it,{id:Date.now()+"-"+Math.floor(Math.random()*1e6),n:it.n+" (Kopie)"});items.push(q);save();render()});
+mb(it.x?"Wieder aktiv":"Als gekündigt markieren",function(){it.x=!it.x;save();render()});
+mb(DEL===it.id?"Sicher löschen?":"Löschen",function(){if(DEL!==it.id){DEL=it.id;render();return}items.splice(items.indexOf(it),1);DEL=null;save();render()});
+c.appendChild(a);return c}
+function pinView(){var a=$("app");a.textContent="";var c=h("div","card");
+c.innerHTML='<h2>App entsperren</h2><label for="pn">PIN</label><input id="pn" type="password" inputmode="numeric" maxlength="6" autocomplete="off"><div class="err" id="e"></div>';
+var b=h("button","pri","Entsperren");
+b.onclick=async function(){var hs;try{hs=await hash(CUR,"pin:"+$("pn").value)}catch(x){return setErr("Nicht möglich.")}if(hs===me().pin){UNL=true;render()}else setErr("Falsche PIN.")};
+c.appendChild(b);var o=h("button","sec","Abmelden");o.onclick=logout;c.appendChild(o);a.appendChild(c)}
+function sec(box){var m=me(),c=h("div","card"),e=h("div","err");
+function se(t){e.textContent=L(t)}
+c.appendChild(h("h2",null,"Sicherheit"));
+c.appendChild(h("label",null,m.pin?"Neue PIN (4 bis 6 Ziffern)":"App-PIN festlegen (4 bis 6 Ziffern)"));
+var pi=h("input");pi.type="password";pi.inputMode="numeric";pi.maxLength=6;c.appendChild(pi);
+var sb=h("button","sec",m.pin?"PIN ändern":"PIN speichern");
+sb.onclick=async function(){if(!/^\d{4,6}$/.test(pi.value))return se("Die PIN braucht 4 bis 6 Ziffern.");try{m.pin=await hash(CUR,"pin:"+pi.value);saveAcc();UNL=true;pi.value="";se("PIN gespeichert. Sie wird beim Öffnen der App abgefragt.")}catch(x){se("Nicht möglich.")}};
+c.appendChild(sb);
+if(m.pin){var rb=h("button","sec","PIN entfernen");rb.onclick=function(){delete m.pin;saveAcc();render()};c.appendChild(rb)}
+c.appendChild(h("label",null,"Neues Passwort (mind. 8 Zeichen)"));
+var pw=h("input");pw.type="password";pw.autocomplete="new-password";c.appendChild(pw);
+var pb=h("button","sec","Passwort ändern");
+pb.onclick=async function(){if(pw.value.length<8)return se("Mindestens 8 Zeichen.");try{if(CLOUD&&FBU){await FBU.updatePassword(pw.value)}else{m.pw=await hash(CUR,pw.value);saveAcc()}pw.value="";se("Passwort geändert.")}catch(x){se(CLOUD?fbErr(x):"Nicht möglich.")}};
+c.appendChild(pb);c.appendChild(e);box.appendChild(c)}
+function dark(){return UI.theme==="dark"||(UI.theme==="auto"&&!!window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)}
+function applyUI(){var r=document.documentElement,d=dark(),H=UI.hue,S=UI.sat,L=Math.max(16,Math.min(84,(d?68:52)+(UI.lt||0))),st=function(k,v){r.style.setProperty(k,v)};
+r.setAttribute("data-theme",d?"dark":"light");
+st("--ac","hsl("+H+" "+S+"% "+L+"%)");st("--ac2","hsl("+((H+45)%360)+" "+S+"% "+Math.min(88,L+6)+"%)");
+st("--hg1","hsl("+H+" "+S+"% "+Math.min(L,48)+"%)");st("--hg2","hsl("+((H+45)%360)+" "+S+"% "+Math.min(L+4,52)+"%)");
+st("--onac",L>62?"#10101e":"#fff");
+if(UI.bgt){st("--bg",d?"hsl("+H+" 38% 6%)":"hsl("+H+" 60% 96%)");st("--card",d?"hsl("+H+" 30% 11%)":"#fff");st("--bd",d?"hsl("+H+" 24% 19%)":"hsl("+H+" 30% 90%)")}
+else{["--bg","--card","--bd"].forEach(function(k){r.style.removeProperty(k)})}
+document.body.style.fontSize=UI.fs+"px";document.body.className=UI.cp?"cp":""}
+try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyUI)}catch(x){}
+function view(){var q=Q.toLowerCase(),l=sorted().filter(function(x){return(filt==="Alle"||(filt==="Ratenzahlungen"?x.rt==="R":x.g===filt))&&(!q||(x.n+" "+(x.o||"")).toLowerCase().indexOf(q)>-1)});
+if(SORT==="Kosten")l.sort(function(a,b){return mon(b)-mon(a)});
+if(SORT==="Name")l.sort(function(a,b){return a.n.localeCompare(b.n)});
+l.sort(function(a,b){return (b.f?1:0)-(a.f?1:0)});
+return l}
+function addSearch(box){
+var sr=h("div","row"),qi=h("input"),so=h("select"),LB={Frist:"Nach Frist",Kosten:"Nach Kosten",Name:"Nach Name"};
+qi.id="q";qi.placeholder="Verträge suchen";qi.value=Q;
+qi.oninput=function(){Q=qi.value;render();var z=$("q");z.focus();z.setSelectionRange(Q.length,Q.length)};
+Object.keys(LB).forEach(function(v){var o=h("option",null,LB[v]);o.value=v;if(SORT===v)o.selected=true;so.appendChild(o)});
+so.onchange=function(){SORT=so.value;render()};so.style.maxWidth="46%";
+sr.style.marginBottom="12px";sr.appendChild(qi);sr.appendChild(so);box.appendChild(sr)}
+function extraU(box){
+var m=me(),act=items.filter(function(i){return !i.x}),sum=0,saved=0;
+items.forEach(function(i){if(i.x)saved+=mon(i);else sum+=mon(i)});
+if(m.budget>0){var p=sum/m.budget,c=h("div","card");c.appendChild(h("h2",null,"Budget"));
+c.appendChild(h("div","kv",null,[h("span",null,fmt(sum)+" von "+fmt(m.budget)+" "+cs()+""),h("span","badge "+(p>1?"red":p>.8?"amb":"ok"),Math.round(p*100)+" %")]));
+var bar=h("div","bar"),f=h("div","fill");f.style.width=Math.min(100,p*100)+"%";bar.appendChild(f);c.appendChild(bar);box.appendChild(c)}
+var t=h("div","card");t.appendChild(h("h2",null,"Teuerste Verträge"));
+act.slice().sort(function(a,b){return mon(b)-mon(a)}).slice(0,3).forEach(function(i){t.appendChild(h("div","kv",null,[h("span",null,i.n),h("span","mu",fmt(mon(i))+" "+cs()+" pro Monat")]))});
+if(!act.length)t.appendChild(h("div","mu","Noch keine Verträge."));
+box.appendChild(t);
+var n=h("div","card");n.appendChild(h("h2",null,"Nächste Fristen"));
+sorted().filter(function(i){return !i.x}).slice(0,5).forEach(function(i){n.appendChild(h("div","kv",null,[h("span",null,i.n+" ("+dt(i.d)+")"),badgeFor(i)]))});
+if(!act.length)n.appendChild(h("div","mu","Noch keine Verträge."));
+box.appendChild(n);
+var s=h("div","card");s.appendChild(h("h2",null,"Gespart durch Kündigungen"));
+s.appendChild(h("div","big",fmt(saved*12)+" "+cs()+" pro Jahr"));
+s.appendChild(h("div","mu",items.filter(function(i){return i.x}).length+" Verträge als gekündigt markiert"));
+box.appendChild(s)}
+function wheel(){
+var w=h("div","wheel"),k=h("div","knob"),dn=false;w.appendChild(k);
+function pos(){var a=(UI.hue-90)*Math.PI/180;k.style.left=(50+39*Math.cos(a))+"%";k.style.top=(50+39*Math.sin(a))+"%";k.style.background="hsl("+UI.hue+" 90% 55%)"}
+function pick(e){var r=w.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;UI.hue=Math.round((Math.atan2(y,x)*180/Math.PI+450)%360);pos();applyUI();sv()}
+w.onpointerdown=function(e){dn=true;try{w.setPointerCapture(e.pointerId)}catch(x){}pick(e)};
+w.onpointermove=function(e){if(dn)pick(e)};
+w.onpointerup=function(){dn=false};
+pos();return w}
+function rng(min,max,val,fn){var r=h("input");r.type="range";r.min=min;r.max=max;r.value=val;r.oninput=function(){fn(+r.value)};return r}
+function viewD(box){
+var m=me(),c=h("div","card");c.appendChild(h("h2",null,"Farbschema"));
+c.appendChild(h("div","mu","Ziehe am Farbrad, um die Hauptfarbe der App zu ändern."));
+c.appendChild(h("label",null,"Vorlagen"));
+var tp=h("div","chips");TPL.forEach(function(t){var b=h("button","chip",t.n);b.style.borderColor="hsl("+t.hue+" "+t.sat+"% 55%)";b.onclick=function(){UI.hue=t.hue;UI.sat=t.sat;UI.lt=t.lt;UI.theme=t.theme;UI.bgt=1;sv();applyUI();render()};tp.appendChild(b)});
+c.appendChild(tp);
+c.appendChild(wheel());c.appendChild(h("div","pv"));
+var pr=h("div","chips");PRE.forEach(function(v){var b=h("button","sw");b.style.background="hsl("+v+" 80% 55%)";b.setAttribute("aria-label","Farbe wählen");b.onclick=function(){UI.hue=v;UI.sat=70;sv();applyUI();render()};pr.appendChild(b)});
+c.appendChild(pr);
+c.appendChild(h("label",null,"Farbintensität"));c.appendChild(rng(20,100,UI.sat,function(v){UI.sat=v;applyUI();sv()}));
+c.appendChild(h("label",null,"Helligkeit der Farbe (dunkler bis heller)"));c.appendChild(rng(-25,25,UI.lt||0,function(v){UI.lt=v;applyUI();sv()}));
+c.appendChild(tg("Farbiger Hintergrund","Hintergrund passt zur Farbe",!!UI.bgt,function(){UI.bgt=UI.bgt?0:1;sv();applyUI();render()}));
+c.appendChild(tg("Kompakte Ansicht","Weniger Abstand, mehr Inhalt",!!UI.cp,function(){UI.cp=UI.cp?0:1;sv();applyUI();render()}));
+c.appendChild(h("label",null,"Darstellung"));
+var sg=h("div","seg");[["auto","Auto"],["light","Hell"],["dark","Dunkel"]].forEach(function(t){var b=h("button",UI.theme===t[0]?"on":"",t[1]);b.onclick=function(){UI.theme=t[0];sv();applyUI();render()};sg.appendChild(b)});
+c.appendChild(sg);
+c.appendChild(h("label",null,"Schriftgröße"));c.appendChild(rng(14,20,UI.fs,function(v){UI.fs=v;applyUI();sv()}));
+box.appendChild(c);
+var lc=h("div","card");lc.appendChild(h("h2",null,"Sprache"));var ls=h("div","chips");[["de","Deutsch"],["en","English"],["ru","Русский"],["tr","Türkçe"]].forEach(function(t){var b=h("button","chip"+((UI.lang||"de")===t[0]?" on":""),t[1]);b.onclick=function(){UI.lang=t[0];sv();render()};ls.appendChild(b)});lc.appendChild(ls);if(UI.lang&&UI.lang!=="de")lc.appendChild(h("p","mu","Die Antworten des Agenten im Befehlsmodus sind vorerst nur auf Deutsch."));box.appendChild(lc);
+var cc=h("div","card");cc.appendChild(h("h2",null,"Währung"));
+var cl=h("select");["€","$","£","CHF"].forEach(function(v){var o=h("option",null,v);o.value=v;if(cs()===v)o.selected=true;cl.appendChild(o)});
+cl.onchange=function(){UI.cur=cl.value;sv();render()};cc.appendChild(cl);box.appendChild(cc);
+var b=h("div","card");b.appendChild(h("h2",null,"Monatsbudget"));
+b.appendChild(h("div","mu","Zeigt in der Übersicht, wie viel von deinem Budget die Verträge verbrauchen. 0 schaltet es aus."));
+var bi=h("input");bi.type="number";bi.min=0;bi.step=1;bi.inputMode="decimal";bi.value=m.budget||0;
+bi.onchange=function(){m.budget=Math.max(0,parseFloat(bi.value)||0);saveAcc();note="Budget gespeichert.";render()};
+b.appendChild(bi);box.appendChild(b);
+var d=h("div","card");d.appendChild(h("h2",null,"Daten"));
+var ex=h("button","sec","Verträge als Sicherung kopieren");
+ex.onclick=function(){try{navigator.clipboard.writeText(JSON.stringify(items)).then(function(){note="Sicherung kopiert.";render()},function(){note="Kopieren wurde blockiert.";render()})}catch(x){note="Kopieren wird nicht unterstützt.";render()}};
+d.appendChild(ex);
+var sh=h("button","sec","Fristen teilen");
+sh.onclick=function(){var t=sorted().filter(function(i){return !i.x}).map(function(i){return i.n+": Kündigen bis "+dt(i.d)}).join("\n")||"Keine Verträge";try{navigator.share({title:"AboWächter",text:t}).catch(function(){})}catch(x){note="Teilen wird hier nicht unterstützt.";render()}};
+d.appendChild(sh);
+d.appendChild(h("label",null,"Sicherung hier einfügen"));
+var ta=h("textarea");ta.rows=3;ta.style.cssText="width:100%;box-sizing:border-box;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:12px";d.appendChild(ta);
+var im=h("button","sec","Sicherung einlesen");
+im.onclick=function(){try{var a=JSON.parse(ta.value);if(!Array.isArray(a))throw 1;var ok=0;
+a.forEach(function(i){if(i&&typeof i.n==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(i.d||"")&&!bad(i.n)&&!bad(String(i.o||""))){
+items.push({id:Date.now()+"-"+Math.floor(Math.random()*1e6),n:i.n.slice(0,60),k:Math.max(0,+i.k||0),d:i.d,g:CATS.indexOf(i.g)>-1?i.g:"Sonstiges",p:PAYS[i.p]!==undefined?i.p:"monatlich",o:String(i.o||"").slice(0,120),x:!!i.x});ok++}});
+save();note=ok+" Verträge eingelesen.";render()}catch(x){note="Das war keine gültige Sicherung.";render()}};
+d.appendChild(im);
+var dl=h("button","sec",armed?"Wirklich alle Verträge löschen? Nochmal tippen":"Alle Verträge löschen");
+dl.onclick=function(){if(!armed){armed=true;render();return}items=[];save();armed=false;note="Alle Verträge gelöscht.";render()};
+d.appendChild(dl);
+if(note)d.appendChild(h("p","mu",note));
+box.appendChild(d);
+var ab=h("div","card");ab.appendChild(h("h2",null,"Über AboWächter"));
+ab.appendChild(h("div","mu","Alle Daten bleiben auf diesem Gerät. Tippe in der Vertragsliste auf einen Vertrag, um Details, Bearbeiten, Favorit, Duplizieren und Kündigen zu sehen."));
+box.appendChild(ab)}
+var ABO_AKTIV=false,CLOUD=false,FBU=null,FBDB=null,SYNC_T=null,SYNCST="",PENDNAME="",BLOCKED=false,AUTHWAIT=false,NETERR=false,LOGERR="",LOGOK="",JUSTLOG=false;
+function PLUSB(){return ABO_AKTIV&&agentOn()}
+function fbReady(){try{return !!(window.firebase&&window.FIREBASE_CONFIG&&FIREBASE_CONFIG.apiKey&&!/HIER/.test(FIREBASE_CONFIG.apiKey))}catch(e){return false}}
+function clean(x){return JSON.parse(JSON.stringify(x))}
+function emOk(m){return /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(m)}
+function fbErr(e){var c=(e&&e.code)||"";return ({"auth/email-already-in-use":"Zu dieser E-Mail gibt es schon ein Konto. Bitte anmelden.","auth/invalid-email":"Bitte eine gültige E-Mail eingeben.","auth/missing-email":"Bitte eine gültige E-Mail eingeben.","auth/weak-password":"Das Passwort braucht mindestens 8 Zeichen.","auth/invalid-credential":"E-Mail oder Passwort stimmt nicht.","auth/invalid-login-credentials":"E-Mail oder Passwort stimmt nicht.","auth/wrong-password":"E-Mail oder Passwort stimmt nicht.","auth/user-not-found":"E-Mail oder Passwort stimmt nicht.","auth/too-many-requests":"Zu viele Versuche. Bitte warte kurz und versuche es erneut.","auth/network-request-failed":"Keine Internetverbindung.","unavailable":"Keine Internetverbindung.","auth/popup-closed-by-user":"Die Google-Anmeldung wurde abgebrochen.","auth/cancelled-popup-request":"Die Google-Anmeldung wurde abgebrochen.","auth/popup-blocked":"Das Anmeldefenster wurde blockiert. Bitte Pop-ups erlauben.","auth/unauthorized-domain":"Diese Adresse ist in Firebase noch nicht freigegeben (Authorized domains).","auth/operation-not-allowed":"Diese Anmeldeart ist in Firebase noch nicht aktiviert.","auth/requires-recent-login":"Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.","auth/user-disabled":"Dieses Konto wurde gesperrt. Bitte wende dich an den Support.","permission-denied":"Keine Berechtigung für die Datenbank."})[c]||"Das hat nicht geklappt. Bitte versuche es erneut."}
+function cloudInit(){if(!fbReady())return;
+try{if(!firebase.apps||!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);FBDB=firebase.firestore();try{FBDB.enablePersistence({synchronizeTabs:true}).catch(function(){})}catch(e){}}catch(e){return}
+CLOUD=true;AUTHWAIT=true;cloudTexts();
+firebase.auth().onAuthStateChanged(function(u){
+if(!u){var was=CUR;FBU=null;mode="in";BLOCKED=false;NETERR=false;AUTHWAIT=false;JUSTLOG=false;if(was)localDrop(was);CUR=null;wr("aw_cur",null);items=[];NOTES=[];TPLS=[];render();return}
+FBU=u;AUTHWAIT=true;NETERR=false;render();
+cloudLoad(u).then(function(){AUTHWAIT=false;JUSTLOG=false;render();fire()},function(e){AUTHWAIT=false;JUSTLOG=false;
+if(e&&e.code==="permission-denied"){LOGERR=fbErr(e);firebase.auth().signOut();return}
+var em=(u.email||u.uid).toLowerCase();if(ACC[em]){CUR=em;items=rd("aw_d_"+em,[]);NOTES=rd("aw_n_"+em,[]);TPLS=rd("aw_t_"+em,[]);UNL=UNL||!ACC[em].pin;render();fire()}else{NETERR=true;render()}})})}
+function localDrop(em){try{["aw_d_","aw_n_","aw_t_","aw_s_"].forEach(function(k){localStorage.removeItem(k+em)})}catch(x){}if(ACC[em]){delete ACC[em];try{localStorage.setItem("aw_acc",JSON.stringify(ACC))}catch(x){}}}
+async function cloudLoad(u){var em=(u.email||u.uid).toLowerCase(),ref=FBDB.collection("users").doc(u.uid),sn=await ref.get(),d=sn.exists?sn.data():null;
+var p=Object.assign({},d&&d.profile?d.profile:(ACC[em]||{}));delete p.pw;
+if(!p.user)p.user=String(PENDNAME||u.displayName||em.split("@")[0]).slice(0,30);PENDNAME="";
+ensure(p);BLOCKED=!!(d&&d.blocked);
+var meta={uid:u.uid,email:em,user:p.user,provider:((u.providerData&&u.providerData[0])||{}).providerId||"password",lastLogin:Date.now()};if(!d)meta.created=Date.now();
+await ref.set(meta,{merge:true});
+ACC[em]=p;CUR=em;UNL=JUSTLOG||!p.pin;tab="v";filt="Alle";armed=false;note="";SUB=null;
+if(d){items=d.items||[];NOTES=d.notes||[];TPLS=d.tpls||[]}else{items=rd("aw_d_"+em,[]);NOTES=rd("aw_n_"+em,[]);TPLS=rd("aw_t_"+em,[])}
+try{localStorage.setItem("aw_acc",JSON.stringify(ACC));localStorage.setItem("aw_cur",JSON.stringify(em));localStorage.setItem("aw_d_"+em,JSON.stringify(items));localStorage.setItem("aw_n_"+em,JSON.stringify(NOTES));localStorage.setItem("aw_t_"+em,JSON.stringify(TPLS))}catch(x){}
+if(!BLOCKED)await cloudSaveNow()}
+function cloudSave(){if(!CLOUD||!FBU||!CUR||BLOCKED||AUTHWAIT)return;clearTimeout(SYNC_T);SYNCST="wait";SYNC_T=setTimeout(function(){cloudSaveNow().then(function(){if(tab==="d"&&SUB==="acc")render()})},1200)}
+function cloudSaveNow(){if(!CLOUD||!FBU||!CUR||!ACC[CUR]||BLOCKED)return Promise.resolve();clearTimeout(SYNC_T);var p=Object.assign({},ACC[CUR]);delete p.pw;
+return FBDB.collection("users").doc(FBU.uid).update(clean({profile:p,items:items,notes:NOTES,tpls:TPLS,user:p.user,count:items.length,updated:Date.now(),trialUsed:!!(p.mem&&p.mem.trialUsed)})).then(function(){SYNCST="ok"},function(e){SYNCST="err"})}
+var _wr0=wr;wr=function(k,v){_wr0(k,v);if(/^aw_(acc|d_|n_|t_)/.test(k))cloudSave()};
+async function authCloud(){var m=$("lm").value.trim().toLowerCase(),p=$("lp").value,u=mode==="reg"?$("lu").value.trim():"";
+if(!emOk(m))return setErr("Bitte eine gültige E-Mail eingeben.");
+if(p.length<8)return setErr("Das Passwort braucht mindestens 8 Zeichen.");
+if(mode==="reg"){if(u.length<3)return setErr("Der Nutzername braucht mindestens 3 Zeichen.");if(bad(u))return setErr(MSG);PENDNAME=u}
+JUSTLOG=true;busy(true);
+try{if(mode==="reg"){var r=await firebase.auth().createUserWithEmailAndPassword(m,p);try{await r.user.updateProfile({displayName:u})}catch(x){}try{await r.user.sendEmailVerification()}catch(x){}}else await firebase.auth().signInWithEmailAndPassword(m,p)}
+catch(e){busy(false);JUSTLOG=false;PENDNAME="";setErr(fbErr(e))}}
+function busy(on){var b=$("lgo");if(b){b.disabled=on;b.style.opacity=on?".6":"1"}}
+function gLogin(){JUSTLOG=true;var pr=new firebase.auth.GoogleAuthProvider();try{pr.setCustomParameters({prompt:"select_account"})}catch(x){}
+firebase.auth().signInWithPopup(pr).catch(function(e){JUSTLOG=false;setErr(fbErr(e))})}
+function pwReset(){var m=$("lm").value.trim();if(!emOk(m))return setErr("Gib oben deine E-Mail ein, dann tippe erneut auf Passwort vergessen.");
+firebase.auth().sendPasswordResetEmail(m).then(function(){var e=$("e");if(e){e.style.color="var(--ok)";e.textContent=L("Falls ein Konto existiert, haben wir dir eine E-Mail zum Zurücksetzen geschickt.")}},function(e){setErr(fbErr(e))})}
+async function cloudDelete(){var t=Date.parse((FBU.metadata&&FBU.metadata.lastSignInTime)||0)||0;
+if(Date.now()-t>4*60*1000){note="Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.";armed=false;render();return}
+var uid=FBU.uid,u=FBU;clearTimeout(SYNC_T);BLOCKED=true;
+try{await FBDB.collection("users").doc(uid).delete();await u.delete()}catch(e){BLOCKED=false;note=fbErr(e);armed=false;render()}}
+function blockedView(){var a=$("app");a.textContent="";var c=h("div","card");c.appendChild(h("h2",null,"Konto gesperrt"));c.appendChild(h("p","mu","Dieses Konto wurde gesperrt. Bitte wende dich an den Support."));
+if(window.SUPPORT_MAIL)c.appendChild(h("p",null,SUPPORT_MAIL));var o=h("button","sec","Abmelden");o.onclick=logout;c.appendChild(o);a.appendChild(c)}
+function waitView(){var a=$("app");a.textContent="";var hero=h("div","hero"),lg=h("div");lg.innerHTML=logoSvg(56);hero.appendChild(lg);hero.appendChild(h("h1",null,"AboWächter"));a.appendChild(hero);
+if(NETERR){var c=h("div","card");c.appendChild(h("h2",null,"Keine Verbindung"));c.appendChild(h("p","mu","Bitte schalte das Internet ein und versuche es erneut."));var b=h("button","pri","Erneut versuchen");b.onclick=function(){location.reload()};c.appendChild(b);var o=h("button","sec","Abmelden");o.onclick=logout;c.appendChild(o);a.appendChild(c)}
+else a.appendChild(h("div","empty","Wird geladen …"))}
+function acctLines(c){if(!CLOUD||!FBU)return;var pv=((FBU.providerData&&FBU.providerData[0])||{}).providerId||"password";
+c.appendChild(h("div","kv",null,[h("span","mu","Anmeldung über"),h("span",null,pv==="google.com"?"Google":"E-Mail und Passwort")]));
+c.appendChild(h("div","kv",null,[h("span","mu","Synchronisierung"),h("span",SYNCST==="err"?"badge red":"badge ok",SYNCST==="err"?"Fehler beim Speichern":SYNCST==="wait"?"Wird gespeichert …":"Gespeichert")]));
+if(pv!=="google.com"){c.appendChild(h("div","kv",null,[h("span","mu","E-Mail"),h("span",null,FBU.emailVerified?"E-Mail bestätigt":"E-Mail nicht bestätigt")]));
+if(!FBU.emailVerified){var v=h("button","sec","Bestätigungs-Mail senden");v.onclick=function(){FBU.sendEmailVerification().then(function(){note="Bestätigungs-Mail gesendet.";render()},function(e){note=fbErr(e);render()})};c.appendChild(v)}}}
+function cloudTexts(){EULA[4]="5. Datenspeicherung: Deine Daten werden in deinem Konto bei Google Firebase gespeichert und mit deinen Geräten synchronisiert. Der Support kann dein Konto zur Hilfe bei Problemen einsehen. Passwörter kann niemand einsehen.";
+PRIV[0]="Deine Daten (E-Mail, Nutzername, Verträge, Notizen, Einstellungen) werden in deinem Konto bei Google Firebase gespeichert, damit sie auf allen deinen Geräten verfügbar sind. Passwörter werden nur verschlüsselt gespeichert und sind für niemanden einsehbar. Der Support kann dein Konto und deine Verträge einsehen, um dir bei Problemen zu helfen. Es gibt keine Werbung und keine Tracker. Details stehen in der Datenschutzerklärung.";
+HELP["Erste Schritte"][2][1]="Ja, die Anmeldung ist Pflicht. So bleiben deine Daten erhalten, auch wenn du das Handy wechselst.";
+HELP["Konto & Sicherheit"][1][1]="Tippe bei der Anmeldung auf „Passwort vergessen?“. Du bekommst dann eine E-Mail zum Zurücksetzen.";
+HELP["Daten & Datenschutz"][0][1]="In deinem Konto bei Google Firebase. Zusätzlich kannst du unter Mehr, Einstellungen, Daten eine Sicherung kopieren."}
+function awBack(){var m=$("lgm");if(m&&m.style.display!=="none"){m.style.display="none";return true}
+if(EDIT||NEW||OPEN||NE||CHK||CANC){EDIT=null;NEW=false;OPEN=null;NE=null;CHK=false;CANC=false;render();return true}
+if(SUB){SUB=null;note="";armed=false;render();return true}
+if(CUR&&ACC[CUR]&&tab!=="v"){tab="v";render();window.scrollTo(0,0);return true}return false}
+function render(){render0();trAll();langUI()}
+function logoSvg(n){return '<svg width="'+n+'" height="'+n+'" viewBox="0 0 512 512"><defs><linearGradient id="lgx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b5bd6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgx)"/><rect x="116" y="140" width="280" height="260" rx="40" fill="#fff"/><path d="M116 180a40 40 0 0 1 40-40h200a40 40 0 0 1 40 40v40H116z" fill="#e4e1ff"/><rect x="176" y="104" width="28" height="64" rx="14" fill="#fff"/><rect x="308" y="104" width="28" height="64" rx="14" fill="#fff"/><path d="M186 306l48 48 94-100" fill="none" stroke="#5b5bd6" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
+function notice(c){if(UI.lang&&UI.lang!=="de")c.appendChild(h("p","mu","Die Übersetzung dient der Orientierung. Rechtlich maßgeblich ist die deutsche Fassung."))}
+var WORDS=["Fester Tag im Monat", "Steuern & Gebühren", "Handy & Internet", "Wohnen & Energie", "Eigener Rhythmus", "vierteljährlich", "Möbel & Technik", "alle 2 Wochen", "halbjährlich", "Versicherung", "wöchentlich", "Handy-Raten", "monatlich", "Ratenkauf", "Sonstiges", "jährlich", "Finanzen", "täglich", "Bildung", "Kredit", "Musik"];
+function langUI(){var b=$("lgb"),m=$("lgm"),LS=[["de","Deutsch"],["en","English"],["ru","Русский"],["tr","Türkçe"]];
+if(!b){b=document.createElement("button");b.id="lgb";b.setAttribute("aria-label","Language");b.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>';document.body.appendChild(b);
+m=document.createElement("div");m.id="lgm";m.style.display="none";LS.forEach(function(t){var x=document.createElement("button");x.textContent=t[1];x.onclick=function(){UI.lang=t[0];sv();m.style.display="none";render()};m.appendChild(x)});document.body.appendChild(m);
+b.onclick=function(){m.style.display=m.style.display==="none"?"block":"none"}}
+var up=!!(CUR&&ACC[CUR]&&ACC[CUR].eula&&(!ACC[CUR].pin||UNL));b.className=up?"up":"";m.className=up?"up":"";
+Array.prototype.forEach.call(m.children,function(x,i){x.className=(UI.lang||"de")===LS[i][0]?"on":""})}
+var RAW=`Verträge|Contracts|Договоры|Sözleşmeler
+Übersicht|Overview|Обзор|Özet
+Kalender|Calendar|Календарь|Takvim
+Notizen|Notes|Заметки|Notlar
+Erinnerung|Reminders|Напоминания|Hatırlatma
+Mehr|More|Ещё|Daha fazla
+Anmelden|Log in|Войти|Giriş yap
+Registrieren|Sign up|Регистрация|Kayıt ol
+Konto erstellen|Create account|Создать аккаунт|Hesap oluştur
+Nutzername|Username|Имя пользователя|Kullanıcı adı
+E-Mail|Email|Эл. почта|E-posta
+Passwort (mind. 8 Zeichen)|Password (min. 8 characters)|Пароль (мин. 8 символов)|Şifre (en az 8 karakter)
+Warum muss ich mich anmelden?|Why do I need to sign in?|Зачем нужен вход?|Neden giriş yapmalıyım?
+Nächste Frist|Next deadline|Ближайший срок|Sonraki son tarih
+Aktiv|Active|Активно|Aktif
+pro Monat|per month|в месяц|aylık
+bald fällig|due soon|скоро срок|yakında
+Raten offen|Open instalments|Открытые рассрочки|Açık taksitler
+Mitglied|Member|Участник|Üye
+Mitglied +|Member +|Участник +|Üye +
+Noch keine Verträge eingetragen.|No contracts yet.|Договоров пока нет.|Henüz sözleşme yok.
+Neuer Eintrag|New entry|Новая запись|Yeni kayıt
+Art|Type|Тип|Tür
+Vertrag|Contract|Договор|Sözleşme
+Ratenzahlung|Instalment plan|Рассрочка|Taksit
+Schnellauswahl|Quick pick|Быстрый выбор|Hızlı seçim
+Name des Vertrags|Contract name|Название договора|Sözleşme adı
+Kosten pro Zahlung|Cost per payment|Стоимость платежа|Ödeme başına tutar
+Höhe einer Rate|Amount per instalment|Сумма взноса|Taksit tutarı
+Kategorie|Category|Категория|Kategori
+Alternative Zahlungstermine|Alternative payment dates|Другие даты платежей|Alternatif ödeme tarihleri
+Zahlweise|Payment interval|Периодичность|Ödeme sıklığı
+Letzter Tag zum Kündigen|Last day to cancel|Последний день отмены|İptal için son gün
+Gesamtbetrag|Total amount|Общая сумма|Toplam tutar
+Anzahl der Raten|Number of instalments|Количество взносов|Taksit sayısı
+Notiz (optional)|Note (optional)|Заметка (необязательно)|Not (isteğe bağlı)
+Vertrag speichern|Save contract|Сохранить договор|Sözleşmeyi kaydet
+Als Vorlage speichern|Save as template|Сохранить как шаблон|Şablon olarak kaydet
+Schnell-Eingabe|Quick entry|Быстрый ввод|Hızlı giriş
+Hinzufügen|Add|Добавить|Ekle
+Verträge suchen|Search contracts|Поиск договоров|Sözleşme ara
+Alle|All|Все|Tümü
+Bearbeiten|Edit|Изменить|Düzenle
+Löschen|Delete|Удалить|Sil
+Duplizieren|Duplicate|Дублировать|Çoğalt
+Favorit|Favorite|Избранное|Favori
+Als gekündigt markieren|Mark as cancelled|Отметить как отменённый|İptal edildi olarak işaretle
+Wieder aktiv|Active again|Снова активен|Tekrar aktif
+Zahlung eintragen|Record payment|Записать платёж|Ödeme ekle
+Rate bezahlt eintragen|Record instalment paid|Записать оплату взноса|Taksit ödendi ekle
+Kündigen bis|Cancel by|Отменить до|İptal son tarihi
+Nächste Zahlung|Next payment|Следующий платёж|Sonraki ödeme
+Noch offen|Still open|Осталось оплатить|Kalan
+Bezahlt|Paid|Оплачено|Ödendi
+Kosten|Costs|Расходы|Giderler
+Pro Tag|Per day|В день|Günlük
+Pro Woche|Per week|В неделю|Haftalık
+Pro Monat|Per month|В месяц|Aylık
+Pro Jahr|Per year|В год|Yıllık
+Nach Kategorie|By category|По категориям|Kategoriye göre
+Teuerste Verträge|Most expensive|Самые дорогие|En pahalılar
+Nächste Fristen|Upcoming deadlines|Ближайшие сроки|Yaklaşan tarihler
+Gespart durch Kündigungen|Saved by cancelling|Экономия от отмен|İptallerle tasarruf
+Ratenzahlungen|Instalment plans|Рассрочки|Taksitler
+Zahlungen in 30 Tagen|Payments in 30 days|Платежи за 30 дней|30 gün içindeki ödemeler
+Neue Notiz|New note|Новая заметка|Yeni not
+Titel|Title|Заголовок|Başlık
+Farbe|Colour|Цвет|Renk
+Notiz speichern|Save note|Сохранить заметку|Notu kaydet
+Angeheftet|Pinned|Закреплённые|Sabitlenenler
+Archiv|Archive|Архив|Arşiv
+Bald fällig|Due soon|Скоро срок|Yakında
+Benachrichtigungen|Notifications|Уведомления|Bildirimler
+Vorab erinnern|Remind in advance|Напомнить заранее|Önceden hatırlat
+Am Fristtag|On the deadline day|В день срока|Son gün
+Benachrichtigungen erlauben|Allow notifications|Разрешить уведомления|Bildirimlere izin ver
+Budget-Warnung|Budget warning|Предупреждение о бюджете|Bütçe uyarısı
+Einstellungen|Settings|Настройки|Ayarlar
+Konto & Sicherheit|Account & security|Аккаунт и безопасность|Hesap ve güvenlik
+Hilfe|Help|Помощь|Yardım
+Rechtliches|Legal|Правовая информация|Yasal
+Neuigkeiten|What's new|Новости|Yenilikler
+Über die App|About the app|О приложении|Uygulama hakkında
+KI & Hilfe|AI & help|ИИ и помощь|YZ ve yardım
+‹ Zurück|‹ Back|‹ Назад|‹ Geri
+Farbschema|Colour scheme|Цветовая схема|Renk şeması
+Vorlagen|Templates|Шаблоны|Şablonlar
+Farbintensität|Colour intensity|Насыщенность|Renk yoğunluğu
+Darstellung|Appearance|Оформление|Görünüm
+Hell|Light|Светлая|Açık
+Dunkel|Dark|Тёмная|Koyu
+Schriftgröße|Font size|Размер шрифта|Yazı boyutu
+Währung|Currency|Валюта|Para birimi
+Monatsbudget|Monthly budget|Месячный бюджет|Aylık bütçe
+Daten|Data|Данные|Veriler
+Sprache|Language|Язык|Dil
+Konto|Account|Аккаунт|Hesap
+Abmelden|Log out|Выйти|Çıkış yap
+Nutzernamen speichern|Save username|Сохранить имя|Kullanıcı adını kaydet
+Nutzername ändern|Change username|Изменить имя|Kullanıcı adını değiştir
+Sicherheit|Security|Безопасность|Güvenlik
+Nutzungsbedingungen|Terms of use|Условия использования|Kullanım koşulları
+Zustimmen und fortfahren|Agree and continue|Согласиться и продолжить|Kabul et ve devam et
+Ablehnen und abmelden|Decline and log out|Отказаться и выйти|Reddet ve çıkış yap
+Abo kündigen|Cancel subscription|Отменить подписку|Aboneliği iptal et
+Zahlungsart|Payment method|Способ оплаты|Ödeme yöntemi
+Nein danke, später|No thanks, later|Нет, спасибо, позже|Hayır, sonra
+Verlauf löschen|Clear history|Очистить историю|Geçmişi temizle
+Senden|Send|Отправить|Gönder
+Helfer|Helper|Помощник|Yardımcı
+Menüs und Schaltflächen sind übersetzt, lange Texte bleiben vorerst Deutsch.|Menus and buttons are translated; long texts stay German for now.|Меню и кнопки переведены, длинные тексты пока на немецком.|Menüler ve düğmeler çevrildi, uzun metinler şimdilik Almanca kalır.
+Gekündigt|Cancelled|Отменён|İptal edildi
+Aktiv bis|Active until|Активно до|Şu tarihe kadar aktif
+Nicht aktiv|Inactive|Не активно|Aktif değil
+Abo behalten|Keep subscription|Оставить подписку|Aboneliği koru
+Ja, kündigen|Yes, cancel|Да, отменить|Evet, iptal et
+Testphase starten|Start trial|Начать пробный период|Denemeyi başlat
+Jetzt für 4,99 € kaufen|Buy now for €4.99|Купить за 4,99 €|Şimdi 4,99 € ile satın al
+Plus kaufen (4,99 € pro Monat)|Buy Plus (€4.99 per month)|Купить Plus (4,99 € в месяц)|Plus satın al (aylık 4,99 €)
+Plus verlängern (4,99 €)|Extend Plus (€4.99)|Продлить Plus (4,99 €)|Plus'ı uzat (4,99 €)
+Plus ansehen|View Plus|Подробнее о Plus|Plus'a göz at
+Willkommen bei Plus!|Welcome to Plus!|Добро пожаловать в Plus!|Plus'a hoş geldin!
+Nein danke|No thanks|Нет, спасибо|Hayır, teşekkürler
+Testphase bis|Trial until|Пробный период до|Deneme sonu
+Nächste Abbuchung|Next charge|Следующее списание|Sonraki tahsilat
+Tarif|Plan|Тариф|Tarife
+Beginn|Start|Начало|Başlangıç
+Plus Monat|Plus monthly|Plus в месяц|Plus aylık
+Heute zu zahlen|Due today|К оплате сегодня|Bugün ödenecek
+Abo bestätigen|Confirm subscription|Подтвердить подписку|Aboneliği onayla
+Abbrechen|Cancel|Отмена|İptal
+Zum KI-Agenten|To the AI agent|К ИИ-агенту|YZ ajanına git
+Fertig|Done|Готово|Bitti
+Zugriff erlauben|Allow access|Разрешить доступ|Erişime izin ver
+Modus|Mode|Режим|Mod
+Befehlsmodus (lokal)|Command mode (local)|Режим команд (локально)|Komut modu (yerel)
+KI-Modus|AI mode|Режим ИИ|YZ modu
+KI-Modus testen (nur in claude.ai)|Try AI mode (claude.ai only)|Включить режим ИИ (только claude.ai)|YZ modunu dene (yalnızca claude.ai)
+Zum Befehlsmodus wechseln|Switch to command mode|Перейти в режим команд|Komut moduna geç
+Sparanalyse|Savings analysis|Анализ экономии|Tasarruf analizi
+Kündigungsschreiben|Cancellation letter|Письмо об отмене|İptal mektubu
+Was läuft bald ab?|What expires soon?|Что скоро истекает?|Neler yakında bitiyor?
+Ausgaben|Spending|Расходы|Harcamalar
+Wie viel kosten meine Verträge?|How much do my contracts cost?|Сколько стоят мои договоры?|Sözleşmelerim ne kadar tutuyor?
+Öffne den Kalender|Open the calendar|Открой календарь|Takvimi aç
+Wie lege ich eine Ratenzahlung an?|How do I add an instalment plan?|Как добавить рассрочку?|Taksit nasıl eklenir?
+Wie funktionieren Erinnerungen?|How do reminders work?|Как работают напоминания?|Hatırlatmalar nasıl çalışır?
+Frag den Helfer …|Ask the helper …|Спросите помощника …|Yardımcıya sor …
+Zum Beispiel: Füge Disney+ 8,99 monatlich hinzu|For example: Add Disney+ 8.99 monthly|Например: добавь Disney+ 8,99 ежемесячно|Örnek: Disney+ 8,99 aylık ekle
+Denkt nach …|Thinking …|Думает …|Düşünüyor …
+Der Agent darf meine Verträge lesen und ändern|The agent may read and edit my contracts|Агент может читать и изменять мои договоры|Ajan sözleşmelerimi okuyup değiştirebilir
+Per Text oder Sprache steuern|Control by text or voice|Управление текстом или голосом|Metin veya sesle kontrol et
+Sparanalyse und fertige Kündigungsschreiben|Savings analysis and ready-made cancellation letters|Анализ экономии и готовые письма об отмене|Tasarruf analizi ve hazır iptal mektupları
+Nichts gefunden.|Nothing found.|Ничего не найдено.|Bir şey bulunamadı.
+Sprechen|Speak|Говорить|Konuş
+Keine Verträge in dieser Ansicht.|No contracts in this view.|В этом разделе нет договоров.|Bu görünümde sözleşme yok.
+Keine Notizen in dieser Ansicht.|No notes in this view.|В этом разделе нет заметок.|Bu görünümde not yok.
+Keine Termine an diesem Tag.|No events on this day.|В этот день нет событий.|Bu günde etkinlik yok.
+Tag antippen|Tap a day|Выберите день|Bir güne dokun
+Noch keine Verträge.|No contracts yet.|Договоров пока нет.|Henüz sözleşme yok.
+Rot: Kündigungsfrist · Blau: Zahlung · Gelb: Rate|Red: cancellation deadline · Blue: payment · Yellow: instalment|Красный: срок отмены · Синий: платёж · Жёлтый: взнос|Kırmızı: iptal süresi · Mavi: ödeme · Sarı: taksit
+Bitte einen Namen eingeben.|Please enter a name.|Введите название.|Lütfen bir ad girin.
+Bitte die monatlichen Kosten eingeben.|Please enter the cost.|Введите стоимость.|Lütfen tutarı girin.
+Bitte das Datum der Kündigungsfrist wählen.|Please choose the cancellation deadline.|Выберите срок отмены.|Lütfen iptal son tarihini seçin.
+Bitte eine gültige E-Mail eingeben.|Please enter a valid email.|Введите корректный адрес эл. почты.|Lütfen geçerli bir e-posta girin.
+Das Passwort braucht mindestens 8 Zeichen.|The password needs at least 8 characters.|Пароль должен быть не короче 8 символов.|Şifre en az 8 karakter olmalı.
+Der Nutzername braucht mindestens 3 Zeichen.|The username needs at least 3 characters.|Имя должно быть не короче 3 символов.|Kullanıcı adı en az 3 karakter olmalı.
+E-Mail oder Passwort stimmt nicht.|Email or password is wrong.|Неверная почта или пароль.|E-posta veya şifre yanlış.
+Kein Konto mit dieser E-Mail. Bitte registrieren.|No account with this email. Please sign up.|Аккаунта с такой почтой нет. Зарегистрируйтесь.|Bu e-postayla hesap yok. Lütfen kayıt olun.
+Zu dieser E-Mail gibt es schon ein Konto. Bitte anmelden.|An account with this email already exists. Please log in.|Аккаунт с такой почтой уже есть. Войдите.|Bu e-postayla zaten hesap var. Lütfen giriş yapın.
+Bitte keine Beleidigungen oder hasserfüllten Begriffe verwenden.|Please do not use insults or hateful terms.|Не используйте оскорбления и разжигающие ненависть слова.|Lütfen hakaret veya nefret içeren sözcükler kullanmayın.
+Bitte stimme den Bedingungen zu.|Please accept the terms.|Примите условия.|Lütfen koşulları kabul edin.
+Bitte lies die Bedingungen und bestätige sie, um die App zu nutzen.|Please read and accept the terms to use the app.|Прочитайте и примите условия, чтобы пользоваться приложением.|Uygulamayı kullanmak için koşulları okuyup onaylayın.
+Ich habe die Bedingungen gelesen und stimme zu.|I have read the terms and agree.|Я прочитал(а) условия и согласен(на).|Koşulları okudum ve kabul ediyorum.
+Bitte bestätige die Bedingungen des Abos.|Please confirm the subscription terms.|Подтвердите условия подписки.|Lütfen abonelik koşullarını onaylayın.
+Alle Verträge löschen|Delete all contracts|Удалить все договоры|Tüm sözleşmeleri sil
+Konto und Daten löschen|Delete account and data|Удалить аккаунт и данные|Hesabı ve verileri sil
+Sicher löschen?|Really delete?|Точно удалить?|Emin misin?
+Verträge als Sicherung kopieren|Copy contracts as backup|Копировать договоры как резервную копию|Sözleşmeleri yedek olarak kopyala
+Sicherung hier einfügen|Paste backup here|Вставьте резервную копию|Yedeği buraya yapıştır
+Sicherung einlesen|Import backup|Загрузить резервную копию|Yedeği içe aktar
+Fristen teilen|Share deadlines|Поделиться сроками|Tarihleri paylaş
+Passwort ändern|Change password|Изменить пароль|Şifreyi değiştir
+PIN ändern|Change PIN|Изменить PIN|PIN'i değiştir
+Neues Passwort (mind. 8 Zeichen)|New password (min. 8 characters)|Новый пароль (мин. 8 символов)|Yeni şifre (en az 8 karakter)
+Nicht zugestimmt|Not agreed|Не принято|Kabul edilmedi
+Zustimmung|Consent|Согласие|Onay
+Zustimmung widerrufen und abmelden|Withdraw consent and log out|Отозвать согласие и выйти|Onayı geri çek ve çıkış yap
+Frühe Vorwarnung|Early warning|Раннее предупреждение|Erken uyarı
+Test-Benachrichtigung senden|Send test notification|Отправить тестовое уведомление|Test bildirimi gönder
+Warnung deaktivieren|Disable warning|Отключить предупреждение|Uyarıyı kapat
+Später erinnern|Remind later|Напомнить позже|Daha sonra hatırlat
+Notiz bearbeiten|Edit note|Изменить заметку|Notu düzenle
+Änderungen speichern|Save changes|Сохранить изменения|Değişiklikleri kaydet
+Lösen|Unpin|Открепить|Sabitlemeyi kaldır
+Zurückholen|Restore|Вернуть|Geri al
+Kopieren|Copy|Копировать|Kopyala
+Anheften|Pin|Закрепить|Sabitle
+Archivieren|Archive|В архив|Arşivle
+Fester Tag im Monat|Fixed day of the month|Фиксированный день месяца|Ayın sabit günü
+Eigener Rhythmus|Custom interval|Свой интервал|Özel aralık
+alle 2 Wochen|every 2 weeks|раз в 2 недели|2 haftada bir
+Wird gelöscht am|Will be deleted on|Будет удалён|Silinme tarihi
+Zuletzt bezahlt|Last paid|Последний платёж|Son ödeme
+Läuft bis|Runs until|Действует до|Bitiş tarihi
+Letzte Rate|Last instalment|Последний взнос|Son taksit
+Letzte Zahlung zurücknehmen|Undo last payment|Отменить последний платёж|Son ödemeyi geri al
+Favorit entfernen|Remove favorite|Убрать из избранного|Favoriden çıkar
+Vertrag in einem Satz|Contract in one sentence|Договор одним предложением|Sözleşmeyi tek cümleyle yaz
+Helligkeit der Farbe (dunkler bis heller)|Colour brightness (darker to lighter)|Яркость цвета (темнее — светлее)|Renk parlaklığı (koyudan açığa)
+Farbiger Hintergrund|Coloured background|Цветной фон|Renkli arka plan
+Hintergrund passt zur Farbe|Background matches the colour|Фон подходит к цвету|Arka plan renge uyar
+Kompakte Ansicht|Compact view|Компактный вид|Kompakt görünüm
+Weniger Abstand, mehr Inhalt|Less spacing, more content|Меньше отступов, больше содержимого|Daha az boşluk, daha fazla içerik
+Ziehe am Farbrad, um die Hauptfarbe der App zu ändern.|Drag the colour wheel to change the main colour of the app.|Перетащите по цветовому кругу, чтобы изменить основной цвет приложения.|Uygulamanın ana rengini değiştirmek için renk çarkını sürükle.
+Wiederholt sich, bis du sie ausschaltest|Repeats until you turn it off|Повторяется, пока вы не отключите|Kapatana kadar tekrarlanır
+Budget-Warnung wiederholen alle|Repeat budget warning every|Повторять предупреждение о бюджете каждые|Bütçe uyarısını şu sıklıkla tekrarla
+Soll die Warnung ausgeschaltet oder später wiederholt werden?|Turn the warning off or repeat it later?|Отключить предупреждение или повторить позже?|Uyarı kapatılsın mı, sonra mı tekrarlansın?
+Erinnerungen|Reminders|Напоминания|Hatırlatmalar
+Vor und am Fristtag|Before and on the deadline|До срока и в день срока|Son günden önce ve son gün
+Zusätzlich am letzten Tag erinnern|Also remind on the last day|Также напомнить в последний день|Son gün ayrıca hatırlat
+Browser-Erlaubnis|Browser permission|Разрешение браузера|Tarayıcı izni
+Design, Budget, Währung, Daten|Design, budget, currency, data|Дизайн, бюджет, валюта, данные|Tasarım, bütçe, para birimi, veriler
+Profil, PIN, Passwort, Zustimmung|Profile, PIN, password, consent|Профиль, PIN, пароль, согласие|Profil, PIN, şifre, onay
+Antworten nach Themen|Answers by topic|Ответы по темам|Konulara göre yanıtlar
+Bedingungen, Datenschutz, Rechte|Terms, privacy, rights|Условия, конфиденциальность, права|Koşullar, gizlilik, haklar
+Version und Urheberrecht|Version and copyright|Версия и авторские права|Sürüm ve telif hakkı
+Update-Log|Update log|Журнал обновлений|Güncelleme günlüğü
+Helfer kostenlos, Agent mit Plus|Free helper, agent with Plus|Помощник бесплатно, агент с Plus|Yardımcı ücretsiz, ajan Plus ile
+Nutzungsbedingungen (EULA)|Terms of use (EULA)|Условия использования (EULA)|Kullanım koşulları (EULA)
+Datenschutz|Privacy|Конфиденциальность|Gizlilik
+Deine Rechte|Your rights|Ваши права|Haklarınız
+Mitgliedschaft und Kündigung|Membership and cancellation|Членство и отмена|Üyelik ve iptal
+Impressum|Legal notice|Выходные данные|Künye
+Über AboWächter|About AboWächter|Об AboWächter|AboWächter hakkında
+Version|Version|Версия|Sürüm
+Speicherort|Storage location|Место хранения|Depolama yeri
+Nur dieses Gerät|This device only|Только это устройство|Yalnızca bu cihaz
+Urheberrecht|Copyright|Авторские права|Telif hakkı
+Dieser Text liegt vorerst nur auf Deutsch vor.|This text is currently available in German only.|Этот текст пока доступен только на немецком.|Bu metin şimdilik yalnızca Almanca.
+vierteljährlich|quarterly|раз в квартал|üç aylık
+halbjährlich|half-yearly|раз в полгода|altı aylık
+wöchentlich|weekly|еженедельно|haftalık
+monatlich|monthly|ежемесячно|aylık
+jährlich|yearly|ежегодно|yıllık
+täglich|daily|ежедневно|günlük
+Handy & Internet|Mobile & internet|Мобильная связь и интернет|Mobil ve internet
+Wohnen & Energie|Housing & energy|Жильё и энергия|Konut ve enerji
+Steuern & Gebühren|Taxes & fees|Налоги и сборы|Vergi ve harçlar
+Möbel & Technik|Furniture & tech|Мебель и техника|Mobilya ve teknoloji
+Handy-Raten|Phone instalments|Рассрочка на телефон|Telefon taksitleri
+Ratenkauf|Instalment purchase|Покупка в рассрочку|Taksitli alım
+Versicherung|Insurance|Страхование|Sigorta
+Finanzen|Finance|Финансы|Finans
+Bildung|Education|Образование|Eğitim
+Sonstiges|Other|Прочее|Diğer
+Musik|Music|Музыка|Müzik
+Kredit|Loan|Кредит|Kredi
+Gelb|Yellow|Жёлтый|Sarı
+Grün|Green|Зелёный|Yeşil
+Blau|Blue|Синий|Mavi
+Rosa|Pink|Розовый|Pembe
+Grau|Grey|Серый|Gri
++ Neuer Eintrag|+ New entry|+ Новая запись|+ Yeni kayıt
+Behalte deine Kündigungsfristen im Blick. Melde dich an oder registriere dich, um zu starten.|Keep track of your cancellation deadlines. Log in or sign up to get started.|Следите за сроками отмены. Войдите или зарегистрируйтесь, чтобы начать.|İptal sürelerini takip et. Başlamak için giriş yap veya kayıt ol.
+Ein Konto ist nötig, damit Verträge, Notizen und die optionale Mitgliedschaft mit dem KI-Agenten deinem Profil zugeordnet werden. Alle Daten bleiben auf diesem Gerät.|An account is needed so contracts, notes and the optional membership with the AI agent are linked to your profile. All data stays on this device.|Аккаунт нужен, чтобы договоры, заметки и необязательная подписка с ИИ-агентом были привязаны к вашему профилю. Все данные остаются на этом устройстве.|Sözleşmelerin, notların ve isteğe bağlı YZ ajanı üyeliğinin profiline bağlanması için hesap gerekir. Tüm veriler bu cihazda kalır.
+Die App speichert deine Daten pro Konto getrennt. Nur so kann der KI-Agent der Mitgliedschaft Plus sicher auf deine eigenen Verträge zugreifen, ohne dass andere Personen am selben Gerät sie sehen.|The app stores your data separately per account. Only this way can the AI agent of Plus safely access your own contracts without other people on the same device seeing them.|Приложение хранит данные отдельно для каждого аккаунта. Только так ИИ-агент Plus может безопасно работать с вашими договорами, а другие пользователи устройства их не увидят.|Uygulama verilerini hesap başına ayrı saklar. Plus'ın YZ ajanı ancak böyle sözleşmelerine güvenle erişir ve aynı cihazdaki başkaları onları göremez.
+Plus: Erster Monat kostenlos, danach 4,99 € pro Monat für deinen eigenen KI-Agenten.|Plus: first month free, then €4.99 per month for your own AI agent.|Plus: первый месяц бесплатно, затем 4,99 € в месяц за собственного ИИ-агента.|Plus: ilk ay ücretsiz, sonra kendi YZ ajanın için aylık 4,99 €.
+Plus: Dein KI-Agent verwaltet Verträge für dich. Erster Monat kostenlos, danach 4,99 € pro Monat.|Plus: your AI agent manages contracts for you. First month free, then €4.99 per month.|Plus: ваш ИИ-агент управляет договорами. Первый месяц бесплатно, затем 4,99 € в месяц.|Plus: YZ ajanın sözleşmelerini yönetir. İlk ay ücretsiz, sonra aylık 4,99 €.
+Mehr erfahren|Learn more|Подробнее|Daha fazla bilgi
+30 Tage kostenlos testen|Try free for 30 days|30 дней бесплатно|30 gün ücretsiz dene
+30 Tage kostenlos testen, jederzeit kündbar. Die Testphase gibt es nur einmal.|Free for 30 days, cancel anytime. The trial is available only once.|30 дней бесплатно, отмена в любой момент. Пробный период доступен только один раз.|30 gün ücretsiz, istediğin zaman iptal. Deneme yalnızca bir kez.
+Alles andere in der App bleibt kostenlos. Nur der Agent nutzt laufend KI-Rechenleistung, die Kosten verursacht.|Everything else in the app stays free. Only the agent uses ongoing AI computing power, which costs money.|Всё остальное в приложении бесплатно. Только агент постоянно использует вычисления ИИ, а они стоят денег.|Uygulamadaki diğer her şey ücretsiz kalır. Yalnızca ajan sürekli YZ gücü kullanır ve bunun maliyeti vardır.
+Die kostenlose Testphase wurde bereits genutzt. Plus gibt es jetzt nur noch mit Bezahlung.|The free trial has already been used. Plus is now available with payment only.|Бесплатный период уже использован. Plus теперь только платно.|Ücretsiz deneme zaten kullanıldı. Plus artık yalnızca ücretli.
+Testmodus: Es wird nichts abgebucht, weil die echte Zahlung noch nicht angebunden ist.|Test mode: nothing is charged because real payment is not connected yet.|Тестовый режим: ничего не списывается, так как реальная оплата ещё не подключена.|Test modu: Gerçek ödeme henüz bağlı olmadığı için hiçbir ücret alınmaz.
+Es wird nichts mehr berechnet. Eine Reaktivierung ist nur mit Bezahlung möglich.|Nothing will be charged anymore. Reactivating is only possible with payment.|Больше ничего не списывается. Возобновить можно только с оплатой.|Artık ücret alınmaz. Yeniden etkinleştirme yalnızca ödemeyle mümkün.
+Wird über deine Mobilfunkrechnung abgerechnet, wenn dein Anbieter das unterstützt.|Billed to your mobile phone bill if your provider supports it.|Списывается со счёта мобильного оператора, если он это поддерживает.|Operatörün destekliyorsa mobil faturana yansıtılır.
+Alle Daten bleiben auf diesem Gerät. Tippe in der Vertragsliste auf einen Vertrag, um Details, Bearbeiten, Favorit, Duplizieren und Kündigen zu sehen.|All data stays on this device. Tap a contract in the list to see details, edit, favorite, duplicate and cancel.|Все данные остаются на этом устройстве. Нажмите на договор в списке, чтобы увидеть детали, изменить, добавить в избранное, дублировать или отменить.|Tüm veriler bu cihazda kalır. Ayrıntılar, düzenleme, favori, çoğaltma ve iptal için listedeki bir sözleşmeye dokun.
+Alle Rechte vorbehalten. Kopieren, Nachbauen und Weitergeben der App sind nicht erlaubt. Am Ende jeder Seite steht das Logo mit Name und Version.|All rights reserved. Copying, rebuilding and passing on the app is not allowed. The logo with name and version appears at the end of every page.|Все права защищены. Копировать, воспроизводить и передавать приложение запрещено. В конце каждой страницы указан логотип с названием и версией.|Tüm hakları saklıdır. Uygulamanın kopyalanması, yeniden yapılması ve paylaşılması yasaktır. Her sayfanın sonunda logo, ad ve sürüm yer alır.
+Der Helfer ist kostenlos, erklärt dir die App und öffnet Menüs. Er läuft komplett auf deinem Gerät.|The helper is free, explains the app and opens menus. It runs entirely on your device.|Помощник бесплатный, объясняет приложение и открывает меню. Работает полностью на вашем устройстве.|Yardımcı ücretsizdir, uygulamayı açıklar ve menüleri açar. Tamamen cihazında çalışır.
+Hallo! Ich bin dein Helfer. Frag mich zum Beispiel: Wie lege ich eine Ratenzahlung an?|Hi! I'm your helper. Ask me, for example: How do I add an instalment plan?|Привет! Я ваш помощник. Спросите, например: как добавить рассрочку?|Merhaba! Ben yardımcınım. Örneğin sor: Taksit nasıl eklenir?
+Hinweis: Dies sind einfache Standardtexte und keine Rechtsberatung.|Note: these are simple standard texts and not legal advice.|Примечание: это простые типовые тексты, а не юридическая консультация.|Not: Bunlar basit standart metinlerdir, hukuki danışmanlık değildir.
+Meldungen kommen nur, solange die App im Browser offen ist. Bei geschlossener App sind sie in dieser Web-Version nicht möglich, dafür braucht es eine installierte Android-App.|Alerts only arrive while the app is open in the browser. With the app closed they are not possible in this web version; an installed Android app is needed.|Уведомления приходят, только пока приложение открыто в браузере. При закрытом приложении в веб-версии они невозможны, нужна установленная Android-версия.|Bildirimler yalnızca uygulama tarayıcıda açıkken gelir. Uygulama kapalıyken bu web sürümünde mümkün değildir; kurulu bir Android uygulaması gerekir.
+Nach Frist|By deadline|По сроку|Son tarihe göre
+Nach Kosten|By cost|По стоимости|Tutara göre
+Nach Name|By name|По названию|Ada göre
+Nächste oder erste Zahlung am (optional)|Next or first payment on (optional)|Следующий или первый платёж (необязательно)|Sonraki veya ilk ödeme tarihi (isteğe bağlı)
+Erste Fälligkeit|First due date|Первая дата платежа|İlk vade tarihi
+Alle wie viele Tage?|Every how many days?|Каждые сколько дней?|Kaç günde bir?
+Zahltag im Monat (1 bis 31)|Payment day of the month (1 to 31)|День платежа в месяце (1–31)|Ayın ödeme günü (1–31)
+Zahlungen laufen bis (optional)|Payments run until (optional)|Платежи действуют до (необязательно)|Ödemeler şu tarihe kadar sürer (isteğe bağlı)
+Zu Vertrag (optional)|Linked contract (optional)|Привязать к договору (необязательно)|Sözleşmeye bağla (isteğe bağlı)
+Keiner|None|Нет|Yok
+Trage bei einem Vertrag die nächste Zahlung ein, dann erscheint sie hier.|Enter the next payment for a contract and it will appear here.|Укажите следующий платёж по договору, и он появится здесь.|Bir sözleşme için sonraki ödemeyi gir, burada görünsün.
+Zeigt in der Übersicht, wie viel von deinem Budget die Verträge verbrauchen. 0 schaltet es aus.|Shows in the overview how much of your budget your contracts use. 0 turns it off.|Показывает в обзоре, какую часть бюджета занимают договоры. 0 — выключить.|Sözleşmelerin bütçenin ne kadarını kullandığını özette gösterir. 0 kapatır.
+Zum Beispiel: Netflix 12,99 monatlich bis 15.12.2026 (Textmuster, noch ohne KI)|For example: Netflix 12.99 monthly until 15.12.2026 (text pattern, no AI yet)|Например: Netflix 12,99 ежемесячно до 15.12.2026 (шаблон текста, пока без ИИ)|Örnek: Netflix 12,99 aylık 15.12.2026'ya kadar (metin kalıbı, henüz YZ yok)
+1. Nutzungsrecht: Du erhältst ein einfaches, nicht übertragbares Recht, AboWächter privat zu nutzen.|1. Right of use: You receive a simple, non-transferable right to use AboWächter privately.|1. Право использования: вы получаете простое непередаваемое право использовать AboWächter в личных целях.|1. Kullanım hakkı: AboWächter'i kişisel olarak kullanmak için basit, devredilemez bir hak alırsın.
+2. Urheberrecht: Die App, ihr Design und ihr Quelltext sind urheberrechtlich geschützt. Kopieren, Nachbauen, Weiterverkaufen und das Entfernen von Urheberhinweisen oder Wasserzeichen sind nicht erlaubt.|2. Copyright: The app, its design and its source code are protected by copyright. Copying, rebuilding, reselling and removing copyright notices or watermarks are not allowed.|2. Авторское право: приложение, его дизайн и исходный код защищены авторским правом. Копирование, воспроизведение, перепродажа и удаление знаков авторства или водяных знаков запрещены.|2. Telif hakkı: Uygulama, tasarımı ve kaynak kodu telif hakkıyla korunur. Kopyalamak, yeniden yapmak, satmak ve telif bildirimlerini veya filigranları kaldırmak yasaktır.
+3. Inhalte: Du bist für deine Eingaben verantwortlich. Beleidigungen, Hass, Rassismus und rechtswidrige Inhalte sind verboten und werden gefiltert.|3. Content: You are responsible for what you enter. Insults, hate, racism and unlawful content are prohibited and are filtered.|3. Содержимое: вы отвечаете за введённые данные. Оскорбления, ненависть, расизм и противозаконные материалы запрещены и фильтруются.|3. İçerik: Girdiklerinden sen sorumlusun. Hakaret, nefret, ırkçılık ve hukuka aykırı içerik yasaktır ve filtrelenir.
+4. Keine Gewähr: Du trägst Fristen und Beträge selbst ein. Erinnerungen können ausfallen. Prüfe wichtige Fristen immer zusätzlich im Vertrag. Für verpasste Kündigungen wird nicht gehaftet, außer bei Vorsatz und grober Fahrlässigkeit.|4. No warranty: You enter deadlines and amounts yourself. Reminders can fail. Always check important deadlines in your contract as well. There is no liability for missed cancellations, except in cases of intent and gross negligence.|4. Без гарантий: сроки и суммы вы вводите сами. Напоминания могут не сработать. Всегда дополнительно проверяйте важные сроки в договоре. Ответственность за пропущенную отмену не несётся, кроме случаев умысла и грубой небрежности.|4. Garanti yok: Tarihleri ve tutarları kendin girersin. Hatırlatmalar çalışmayabilir. Önemli tarihleri her zaman sözleşmenden de kontrol et. Kasıt ve ağır ihmal dışında kaçırılan iptallerden sorumluluk kabul edilmez.
+5. Datenspeicherung: Deine Daten liegen nur lokal auf deinem Gerät. Löschst du Browserdaten oder die App, sind sie weg. Sichere sie regelmäßig.|5. Data storage: Your data is stored only locally on your device. If you delete browser data or the app, it is gone. Back it up regularly.|5. Хранение данных: ваши данные хранятся только на вашем устройстве. Если удалить данные браузера или приложение, они пропадут. Регулярно делайте резервную копию.|5. Veri saklama: Verilerin yalnızca cihazında saklanır. Tarayıcı verilerini veya uygulamayı silersen kaybolur. Düzenli olarak yedekle.
+6. Änderungen: Funktionen und diese Bedingungen können sich ändern. Bei wesentlichen Änderungen wirst du erneut um Zustimmung gebeten.|6. Changes: Features and these terms may change. For significant changes you will be asked to agree again.|6. Изменения: функции и эти условия могут меняться. При существенных изменениях согласие запрашивается повторно.|6. Değişiklikler: Özellikler ve bu koşullar değişebilir. Önemli değişikliklerde onayın yeniden istenir.
+7. Beendigung: Du kannst dein Konto jederzeit löschen. Bei Verstößen kann die Nutzung beendet werden.|7. Termination: You can delete your account at any time. Use may be ended in case of violations.|7. Прекращение: вы можете удалить аккаунт в любой момент. При нарушениях использование может быть прекращено.|7. Sonlandırma: Hesabını istediğin zaman silebilirsin. İhlallerde kullanım sonlandırılabilir.
+8. Recht: Es gilt deutsches Recht, soweit zwingende Verbraucherschutzvorschriften nichts anderes bestimmen.|8. Law: German law applies unless mandatory consumer protection rules provide otherwise.|8. Право: применяется право Германии, если обязательные нормы защиты потребителей не предусматривают иного.|8. Hukuk: Zorunlu tüketici koruma kuralları aksini öngörmedikçe Alman hukuku geçerlidir.
+Es werden keine Daten an einen Server gesendet. E-Mail, Nutzername, Verträge und Notizen bleiben auf deinem Gerät. Passwort und PIN werden nur als Hash gespeichert. Benachrichtigungen nutzen die Funktion deines Browsers.|No data is sent to a server. Email, username, contracts and notes stay on your device. Password and PIN are stored only as a hash. Notifications use your browser's own function.|Данные не отправляются на сервер. Почта, имя, договоры и заметки остаются на вашем устройстве. Пароль и PIN хранятся только в виде хеша. Уведомления используют функцию вашего браузера.|Hiçbir veri sunucuya gönderilmez. E-posta, kullanıcı adı, sözleşmeler ve notlar cihazında kalır. Şifre ve PIN yalnızca özet (hash) olarak saklanır. Bildirimler tarayıcının kendi özelliğini kullanır.
+Auskunft und Export: Mehr, Einstellungen, Daten.|Access and export: More, Settings, Data.|Доступ и экспорт: Ещё, Настройки, Данные.|Erişim ve dışa aktarma: Daha fazla, Ayarlar, Veriler.
+Berichtigung: Verträge und Notizen kannst du jederzeit bearbeiten.|Correction: You can edit contracts and notes at any time.|Исправление: договоры и заметки можно изменить в любой момент.|Düzeltme: Sözleşmeleri ve notları istediğin zaman düzenleyebilirsin.
+Löschung: Mehr, Konto, Konto und Daten löschen.|Deletion: More, Account, Delete account and data.|Удаление: Ещё, Аккаунт, Удалить аккаунт и данные.|Silme: Daha fazla, Hesap, Hesabı ve verileri sil.
+Widerruf der Zustimmung: Unten auf dieser Seite. Danach wirst du abgemeldet und musst erneut zustimmen.|Withdrawing consent: At the bottom of this page. You are then logged out and must agree again.|Отзыв согласия: внизу этой страницы. После этого вы выйдете из аккаунта и должны будете согласиться заново.|Onayı geri çekme: Bu sayfanın altında. Ardından oturumun kapanır ve yeniden onaylaman gerekir.
+Keine Weitergabe: Deine Daten werden nicht an Dritte übermittelt.|No sharing: Your data is not passed on to third parties.|Без передачи: ваши данные не передаются третьим лицам.|Paylaşım yok: Verilerin üçüncü kişilere aktarılmaz.
+Die Mitgliedschaft kostet nach dem Probezeitraum 4,99 € pro Monat und lässt sich jederzeit unter Mehr, Mitgliedschaft Plus beenden. Im Testmodus wird nichts abgebucht.|After the trial the membership costs €4.99 per month and can be ended at any time under More, AboWächter Plus. In test mode nothing is charged.|После пробного периода подписка стоит 4,99 € в месяц, её можно отменить в любой момент в разделе Ещё, AboWächter Plus. В тестовом режиме ничего не списывается.|Deneme süresinden sonra üyelik aylık 4,99 € tutar ve Daha fazla, AboWächter Plus bölümünden istediğin zaman sonlandırılabilir. Test modunda ücret alınmaz.
+Platzhalter: Vor dem Upload trägst du hier Name, Anschrift und Kontakt des Anbieters ein.|Placeholder: Before publishing, the provider's name, address and contact details go here.|Заглушка: перед публикацией здесь указываются имя, адрес и контакты владельца приложения.|Yer tutucu: Yayınlamadan önce buraya sağlayıcının adı, adresi ve iletişim bilgileri yazılır.
+Die Übersetzung dient der Orientierung. Rechtlich maßgeblich ist die deutsche Fassung.|The translation is for guidance. The German version is legally binding.|Перевод служит для ознакомления. Юридическую силу имеет немецкая версия.|Çeviri bilgi amaçlıdır. Hukuken Almanca metin geçerlidir.
+Die Antworten des Agenten im Befehlsmodus sind vorerst nur auf Deutsch.|The agent's replies in command mode are in German only for now.|Ответы агента в режиме команд пока только на немецком.|Ajanın komut modundaki yanıtları şimdilik yalnızca Almanca.
+Erste Schritte|Getting started|Первые шаги|İlk adımlar
+Verträge & Fristen|Contracts & deadlines|Договоры и сроки|Sözleşmeler ve tarihler
+Zahlungsrhythmen|Payment intervals|Периодичность платежей|Ödeme aralıkları
+Design|Design|Дизайн|Tasarım
+Daten & Datenschutz|Data & privacy|Данные и конфиденциальность|Veriler ve gizlilik
+Suchbegriff eingeben|Enter a search term|Введите запрос|Arama terimi gir
+Wie lege ich einen Vertrag an?|How do I add a contract?|Как добавить договор?|Sözleşme nasıl eklenir?
+Öffne Verträge, gib Name, Kosten, Kategorie und den letzten Kündigungstag ein und tippe auf Vertrag speichern.|Open Contracts, enter name, cost, category and the last day to cancel, then tap Save contract.|Откройте Договоры, введите название, стоимость, категорию и последний день отмены и нажмите Сохранить договор.|Sözleşmeler'i aç, adı, tutarı, kategoriyi ve iptal için son günü gir, ardından Sözleşmeyi kaydet'e dokun.
+Was ist der letzte Kündigungstag?|What is the last day to cancel?|Что такое последний день отмены?|İptal için son gün nedir?
+Der letzte Tag, an dem deine Kündigung rechtzeitig beim Anbieter ankommen muss. Er steht im Vertrag.|The last day on which your cancellation must reach the provider in time. It is stated in your contract.|Последний день, когда ваше заявление об отмене должно вовремя поступить поставщику. Он указан в договоре.|İptal bildiriminin sağlayıcıya zamanında ulaşması gereken son gün. Sözleşmende yazar.
+Brauche ich ein Konto?|Do I need an account?|Нужен ли аккаунт?|Hesap gerekli mi?
+Ja, die Anmeldung ist Pflicht. Das Konto liegt nur auf deinem Gerät.|Yes, signing in is required. The account is stored only on your device.|Да, вход обязателен. Аккаунт хранится только на вашем устройстве.|Evet, giriş zorunludur. Hesap yalnızca cihazında saklanır.
+Wie bearbeite ich einen Vertrag?|How do I edit a contract?|Как изменить договор?|Sözleşme nasıl düzenlenir?
+Tippe in der Liste auf den Vertrag und dann auf Bearbeiten.|Tap the contract in the list and then Edit.|Нажмите на договор в списке, затем Изменить.|Listede sözleşmeye, ardından Düzenle'ye dokun.
+Was heißt Als gekündigt markieren?|What does Mark as cancelled mean?|Что значит Отметить как отменённый?|İptal edildi olarak işaretle ne demek?
+Der Vertrag zählt nicht mehr zu den Kosten und löst keine Erinnerung aus. Die gesparte Summe steht in der Übersicht.|The contract no longer counts towards your costs and triggers no reminder. The amount saved is shown in the overview.|Договор больше не учитывается в расходах и не вызывает напоминаний. Сэкономленная сумма показана в обзоре.|Sözleşme artık giderlere dahil edilmez ve hatırlatma oluşturmaz. Tasarruf edilen tutar özette görünür.
+Was bedeuten die Farben?|What do the colours mean?|Что означают цвета?|Renkler ne anlama geliyor?
+Rot: die Frist liegt innerhalb deines Erinnerungs-Vorlaufs. Gelb: unter 30 Tage. Grün: es ist noch Zeit.|Red: the deadline is within your reminder lead time. Yellow: under 30 days. Green: there is still time.|Красный: срок попадает в период напоминания. Жёлтый: меньше 30 дней. Зелёный: время ещё есть.|Kırmızı: son tarih hatırlatma süren içinde. Sarı: 30 günden az. Yeşil: daha zaman var.
+Was sind alternative Zahlungstermine?|What are alternative payment dates?|Что такое другие даты платежей?|Alternatif ödeme tarihleri nedir?
+Mit dem Haken wählst du zum Beispiel einen festen Zahltag im Monat, einen eigenen Rhythmus in Tagen oder ein Enddatum. Ohne Haken wählst du wöchentlich, monatlich oder jährlich.|With the box ticked you can choose a fixed payment day of the month, a custom interval in days or an end date. Without it you choose weekly, monthly or yearly.|С галочкой можно выбрать фиксированный день месяца, свой интервал в днях или дату окончания. Без неё выбирается еженедельно, ежемесячно или ежегодно.|Kutucuk işaretliyken ayın sabit bir ödeme gününü, gün olarak özel bir aralığı veya bitiş tarihini seçebilirsin. İşaretsizken haftalık, aylık veya yıllık seçersin.
+Wie wird die nächste Zahlung berechnet?|How is the next payment calculated?|Как рассчитывается следующий платёж?|Sonraki ödeme nasıl hesaplanır?
+Aus dem Datum der ersten Zahlung und dem Rhythmus. Bei festem Zahltag zählt dieser Tag, in kürzeren Monaten der letzte Tag des Monats.|From the date of the first payment and the interval. With a fixed payment day that day counts, in shorter months the last day of the month.|По дате первого платежа и периодичности. При фиксированном дне учитывается он, в коротких месяцах — последний день месяца.|İlk ödeme tarihinden ve aralıktan. Sabit ödeme gününde o gün, kısa aylarda ayın son günü geçerlidir.
+Warum fehlt eine Zahlung im Kalender?|Why is a payment missing from the calendar?|Почему платежа нет в календаре?|Takvimde neden bir ödeme eksik?
+Trage die nächste Zahlung beim Vertrag ein und prüfe, ob das Enddatum schon vorbei ist.|Enter the next payment for the contract and check whether the end date has already passed.|Укажите следующий платёж в договоре и проверьте, не прошла ли дата окончания.|Sözleşmeye sonraki ödemeyi gir ve bitiş tarihinin geçip geçmediğini kontrol et.
+Wann bekomme ich eine Erinnerung?|When do I get a reminder?|Когда придёт напоминание?|Hatırlatmayı ne zaman alırım?
+Vor der Frist, am Fristtag und optional als frühe Vorwarnung. Die Zeiten stellst du unter Erinnerung ein.|Before the deadline, on the deadline day and optionally as an early warning. You set the times under Reminders.|До срока, в день срока и при желании заранее. Время настраивается в разделе Напоминания.|Son tarihten önce, son gün ve isteğe bağlı olarak erken uyarı şeklinde. Zamanları Hatırlatma bölümünden ayarlarsın.
+Warum kommt keine Meldung?|Why is there no alert?|Почему нет уведомления?|Neden bildirim gelmiyor?
+Erlaube Benachrichtigungen im Browser. Meldungen kommen nur, solange die App geöffnet ist.|Allow notifications in the browser. Alerts only arrive while the app is open.|Разрешите уведомления в браузере. Они приходят, только пока приложение открыто.|Tarayıcıda bildirimlere izin ver. Bildirimler yalnızca uygulama açıkken gelir.
+Wie nutze ich den Notizblock?|How do I use the notepad?|Как пользоваться блокнотом?|Not defteri nasıl kullanılır?
+Öffne Notizen, schreibe Titel und Text, wähle Farbe und optional einen Vertrag und speichere.|Open Notes, write a title and text, choose a colour and optionally a contract, then save.|Откройте Заметки, введите заголовок и текст, выберите цвет и при желании договор и сохраните.|Notlar'ı aç, başlık ve metin yaz, renk ve isteğe bağlı olarak bir sözleşme seç ve kaydet.
+Was kann ich mit Notizen machen?|What can I do with notes?|Что можно делать с заметками?|Notlarla neler yapabilirim?
+Anheften, archivieren, kopieren, bearbeiten, löschen, suchen und nach Angeheftet oder Archiv filtern.|Pin, archive, copy, edit, delete, search and filter by Pinned or Archive.|Закреплять, архивировать, копировать, изменять, удалять, искать и фильтровать по закреплённым или архиву.|Sabitle, arşivle, kopyala, düzenle, sil, ara ve Sabitlenenler veya Arşiv'e göre filtrele.
+Wie ändere ich die Farben?|How do I change the colours?|Как изменить цвета?|Renkleri nasıl değiştiririm?
+Mehr, Einstellungen: Farbrad, Vorlagen, Helligkeit, Intensität und farbiger Hintergrund.|More, Settings: colour wheel, templates, brightness, intensity and coloured background.|Ещё, Настройки: цветовой круг, шаблоны, яркость, насыщенность и цветной фон.|Daha fazla, Ayarlar: renk çarkı, şablonlar, parlaklık, yoğunluk ve renkli arka plan.
+Was macht die App-PIN?|What does the app PIN do?|Для чего нужен PIN приложения?|Uygulama PIN'i ne işe yarar?
+Sie sperrt die App beim Öffnen. Du legst sie unter Mehr, Konto fest.|It locks the app when it opens. You set it under More, Account.|Он блокирует приложение при открытии. Задаётся в разделе Ещё, Аккаунт.|Uygulamayı açılışta kilitler. Daha fazla, Hesap bölümünden ayarlarsın.
+Passwort vergessen?|Forgot your password?|Забыли пароль?|Şifreni mi unuttun?
+Es gibt keine Zurücksetzen-Mail, weil das Konto nur auf deinem Gerät liegt. Lege notfalls ein neues Konto an.|There is no reset email because the account is stored only on your device. If necessary, create a new account.|Письма для сброса нет, так как аккаунт хранится только на вашем устройстве. При необходимости создайте новый аккаунт.|Hesap yalnızca cihazında saklandığı için sıfırlama e-postası yoktur. Gerekirse yeni bir hesap oluştur.
+Wo liegen meine Daten?|Where is my data stored?|Где хранятся мои данные?|Verilerim nerede saklanıyor?
+Nur auf deinem Gerät. Sichere sie unter Mehr, Einstellungen, Daten.|Only on your device. Back it up under More, Settings, Data.|Только на вашем устройстве. Резервная копия: Ещё, Настройки, Данные.|Yalnızca cihazında. Daha fazla, Ayarlar, Veriler bölümünden yedekle.
+Wie lösche ich alles?|How do I delete everything?|Как удалить всё?|Her şeyi nasıl silerim?
+Mehr, Konto, Konto und Daten löschen.|More, Account, Delete account and data.|Ещё, Аккаунт, Удалить аккаунт и данные.|Daha fazla, Hesap, Hesabı ve verileri sil.
+Notizblock mit Farben, Anheften, Archiv und Suche|Notepad with colours, pinning, archive and search|Блокнот с цветами, закреплением, архивом и поиском|Renkli, sabitlemeli, arşivli ve aramalı not defteri
+Alternative Zahlungstermine mit festem Zahltag und Enddatum|Alternative payment dates with fixed payment day and end date|Другие даты платежей с фиксированным днём и датой окончания|Sabit ödeme günü ve bitiş tarihiyle alternatif ödeme tarihleri
+Hilfe-Center mit Themen und Suche|Help centre with topics and search|Справочный центр с темами и поиском|Konulu ve aramalı yardım merkezi
+Nutzungsbedingungen mit Zustimmung im Konto|Terms of use with consent shown in the account|Условия использования с отметкой согласия в аккаунте|Hesapta onayı görünen kullanım koşulları
+Neues Menü Mehr, Update-Log und Wasserzeichen|New More menu, update log and watermark|Новое меню Ещё, журнал обновлений и водяной знак|Yeni Daha fazla menüsü, güncelleme günlüğü ve filigran
+Farbrad, Vorlagen und Helligkeit|Colour wheel, templates and brightness|Цветовой круг, шаблоны и яркость|Renk çarkı, şablonlar ve parlaklık
+Eigene Zahlungsrhythmen und Zahlungskalender|Custom payment intervals and payment calendar|Свои интервалы платежей и календарь платежей|Özel ödeme aralıkları ve ödeme takvimi
+Verträge bearbeiten, Favoriten, Duplizieren|Edit contracts, favorites, duplicate|Изменение договоров, избранное, дублирование|Sözleşme düzenleme, favoriler, çoğaltma
+App-PIN und Passwort ändern|App PIN and password change|PIN приложения и смена пароля|Uygulama PIN'i ve şifre değiştirme
+Registrieren und Anmelden|Sign up and log in|Регистрация и вход|Kayıt ve giriş
+Erinnerungen vor der Frist|Reminders before the deadline|Напоминания до срока|Son tarihten önce hatırlatmalar
+Inhaltsfilter gegen Beleidigungen|Content filter against insults|Фильтр оскорблений|Hakaretlere karşı içerik filtresi
+Übersicht mit Budget|Overview with budget|Обзор с бюджетом|Bütçeli özet
+Dazu habe ich nichts gefunden. Probiere andere Wörter oder öffne Mehr, Hilfe.|I found nothing on that. Try other words or open More, Help.|Ничего не найдено. Попробуйте другие слова или откройте Ещё, Помощь.|Bununla ilgili bir şey bulamadım. Başka sözcükler dene veya Daha fazla, Yardım'ı aç.
+Alle Verträge gelöscht.|All contracts deleted.|Все договоры удалены.|Tüm sözleşmeler silindi.
+Bitte den Gesamtbetrag eingeben.|Please enter the total amount.|Введите общую сумму.|Lütfen toplam tutarı girin.
+Bitte die Anzahl der Raten eingeben.|Please enter the number of instalments.|Введите количество взносов.|Lütfen taksit sayısını girin.
+Bitte die Höhe einer Rate eingeben.|Please enter the amount per instalment.|Введите сумму взноса.|Lütfen taksit tutarını girin.
+Bitte einen Titel oder Text eingeben.|Please enter a title or text.|Введите заголовок или текст.|Lütfen başlık veya metin girin.
+Bitte einen Zahltag von 1 bis 31 eingeben.|Please enter a payment day from 1 to 31.|Введите день платежа от 1 до 31.|Lütfen 1–31 arası bir ödeme günü girin.
+Bitte korrigiere die rot markierten Zeilen.|Please fix the lines marked in red.|Исправьте строки, отмеченные красным.|Lütfen kırmızıyla işaretli satırları düzeltin.
+Bitte mindestens einen Eintrag schreiben.|Please write at least one entry.|Введите хотя бы одну запись.|Lütfen en az bir kayıt yazın.
+Budget gespeichert.|Budget saved.|Бюджет сохранён.|Bütçe kaydedildi.
+Das Enddatum liegt vor der ersten Zahlung.|The end date is before the first payment.|Дата окончания раньше первого платежа.|Bitiş tarihi ilk ödemeden önce.
+Das war keine gültige Sicherung.|That was not a valid backup.|Это не резервная копия.|Bu geçerli bir yedek değil.
+Der KI-Modus ist in diesem Fenster nicht verfügbar. Der Befehlsmodus bleibt aktiv.|AI mode is not available in this window. Command mode stays active.|Режим ИИ в этом окне недоступен. Режим команд остаётся активным.|YZ modu bu pencerede kullanılamıyor. Komut modu etkin kalır.
+Der Nutzername lässt sich nur 2 Mal pro 14 Tage ändern.|The username can only be changed twice every 14 days.|Имя можно менять только 2 раза за 14 дней.|Kullanıcı adı 14 günde yalnızca 2 kez değiştirilebilir.
+Die PIN braucht 4 bis 6 Ziffern.|The PIN needs 4 to 6 digits.|PIN должен содержать от 4 до 6 цифр.|PIN 4–6 haneli olmalı.
+Dieser Browser kann das Passwort nicht verarbeiten.|This browser cannot process the password.|Этот браузер не может обработать пароль.|Bu tarayıcı şifreyi işleyemiyor.
+Dieser Browser unterstützt keine Benachrichtigungen.|This browser does not support notifications.|Этот браузер не поддерживает уведомления.|Bu tarayıcı bildirimleri desteklemiyor.
+Falsche PIN.|Wrong PIN.|Неверный PIN.|Yanlış PIN.
+Gespeichert.|Saved.|Сохранено.|Kaydedildi.
+Gib zuerst einen Namen ein.|Enter a name first.|Сначала введите название.|Önce bir ad girin.
+Kein Betrag erkannt. Schreibe zum Beispiel 15 € oder 14,99.|No amount recognised. Write for example 15 € or 14.99.|Сумма не распознана. Напишите, например, 15 € или 14,99.|Tutar algılanmadı. Örneğin 15 € veya 14,99 yazın.
+Kopieren wird nicht unterstützt.|Copying is not supported.|Копирование не поддерживается.|Kopyalama desteklenmiyor.
+Kopieren wurde blockiert.|Copying was blocked.|Копирование заблокировано.|Kopyalama engellendi.
+Mindestens 3 Zeichen.|At least 3 characters.|Не менее 3 символов.|En az 3 karakter.
+Mindestens 8 Zeichen.|At least 8 characters.|Не менее 8 символов.|En az 8 karakter.
+Nicht möglich.|Not possible.|Невозможно.|Mümkün değil.
+PIN gespeichert. Sie wird beim Öffnen der App abgefragt.|PIN saved. It will be asked for when the app opens.|PIN сохранён. Он будет запрашиваться при открытии приложения.|PIN kaydedildi. Uygulama açılırken sorulur.
+Passwort geändert.|Password changed.|Пароль изменён.|Şifre değiştirildi.
+Prüfe …|Checking …|Проверка …|Kontrol ediliyor …
+Sicherung kopiert.|Backup copied.|Резервная копия скопирована.|Yedek kopyalandı.
+Teilen wird hier nicht unterstützt.|Sharing is not supported here.|Здесь нельзя поделиться.|Paylaşım burada desteklenmiyor.
+Vorlage gespeichert.|Template saved.|Шаблон сохранён.|Şablon kaydedildi.
+Testmeldung gesendet.|Test alert sent.|Тестовое уведомление отправлено.|Test bildirimi gönderildi.
+Nicht möglich: Erlaubnis fehlt oder der Browser blockiert es.|Not possible: permission is missing or the browser blocks it.|Невозможно: нет разрешения или браузер блокирует.|Mümkün değil: izin yok veya tarayıcı engelliyor.
+Das ist eine Testmeldung.|This is a test alert.|Это тестовое уведомление.|Bu bir test bildirimidir.
+Abbezahlt|Paid off|Выплачено|Tamamı ödendi
+Abgelaufen|Expired|Истекла|Süresi doldu
+Alle hinzufügen|Add all|Добавить все|Tümünü ekle
+App entsperren|Unlock app|Разблокировать приложение|Uygulamanın kilidini aç
+Entsperren|Unlock|Разблокировать|Kilidi aç
+App-PIN festlegen (4 bis 6 Ziffern)|Set app PIN (4 to 6 digits)|Задать PIN приложения (4–6 цифр)|Uygulama PIN'i belirle (4–6 hane)
+Neue PIN (4 bis 6 Ziffern)|New PIN (4 to 6 digits)|Новый PIN (4–6 цифр)|Yeni PIN (4–6 hane)
+PIN speichern|Save PIN|Сохранить PIN|PIN'i kaydet
+PIN entfernen|Remove PIN|Удалить PIN|PIN'i kaldır
+Aus|Off|Выкл.|Kapalı
+Ein|On|Вкл.|Açık
+Auto|Auto|Авто|Otomatik
+Bereits bezahlt|Already paid|Уже оплачено|Ödenen
+Budget|Budget|Бюджет|Bütçe
+Schnell-Eingabe|Quick entry|Быстрый ввод|Hızlı giriş
+Ein Eintrag pro Zeile. Erkannt werden Name, Preis (auch mit € oder ohne Komma), Zahlweise, Datum, Raten, Kategorie und Notiz.|One entry per line. Name, price (with € or without decimals), interval, date, instalments, category and note are recognised. Keywords work in German and English, as in the examples.|Одна запись в строке. Распознаются название, цена (с € или без копеек), периодичность, дата, взносы, категория и заметка. Ключевые слова — на немецком или английском, как в примерах.|Her satıra bir kayıt. Ad, fiyat (€ ile veya küsuratsız), ödeme sıklığı, tarih, taksit, kategori ve not algılanır. Anahtar sözcükler örneklerdeki gibi Almanca veya İngilizce yazılır.
+Fitnessstudio|Gym|Фитнес-клуб|Spor salonu
+Haftpflicht|Liability insurance|Страхование ответственности|Sorumluluk sigortası
+Handyvertrag|Mobile contract|Мобильный тариф|Mobil hat
+Strom|Electricity|Электричество|Elektrik
+Handyrechnung (Mobilfunkanbieter)|Phone bill (mobile carrier)|Счёт мобильного оператора|Telefon faturası (operatör)
+Kreditkarte|Credit card|Банковская карта|Kredi kartı
+KI-Agent verwaltet Verträge, Raten und Zahlungen für dich|AI agent manages contracts, instalments and payments for you|ИИ-агент управляет договорами, рассрочками и платежами|YZ ajanı sözleşmeleri, taksitleri ve ödemeleri senin için yönetir
+Der Agent verwaltet deine Verträge per Text oder Sprache: hinzufügen, kündigen, Zahlungen eintragen, Sparanalyse und Kündigungsschreiben. Er gehört zu AboWächter Plus: 30 Tage kostenlos, danach 4,99 € pro Monat.|The agent manages your contracts by text or voice: add, cancel, record payments, savings analysis and cancellation letters. It is part of AboWächter Plus: 30 days free, then €4.99 per month.|Агент управляет договорами текстом или голосом: добавление, отмена, запись платежей, анализ экономии и письма об отмене. Он входит в AboWächter Plus: 30 дней бесплатно, затем 4,99 € в месяц.|Ajan sözleşmelerini metin veya sesle yönetir: ekleme, iptal, ödeme kaydı, tasarruf analizi ve iptal mektupları. AboWächter Plus'a dahildir: 30 gün ücretsiz, sonra aylık 4,99 €.
+Ich starte die Testphase. Danach werden 4,99 € pro Monat berechnet, bis ich kündige. Die Testphase gibt es nur einmal.|I am starting the trial. After that €4.99 per month is charged until I cancel. The trial is available only once.|Я начинаю пробный период. Затем списывается 4,99 € в месяц, пока я не отменю. Пробный период доступен только один раз.|Denemeyi başlatıyorum. Sonrasında ben iptal edene kadar aylık 4,99 € alınır. Deneme yalnızca bir kez kullanılabilir.
+Ich kaufe Plus für 4,99 € pro Monat. Es verlängert sich monatlich, bis ich kündige.|I am buying Plus for €4.99 per month. It renews monthly until I cancel.|Я покупаю Plus за 4,99 € в месяц. Подписка продлевается ежемесячно, пока я не отменю.|Plus'ı aylık 4,99 € karşılığında satın alıyorum. Ben iptal edene kadar her ay yenilenir.
+Plus Monat · 4,99 €|Plus monthly · €4.99|Plus в месяц · 4,99 €|Plus aylık · 4,99 €
+Mitglied seit|Member since|Участник с|Üyelik başlangıcı
+Mitternacht|Midnight|Полночь|Gece yarısı
+Ozean|Ocean|Океан|Okyanus
+Wald|Forest|Лес|Orman
+Vier Sprachen mit Sprachknopf auf jeder Seite|Four languages with a language button on every page|Четыре языка и кнопка языка на каждой странице|Dört dil ve her sayfada dil düğmesi
+Schnell-Eingabe mit Vorschau, Raten und Preis-Erkennung|Quick entry with preview, instalments and price detection|Быстрый ввод с предпросмотром, рассрочкой и распознаванием цены|Önizlemeli, taksitli ve fiyat algılamalı hızlı giriş
+Neues Logo und installierbare App|New logo and installable app|Новый логотип и устанавливаемое приложение|Yeni logo ve kurulabilir uygulama
+Notiz|Note|Заметка|Not
+Notizen suchen|Search notes|Поиск заметок|Not ara
+Offene Ratenzahlungen|Open instalment plans|Открытые рассрочки|Açık taksitler
+Ohne Titel|Untitled|Без названия|Başlıksız
+Status|Status|Статус|Durum
+Summe|Total|Итого|Toplam
+Testphase|Trial|Пробный период|Deneme
+Text|Text|Текст|Metin
+Wirklich alle Daten löschen? Nochmal tippen|Really delete all data? Tap again|Точно удалить все данные? Нажмите ещё раз|Tüm veriler silinsin mi? Tekrar dokun
+Wirklich alle Verträge löschen? Nochmal tippen|Really delete all contracts? Tap again|Точно удалить все договоры? Нажмите ещё раз|Tüm sözleşmeler silinsin mi? Tekrar dokun
+blockiert|blocked|заблокировано|engellendi
+erlaubt|allowed|разрешено|izin verildi
+noch nicht erlaubt|not allowed yet|ещё не разрешено|henüz izin verilmedi
+nicht unterstützt|not supported|не поддерживается|desteklenmiyor
+fehlt|missing|нет|yok
+Du|You|Вы|Sen
+(geschätzt)|(estimated)|(оценка)|(tahmini)
+(Anzahl geschätzt)|(number estimated)|(количество — оценка)|(sayı tahmini)
+Erste Fälligkeit|First due date|Первая дата платежа|İlk vade tarihi
+Mit Google anmelden|Sign in with Google|Войти через Google|Google ile giriş yap
+oder|or|или|veya
+Gib oben deine E-Mail ein, dann tippe erneut auf Passwort vergessen.|Enter your email above, then tap Forgot password again.|Введите почту выше и снова нажмите «Забыли пароль?».|Yukarıya e-postanı yaz, sonra tekrar Şifreni mi unuttun?'a dokun.
+Falls ein Konto existiert, haben wir dir eine E-Mail zum Zurücksetzen geschickt.|If an account exists, we have sent you an email to reset your password.|Если аккаунт существует, мы отправили письмо для сброса пароля.|Bir hesap varsa sıfırlama için sana bir e-posta gönderdik.
+Mit deinem Konto sind deine Verträge sicher gespeichert und auf all deinen Geräten verfügbar.|With your account, your contracts are stored safely and available on all your devices.|С аккаунтом ваши договоры надёжно сохранены и доступны на всех устройствах.|Hesabınla sözleşmelerin güvenle saklanır ve tüm cihazlarında kullanılabilir.
+Dein Konto sorgt dafür, dass deine Daten nicht verloren gehen, wenn du das Handy wechselst oder die App neu installierst. Die Daten werden geschützt bei Google Firebase gespeichert. Der Support kann sie nur zur Hilfe bei Problemen einsehen. Passwörter kann niemand sehen.|Your account makes sure your data is not lost when you change phones or reinstall the app. The data is stored securely with Google Firebase. Support can only view it to help with problems. Nobody can see passwords.|Аккаунт гарантирует, что данные не пропадут при смене телефона или переустановке приложения. Данные надёжно хранятся в Google Firebase. Поддержка может просматривать их только для помощи при проблемах. Пароли не видит никто.|Hesabın, telefon değiştirdiğinde veya uygulamayı yeniden kurduğunda verilerinin kaybolmamasını sağlar. Veriler Google Firebase'de güvenle saklanır. Destek ekibi bunları yalnızca sorunlarda yardım için görebilir. Şifreleri kimse göremez.
+Ein Konto ist nötig, damit Verträge und Notizen deinem Profil zugeordnet werden. Alle Daten bleiben auf diesem Gerät.|An account is needed so contracts and notes are linked to your profile. All data stays on this device.|Аккаунт нужен, чтобы договоры и заметки были привязаны к вашему профилю. Все данные остаются на этом устройстве.|Sözleşmelerin ve notların profiline bağlanması için hesap gerekir. Tüm veriler bu cihazda kalır.
+Die App speichert deine Daten pro Konto getrennt, damit andere Personen am selben Gerät sie nicht sehen.|The app stores your data separately per account so other people on the same device cannot see it.|Приложение хранит данные отдельно для каждого аккаунта, чтобы другие пользователи устройства их не видели.|Uygulama verilerini hesap başına ayrı saklar, böylece aynı cihazdaki başkaları göremez.
+Zu viele Versuche. Bitte warte kurz und versuche es erneut.|Too many attempts. Please wait a moment and try again.|Слишком много попыток. Подождите немного и попробуйте снова.|Çok fazla deneme. Lütfen biraz bekleyip tekrar dene.
+Keine Internetverbindung.|No internet connection.|Нет подключения к интернету.|İnternet bağlantısı yok.
+Die Google-Anmeldung wurde abgebrochen.|Google sign-in was cancelled.|Вход через Google отменён.|Google ile giriş iptal edildi.
+Das Anmeldefenster wurde blockiert. Bitte Pop-ups erlauben.|The sign-in window was blocked. Please allow pop-ups.|Окно входа заблокировано. Разрешите всплывающие окна.|Giriş penceresi engellendi. Lütfen açılır pencerelere izin ver.
+Diese Adresse ist in Firebase noch nicht freigegeben (Authorized domains).|This address is not yet approved in Firebase (Authorized domains).|Этот адрес ещё не разрешён в Firebase (Authorized domains).|Bu adres Firebase'de henüz onaylanmadı (Authorized domains).
+Diese Anmeldeart ist in Firebase noch nicht aktiviert.|This sign-in method is not yet enabled in Firebase.|Этот способ входа ещё не включён в Firebase.|Bu giriş yöntemi Firebase'de henüz etkin değil.
+Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.|For security reasons, please log out and back in, then try again.|В целях безопасности выйдите и войдите снова, затем повторите.|Güvenlik nedeniyle lütfen çıkış yapıp tekrar giriş yap ve yeniden dene.
+Dieses Konto wurde gesperrt. Bitte wende dich an den Support.|This account has been blocked. Please contact support.|Этот аккаунт заблокирован. Обратитесь в поддержку.|Bu hesap engellendi. Lütfen destek ile iletişime geç.
+Keine Berechtigung für die Datenbank.|No permission for the database.|Нет доступа к базе данных.|Veritabanı için izin yok.
+Das hat nicht geklappt. Bitte versuche es erneut.|That did not work. Please try again.|Не получилось. Попробуйте ещё раз.|Bu olmadı. Lütfen tekrar dene.
+Konto gesperrt|Account blocked|Аккаунт заблокирован|Hesap engellendi
+Wird geladen …|Loading …|Загрузка …|Yükleniyor …
+Keine Verbindung|No connection|Нет соединения|Bağlantı yok
+Bitte schalte das Internet ein und versuche es erneut.|Please turn on the internet and try again.|Включите интернет и попробуйте снова.|Lütfen interneti aç ve tekrar dene.
+Erneut versuchen|Try again|Повторить|Tekrar dene
+Anmeldung über|Signed in with|Вход через|Giriş yöntemi
+E-Mail und Passwort|Email and password|Почта и пароль|E-posta ve şifre
+Synchronisierung|Sync|Синхронизация|Senkronizasyon
+Gespeichert|Saved|Сохранено|Kaydedildi
+Wird gespeichert …|Saving …|Сохранение …|Kaydediliyor …
+Fehler beim Speichern|Error while saving|Ошибка сохранения|Kaydetme hatası
+E-Mail bestätigt|Email verified|Почта подтверждена|E-posta doğrulandı
+E-Mail nicht bestätigt|Email not verified|Почта не подтверждена|E-posta doğrulanmadı
+Bestätigungs-Mail senden|Send verification email|Отправить письмо подтверждения|Doğrulama e-postası gönder
+Bestätigungs-Mail gesendet.|Verification email sent.|Письмо подтверждения отправлено.|Doğrulama e-postası gönderildi.
+Dein Konto (Google Firebase)|Your account (Google Firebase)|Ваш аккаунт (Google Firebase)|Hesabın (Google Firebase)
+Agent|Agent|Агент|Ajan
+Helfer und Agent, kostenlos|Helper and agent, free|Помощник и агент, бесплатно|Yardımcı ve ajan, ücretsiz
+5. Datenspeicherung: Deine Daten werden in deinem Konto bei Google Firebase gespeichert und mit deinen Geräten synchronisiert. Der Support kann dein Konto zur Hilfe bei Problemen einsehen. Passwörter kann niemand einsehen.|5. Data storage: Your data is stored in your account with Google Firebase and synced across your devices. Support can view your account to help with problems. Nobody can see passwords.|5. Хранение данных: данные хранятся в вашем аккаунте в Google Firebase и синхронизируются между устройствами. Поддержка может просматривать аккаунт для помощи при проблемах. Пароли не видит никто.|5. Veri saklama: Verilerin Google Firebase'deki hesabında saklanır ve cihazların arasında senkronize edilir. Destek ekibi sorunlarda yardım için hesabını görebilir. Şifreleri kimse göremez.
+Deine Daten (E-Mail, Nutzername, Verträge, Notizen, Einstellungen) werden in deinem Konto bei Google Firebase gespeichert, damit sie auf allen deinen Geräten verfügbar sind. Passwörter werden nur verschlüsselt gespeichert und sind für niemanden einsehbar. Der Support kann dein Konto und deine Verträge einsehen, um dir bei Problemen zu helfen. Es gibt keine Werbung und keine Tracker. Details stehen in der Datenschutzerklärung.|Your data (email, username, contracts, notes, settings) is stored in your account with Google Firebase so it is available on all your devices. Passwords are stored only in encrypted form and cannot be seen by anyone. Support can view your account and contracts to help you with problems. There are no ads and no trackers. Details are in the privacy policy.|Ваши данные (почта, имя, договоры, заметки, настройки) хранятся в аккаунте в Google Firebase, чтобы быть доступными на всех устройствах. Пароли хранятся только в зашифрованном виде и никому не видны. Поддержка может просматривать аккаунт и договоры, чтобы помочь при проблемах. Нет рекламы и трекеров. Подробности — в политике конфиденциальности.|Verilerin (e-posta, kullanıcı adı, sözleşmeler, notlar, ayarlar) tüm cihazlarında kullanılabilmesi için Google Firebase'deki hesabında saklanır. Şifreler yalnızca şifrelenmiş olarak saklanır ve kimse göremez. Destek ekibi sorunlarda yardım için hesabını ve sözleşmelerini görebilir. Reklam ve izleyici yoktur. Ayrıntılar gizlilik politikasındadır.
+Ja, die Anmeldung ist Pflicht. So bleiben deine Daten erhalten, auch wenn du das Handy wechselst.|Yes, signing in is required. That way your data is kept even if you change phones.|Да, вход обязателен. Так данные сохранятся даже при смене телефона.|Evet, giriş zorunludur. Böylece telefon değiştirsen bile verilerin korunur.
+Tippe bei der Anmeldung auf „Passwort vergessen?“. Du bekommst dann eine E-Mail zum Zurücksetzen.|Tap "Forgot password?" on the sign-in screen. You will then receive an email to reset it.|Нажмите «Забыли пароль?» на экране входа. Вы получите письмо для сброса.|Giriş ekranında „Şifreni mi unuttun?“a dokun. Sıfırlama için bir e-posta alırsın.
+In deinem Konto bei Google Firebase. Zusätzlich kannst du unter Mehr, Einstellungen, Daten eine Sicherung kopieren.|In your account with Google Firebase. You can also copy a backup under More, Settings, Data.|В вашем аккаунте в Google Firebase. Дополнительно можно скопировать резервную копию: Ещё, Настройки, Данные.|Google Firebase'deki hesabında. Ayrıca Daha fazla, Ayarlar, Veriler bölümünden yedek kopyalayabilirsin.
+Anmeldung mit Google oder E-Mail|Sign in with Google or email|Вход через Google или почту|Google veya e-posta ile giriş
+Daten in der Cloud, auf allen Geräten gleich|Data in the cloud, the same on all devices|Данные в облаке, одинаковые на всех устройствах|Veriler bulutta, tüm cihazlarda aynı
+Passwort vergessen per E-Mail|Forgot password by email|Сброс пароля по почте|E-postayla şifre sıfırlama
+KI-Agent jetzt kostenlos für alle|AI agent now free for everyone|ИИ-агент теперь бесплатен для всех|YZ ajanı artık herkese ücretsiz
+Benachrichtigungen auf Android|Notifications on Android|Уведомления на Android|Android'de bildirimler`,LG={en:1,ru:2,tr:3},DICT={1:{},2:{},3:{}},RX={en:[[/ pro Jahr/g," per year"],[/ pro Woche/g," per week"],[/ pro Tag/g," per day"],[/Deine Testphase läuft bis (.+?)\. Danach kostet Plus 4,99 € pro Monat\./g,"Your trial runs until $1. After that Plus costs €4.99 per month."],[/Dein Abo ist aktiv\. Nächste Abbuchung am (.+?) \(4,99 €\)\./g,"Your subscription is active. Next charge on $1 (€4.99)."],[/Wirklich kündigen\? Plus bleibt bis (.+?) aktiv\. Danach geht es nur noch mit Bezahlung weiter, eine zweite Testphase gibt es nicht\./g,"Really cancel? Plus stays active until $1. After that it only continues with payment; there is no second trial."],[/^Danach ab (.+)$/g,"Then from $1"],[/Gekündigt · löscht sich in (\d+) Tagen/g,"Cancelled · removed in $1 days"],[/Gekündigt · löscht sich morgen/g,"Cancelled · removed tomorrow"],[/Gekündigt · löscht sich heute/g,"Cancelled · removed today"],[/ Rate · (\d+)\/(\d+) Raten · offen /g," per instalment · $1/$2 paid · open "],[/\((\d+) von (\d+) Raten\)/g,"($1 of $2 instalments)"],[/^(\d+) Raten, gesamt /g,"$1 instalments, total "],[/alle (\d+) Tage/g,"every $1 days"],[/am (\d+)\. jeden Monats/g,"on day $1 of each month"],[/Budget überschritten: (.+?) von /g,"Budget exceeded: $1 of "],[/^([\d.,]+) von ([\d.,]+)/g,"$1 of $2"],[/^Zugestimmt am /g,"Agreed on "],[/ · (\d+) Zeichen$/g," · $1 characters"],[/^Kündigen bis: /g,"Cancel by: "],[/^Zahlung: /g,"Payment: "],[/^Rate: /g,"Instalment: "],[/^Vertrag: /g,"Contract: "],[/^1 Tag vorher$/g,"1 day before"],[/^(\d+) Tage vorher$/g,"$1 days before"],[/^1 Stunde$/g,"1 hour"],[/^(\d+) Stunden$/g,"$1 hours"],[/^(\d+) Verträge eingelesen\.$/g,"$1 contracts imported."],[/Noch (\d+) Tage bis zur Kündigungsfrist: /g,"$1 days until the cancellation deadline: "],[/Heute ist der letzte Tag zum Kündigen: /g,"Today is the last day to cancel: "],[/In (\d+) Tagen läuft die Frist ab: /g,"The deadline ends in $1 days: "],[/Rate fällig in (\d+) Tagen: /g,"Instalment due in $1 days: "],[/^Version (\S+)$/g,"Version $1"],[/Nichts fällig in den nächsten (\d+) Tagen\./g,"Nothing due in the next $1 days."],[/(\d+) Verträge als gekündigt markiert/g,"$1 contracts marked as cancelled"],[/noch (\d+) Tage/g,"$1 days left"],[/Heute letzter Tag/g,"Last day today"],[/Frist vorbei/g,"Deadline passed"],[/Guten Morgen/g,"Good morning"],[/Guten Tag/g,"Good day"],[/Guten Abend/g,"Good evening"],[/ pro Monat/g," per month"],[/Hallo,/g,"Hello,"]],ru:[[/ pro Jahr/g," в год"],[/ pro Woche/g," в неделю"],[/ pro Tag/g," в день"],[/Deine Testphase läuft bis (.+?)\. Danach kostet Plus 4,99 € pro Monat\./g,"Пробный период действует до $1. Затем Plus стоит 4,99 € в месяц."],[/Dein Abo ist aktiv\. Nächste Abbuchung am (.+?) \(4,99 €\)\./g,"Подписка активна. Следующее списание $1 (4,99 €)."],[/Wirklich kündigen\? Plus bleibt bis (.+?) aktiv\. Danach geht es nur noch mit Bezahlung weiter, eine zweite Testphase gibt es nicht\./g,"Точно отменить? Plus останется активным до $1. Дальше только платно, второго пробного периода не будет."],[/^Danach ab (.+)$/g,"Затем с $1"],[/Gekündigt · löscht sich in (\d+) Tagen/g,"Отменён · удалится через $1 дн."],[/Gekündigt · löscht sich morgen/g,"Отменён · удалится завтра"],[/Gekündigt · löscht sich heute/g,"Отменён · удалится сегодня"],[/ Rate · (\d+)\/(\d+) Raten · offen /g," за взнос · оплачено $1/$2 · осталось "],[/\((\d+) von (\d+) Raten\)/g,"($1 из $2 взносов)"],[/^(\d+) Raten, gesamt /g,"$1 взносов, всего "],[/alle (\d+) Tage/g,"каждые $1 дн."],[/am (\d+)\. jeden Monats/g,"$1-го числа каждого месяца"],[/Budget überschritten: (.+?) von /g,"Бюджет превышен: $1 из "],[/^([\d.,]+) von ([\d.,]+)/g,"$1 из $2"],[/^Zugestimmt am /g,"Принято "],[/ · (\d+) Zeichen$/g," · $1 симв."],[/^Kündigen bis: /g,"Отменить до: "],[/^Zahlung: /g,"Платёж: "],[/^Rate: /g,"Взнос: "],[/^Vertrag: /g,"Договор: "],[/^1 Tag vorher$/g,"за 1 день"],[/^(\d+) Tage vorher$/g,"за $1 дн."],[/^1 Stunde$/g,"1 час"],[/^(\d+) Stunden$/g,"$1 ч."],[/^(\d+) Verträge eingelesen\.$/g,"Загружено договоров: $1."],[/Noch (\d+) Tage bis zur Kündigungsfrist: /g,"До срока отмены $1 дн.: "],[/Heute ist der letzte Tag zum Kündigen: /g,"Сегодня последний день отмены: "],[/In (\d+) Tagen läuft die Frist ab: /g,"Срок истекает через $1 дн.: "],[/Rate fällig in (\d+) Tagen: /g,"Взнос через $1 дн.: "],[/^Version (\S+)$/g,"Версия $1"],[/Nichts fällig in den nächsten (\d+) Tagen\./g,"Ничего не нужно делать в ближайшие $1 дн."],[/(\d+) Verträge als gekündigt markiert/g,"Отмечено отменённых договоров: $1"],[/noch (\d+) Tage/g,"осталось $1 дн."],[/Heute letzter Tag/g,"Сегодня последний день"],[/Frist vorbei/g,"Срок истёк"],[/Guten Morgen/g,"Доброе утро"],[/Guten Tag/g,"Добрый день"],[/Guten Abend/g,"Добрый вечер"],[/ pro Monat/g," в месяц"],[/Hallo,/g,"Привет,"]],tr:[[/ pro Jahr/g," yıllık"],[/ pro Woche/g," haftalık"],[/ pro Tag/g," günlük"],[/Deine Testphase läuft bis (.+?)\. Danach kostet Plus 4,99 € pro Monat\./g,"Deneme süren $1 tarihine kadar sürer. Sonrasında Plus aylık 4,99 € tutar."],[/Dein Abo ist aktiv\. Nächste Abbuchung am (.+?) \(4,99 €\)\./g,"Aboneliğin aktif. Sonraki tahsilat: $1 (4,99 €)."],[/Wirklich kündigen\? Plus bleibt bis (.+?) aktiv\. Danach geht es nur noch mit Bezahlung weiter, eine zweite Testphase gibt es nicht\./g,"Gerçekten iptal edilsin mi? Plus $1 tarihine kadar aktif kalır. Sonrasında yalnızca ödemeyle devam eder, ikinci bir deneme yoktur."],[/^Danach ab (.+)$/g,"Sonra $1 itibarıyla"],[/Gekündigt · löscht sich in (\d+) Tagen/g,"İptal edildi · $1 gün sonra silinir"],[/Gekündigt · löscht sich morgen/g,"İptal edildi · yarın silinir"],[/Gekündigt · löscht sich heute/g,"İptal edildi · bugün silinir"],[/ Rate · (\d+)\/(\d+) Raten · offen /g," taksit · $1/$2 ödendi · kalan "],[/\((\d+) von (\d+) Raten\)/g,"($1/$2 taksit)"],[/^(\d+) Raten, gesamt /g,"$1 taksit, toplam "],[/alle (\d+) Tage/g,"$1 günde bir"],[/am (\d+)\. jeden Monats/g,"her ayın $1. günü"],[/Budget überschritten: (.+?) von /g,"Bütçe aşıldı: $1 / "],[/^([\d.,]+) von ([\d.,]+)/g,"$1 / $2"],[/^Zugestimmt am /g,"Onay tarihi: "],[/ · (\d+) Zeichen$/g," · $1 karakter"],[/^Kündigen bis: /g,"İptal son tarihi: "],[/^Zahlung: /g,"Ödeme: "],[/^Rate: /g,"Taksit: "],[/^Vertrag: /g,"Sözleşme: "],[/^1 Tag vorher$/g,"1 gün önce"],[/^(\d+) Tage vorher$/g,"$1 gün önce"],[/^1 Stunde$/g,"1 saat"],[/^(\d+) Stunden$/g,"$1 saat"],[/^(\d+) Verträge eingelesen\.$/g,"$1 sözleşme içe aktarıldı."],[/Noch (\d+) Tage bis zur Kündigungsfrist: /g,"İptal son tarihine $1 gün: "],[/Heute ist der letzte Tag zum Kündigen: /g,"Bugün iptal için son gün: "],[/In (\d+) Tagen läuft die Frist ab: /g,"Süre $1 gün sonra doluyor: "],[/Rate fällig in (\d+) Tagen: /g,"Taksit $1 gün sonra: "],[/^Version (\S+)$/g,"Sürüm $1"],[/Nichts fällig in den nächsten (\d+) Tagen\./g,"Önümüzdeki $1 gün içinde vadesi gelen yok."],[/(\d+) Verträge als gekündigt markiert/g,"İptal edildi olarak işaretlenen sözleşme: $1"],[/noch (\d+) Tage/g,"$1 gün kaldı"],[/Heute letzter Tag/g,"Bugün son gün"],[/Frist vorbei/g,"Süre doldu"],[/Guten Morgen/g,"Günaydın"],[/Guten Tag/g,"İyi günler"],[/Guten Abend/g,"İyi akşamlar"],[/ pro Monat/g," aylık"],[/Hallo,/g,"Merhaba,"]]};
+RAW.split("\n").forEach(function(l){var p=l.split("|");for(var k=1;k<4;k++)DICT[k][p[0]]=p[k]});
+var WRX=null,PROT=[];
+function LC(){return {en:"en-GB",ru:"ru-RU",tr:"tr-TR"}[UI.lang]||"de"+"-DE"}
+function protList(){var a=[];function ad(v){if(typeof v==="string"&&v.trim().length>1)a.push(v.trim())}
+items.forEach(function(i){ad(i.n);ad(i.o)});NOTES.forEach(function(n){ad(n.t);ad(n.b)});TPLS.forEach(function(t){ad(t.n)});
+AG.forEach(function(v){if(v.r==="u")ad(v.t)});HM.forEach(function(v){if(v.r==="u")ad(v.t)});
+if(CUR){ad(CUR);if(ACC[CUR])ad(ACC[CUR].user)}
+a=a.filter(function(v,i){return a.indexOf(v)===i}).sort(function(p,q){return q.length-p.length});return a.slice(0,400)}
+function L(s){var k=LG[UI.lang];if(!k||typeof s!=="string")return s;var t=s.trim();if(!t)return s;var d=DICT[k][t];if(d&&PROT.indexOf(t)<0)return s.replace(t,d);
+var hold=[];PROT.forEach(function(p){if(s.indexOf(p)>-1){s=s.split(p).join(String.fromCharCode(0xE000+hold.length));hold.push(p)}});
+RX[UI.lang].forEach(function(r){s=s.replace(r[0],r[1])});
+if(!WRX)WRX=WORDS.map(function(w){return [w,new RegExp("(^|[^A-Za-zÄÖÜäöüß])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"(?![A-Za-zÄÖÜäöüß])","g")]});
+WRX.forEach(function(w){var v=DICT[k][w[0]];if(v)s=s.replace(w[1],function(m,a){return a+v})});
+hold.forEach(function(p,i){s=s.split(String.fromCharCode(0xE000+i)).join(p)});return s}
+function trAll(){document.documentElement.lang=UI.lang||"de";var k=LG[UI.lang];if(!k)return;PROT=protList();var a=$("app"),w=document.createTreeWalker(a,NodeFilter.SHOW_TEXT),n,l=[];while(n=w.nextNode())l.push(n);
+l.forEach(function(n){var p=n.parentNode;if(!p||(p.tagName==="OPTION"&&!p.hasAttribute("value"))||(p.closest&&p.closest("[data-nt]")))return;var v=L(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v});
+a.querySelectorAll("[placeholder]").forEach(function(e){if(!e.hasAttribute("data-nt"))e.placeholder=L(e.placeholder)})}
+function render0(){
+wm();if(CLOUD&&(AUTHWAIT||NETERR))return waitView();if(!CUR||!ACC[CUR]){CUR=null;return loginView()}
+if(BLOCKED)return blockedView();
+purge();if(!me().eula)return eulaView();
+if(me().pin&&!UNL)return pinView();
+var a=$("app");a.textContent="";
+var m=me(),nx=sorted().filter(function(i){return !i.x})[0],hero=h("div","hero");
+hero.appendChild(h("div","top",null,[h("h1",null,greet()+", "+m.user),h("span","badge"+(PLUSB()?" plus":""),PLUSB()?"Mitglied +":"Mitglied")]));
+var x=h("div","nx");
+if(nx){x.appendChild(h("div","mu","Nächste Frist"));x.appendChild(h("div","name",nx.n));x.appendChild(badgeFor(nx))}
+else x.appendChild(h("div","mu","Noch keine Verträge eingetragen."));
+hero.appendChild(x);hero.appendChild(stats());a.appendChild(hero);
+var bn=bwBanner();if(bn)a.appendChild(bn);var box=h("div");a.appendChild(box);
+({v:viewV,u:function(b){viewU(b);extraU(b);rateCard(b);payCard(b);memAd(b)},c:viewC,ag:viewAg,b:viewB,n:viewN,d:viewMore,k:function(b){viewK(b);sec(b)}})[tab](box);
+a.appendChild(foot());if(tab!=="ag")a.appendChild(fab());a.appendChild(tabs())}
+if(CUR&&ACC[CUR]){ensure(ACC[CUR]);items=rd("aw_d_"+CUR,[]);NOTES=rd("aw_n_"+CUR,[]);TPLS=rd("aw_t_"+CUR,[])}
+applyUI();
+cloudInit();
+render();fire();
+setInterval(function(){if(CUR)fire()},60000);
+</script><script>if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(function(){})</script></body></html>

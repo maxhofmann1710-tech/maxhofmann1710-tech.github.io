@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AboWächter Admin</title>
+<style>
+:root{--bg:#f3f4fa;--card:#fff;--tx:#17182b;--mu:#6c6f8a;--bd:#e5e7f2;--ac:#5b5bd6;--red:#c4262e;--redbg:#fde8ea;--ok:#1f7a45;--okbg:#e2f5ea;--amb:#8f5b00;--ambbg:#fff1d0}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1020;--card:#191a2e;--tx:#eef0ff;--mu:#9a9dc0;--bd:#2a2c47;--ac:#8b8bff;--red:#ffb4b8;--redbg:#4b1d22;--ok:#9ae6b8;--okbg:#17382a;--amb:#ffd990;--ambbg:#4a3813}}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:4px 0}h2{font-size:17px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px}
+.mu{color:var(--mu);font-size:13px}
+input{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px;margin:6px 0}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+.pri{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:600}
+.dang{background:var(--redbg);color:var(--red);border-color:var(--red)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stats div{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center}.stats b{display:block;font-size:20px}
+@media (max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+.u{cursor:pointer}.u:hover{border-color:var(--ac)}
+.badge{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.red{background:var(--redbg);color:var(--red)}.ok{background:var(--okbg);color:var(--ok)}.amb{background:var(--ambbg);color:var(--amb)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--bd)}.kv:last-child{border:0}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:6px 4px;border-bottom:1px solid var(--bd)}
+.note{border-left:4px solid var(--ac);background:var(--card);padding:10px 12px;border-radius:0 12px 12px 0;margin-bottom:12px;font-size:14px}
+.msg{color:var(--red);margin:8px 0}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="einstellungen.js"></script>
+</head>
+<body><main id="app"></main>
+<script>
+var $=function(i){return document.getElementById(i)};
+function h(t,c,x,k){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;(k||[]).forEach(function(y){if(y)e.appendChild(y)});return e}
+function d(x){return x?new Date(x).toLocaleString("de-DE"):"–"}
+function eur(n){return (+n||0).toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2})+" €"}
+var USERS=[],SEL=null,Q="",MSG="",INFO="",DEL=false,ME=null,auth=null,db=null;
+function cfgOk(){try{return !!(window.firebase&&window.FIREBASE_CONFIG&&FIREBASE_CONFIG.apiKey&&!/HIER/.test(FIREBASE_CONFIG.apiKey))}catch(e){return false}}
+function errTxt(e){var c=(e&&e.code)||"";return ({"auth/invalid-credential":"E-Mail oder Passwort stimmt nicht.","auth/wrong-password":"E-Mail oder Passwort stimmt nicht.","auth/user-not-found":"E-Mail oder Passwort stimmt nicht.","auth/popup-closed-by-user":"Anmeldung abgebrochen.","auth/unauthorized-domain":"Diese Adresse ist in Firebase nicht freigegeben (Authorized domains).","permission-denied":"Keine Berechtigung."})[c]||("Fehler: "+((e&&e.message)||e))}
+async function load(){MSG="";INFO="Lade Konten …";render();
+try{var s=await db.collection("users").get();USERS=s.docs.map(function(x){return Object.assign({id:x.id},x.data())});USERS.sort(function(a,b){return (b.lastLogin||0)-(a.lastLogin||0)});INFO=""}
+catch(e){USERS=null;INFO="";MSG=e&&e.code==="permission-denied"?"Kein Admin-Zugriff für "+(ME&&ME.email)+". Trage genau diese Gmail-Adresse in den Firestore-Regeln bei isAdmin() ein und veröffentliche die Regeln.":errTxt(e)}
+render()}
+function loginCard(){var c=h("div","card");c.appendChild(h("h2",null,"Admin-Anmeldung"));
+var g=h("button","pri","Mit Google anmelden");g.onclick=function(){var p=new firebase.auth.GoogleAuthProvider();auth.signInWithPopup(p).catch(function(e){MSG=errTxt(e);render()})};c.appendChild(g);
+c.appendChild(h("p","mu","oder mit E-Mail und Passwort:"));var m=h("input");m.type="email";m.placeholder="E-Mail";var p=h("input");p.type="password";p.placeholder="Passwort";c.appendChild(m);c.appendChild(p);
+var b=h("button",null,"Anmelden");b.onclick=function(){auth.signInWithEmailAndPassword(m.value.trim(),p.value).catch(function(e){MSG=errTxt(e);render()})};c.appendChild(b);return c}
+function stats(){var w=h("div","stats"),wk=Date.now()-7*864e5,act=0,ct=0,bl=0;USERS.forEach(function(u){if((u.lastLogin||0)>wk)act++;ct+=(u.items||[]).length;if(u.blocked)bl++});
+[[USERS.length,"Konten"],[act,"aktiv (7 Tage)"],[ct,"Verträge gesamt"],[bl,"gesperrt"]].forEach(function(t){w.appendChild(h("div",null,null,[h("b",null,String(t[0])),h("span","mu",t[1])]))});return w}
+function listView(a){var n=h("div","note");n.textContent="Passwörter sind verschlüsselt gespeichert und für niemanden sichtbar, auch nicht für dich. Für Support: Konto öffnen und „Passwort-Reset-Mail senden“ tippen. Der Nutzer legt dann selbst ein neues Passwort fest.";a.appendChild(n);
+a.appendChild(stats());var c=h("div","card"),q=h("input");q.id="q";q.placeholder="Suchen nach Name oder E-Mail";q.value=Q;q.oninput=function(){Q=q.value;render();var z=$("q");z.focus();z.setSelectionRange(Q.length,Q.length)};c.appendChild(q);a.appendChild(c);
+var ql=Q.toLowerCase(),l=USERS.filter(function(u){return !ql||((u.user||"")+" "+(u.email||"")).toLowerCase().indexOf(ql)>-1});
+l.forEach(function(u){var r=h("div","card u",null,[h("div","top",null,[h("div",null,null,[h("b",null,u.user||"(ohne Namen)"),h("div","mu",u.email||u.id)]),h("span","badge "+(u.blocked?"red":"ok"),u.blocked?"gesperrt":"aktiv")]),h("div","mu",(u.provider==="google.com"?"Google":"E-Mail")+" · "+(u.items||[]).length+" Verträge · letzte Anmeldung "+d(u.lastLogin))]);r.onclick=function(){SEL=u.id;DEL=false;MSG="";INFO="";render();window.scrollTo(0,0)};a.appendChild(r)});
+if(!l.length)a.appendChild(h("p","mu","Keine Konten gefunden."))}
+function detail(a,u){var bk=h("button",null,"‹ Zurück zur Liste");bk.onclick=function(){SEL=null;DEL=false;render()};a.appendChild(bk);a.appendChild(h("div",null,null,[]));
+var c=h("div","card");c.style.marginTop="12px";c.appendChild(h("div","top",null,[h("h2",null,u.user||"(ohne Namen)"),h("span","badge "+(u.blocked?"red":"ok"),u.blocked?"gesperrt":"aktiv")]));
+var p=u.profile||{};[["E-Mail",u.email],["Nutzer-ID",u.id],["Anmeldung über",u.provider==="google.com"?"Google":"E-Mail und Passwort"],["Registriert",d(u.created)],["Letzte Anmeldung",d(u.lastLogin)],["Zuletzt gespeichert",d(u.updated)],["Nutzungsbedingungen",p.eula?"zugestimmt am "+d(p.eula):"nicht zugestimmt"],["Verträge",String((u.items||[]).length)],["Notizen",String((u.notes||[]).length)+" (Inhalt aus Datenschutzgründen ausgeblendet)"],["App-PIN aktiv",p.pin?"ja":"nein"]].forEach(function(r){c.appendChild(h("div","kv",null,[h("span","mu",r[0]),h("span",null,r[1]||"–")]))});
+a.appendChild(c);
+var t=h("div","card");t.appendChild(h("h2",null,"Verträge"));var it=u.items||[];
+if(it.length){var tb=h("table"),hd=h("tr");["Name","Betrag","Rhythmus","Kündigen bis / Status"].forEach(function(x){hd.appendChild(h("th",null,x))});tb.appendChild(hd);
+it.forEach(function(i){var r=h("tr");[i.n,eur(i.k),i.p==="Eigener Rhythmus"?"alle "+(i.c||7)+" Tage":(i.p||"monatlich"),(i.rt==="R"?"Ratenzahlung · ":"")+(i.x?"gekündigt":(i.d||"–"))].forEach(function(x){r.appendChild(h("td",null,x))});tb.appendChild(r)});t.appendChild(tb)}
+else t.appendChild(h("p","mu","Keine Verträge."));a.appendChild(t);
+var ac=h("div","card");ac.appendChild(h("h2",null,"Aktionen"));var row=h("div","row");
+var r1=h("button","pri","Passwort-Reset-Mail senden");r1.onclick=function(){if(!u.email||u.provider==="google.com"){INFO="Dieses Konto nutzt Google-Anmeldung. Ein Passwort gibt es dort nicht.";render();return}auth.sendPasswordResetEmail(u.email).then(function(){INFO="Reset-Mail an "+u.email+" gesendet.";render()},function(e){MSG=errTxt(e);render()})};row.appendChild(r1);
+var r2=h("button",u.blocked?null:"dang",u.blocked?"Entsperren":"Sperren");r2.onclick=function(){db.collection("users").doc(u.id).update({blocked:!u.blocked}).then(function(){u.blocked=!u.blocked;INFO=u.blocked?"Konto gesperrt.":"Konto entsperrt.";render()},function(e){MSG=errTxt(e);render()})};row.appendChild(r2);
+var r3=h("button",null,"Daten kopieren (Auskunft)");r3.onclick=function(){var x=JSON.stringify(u,null,2);try{navigator.clipboard.writeText(x).then(function(){INFO="Daten kopiert. Du kannst sie dem Nutzer als Auskunft schicken.";render()})}catch(e){INFO="Kopieren nicht möglich.";render()}};row.appendChild(r3);
+var r4=h("button","dang",DEL?"Wirklich alle Daten löschen? Nochmal tippen":"Daten löschen");r4.onclick=function(){if(!DEL){DEL=true;render();return}db.collection("users").doc(u.id).delete().then(function(){USERS=USERS.filter(function(x){return x.id!==u.id});SEL=null;DEL=false;INFO="Daten gelöscht. Das Login selbst löschst du in der Firebase-Konsole unter Authentication.";render()},function(e){MSG=errTxt(e);render()})};row.appendChild(r4);
+ac.appendChild(row);ac.appendChild(h("p","mu","Sperren verhindert die Nutzung der App. Für eine harte Sperre zusätzlich in der Firebase-Konsole unter Authentication beim Nutzer „Konto deaktivieren“ wählen."));a.appendChild(ac)}
+function render(){var a=$("app");a.textContent="";
+a.appendChild(h("div","top",null,[h("h1",null,"AboWächter Admin"),ME?h("div","row",null,[h("span","mu",ME.email),(function(){var b=h("button",null,"Neu laden");b.onclick=load;return b})(),(function(){var b=h("button",null,"Abmelden");b.onclick=function(){auth.signOut()};return b})()]):null]));
+if(!cfgOk()){var c=h("div","card");c.appendChild(h("h2",null,"Noch nicht eingerichtet"));c.appendChild(h("p",null,"Trage zuerst deine Firebase-Daten in einstellungen.js ein."));a.appendChild(c);return}
+if(MSG)a.appendChild(h("div","msg",MSG));if(INFO)a.appendChild(h("div","note",INFO));
+if(!ME){a.appendChild(loginCard());return}
+if(!USERS)return;
+var u=SEL&&USERS.filter(function(x){return x.id===SEL})[0];if(u)detail(a,u);else listView(a)}
+if(cfgOk()){firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.firestore();auth.onAuthStateChanged(function(u){ME=u;if(u)load();else{USERS=[];SEL=null;render()}})}
+render();
+</script>
+</body></html>
