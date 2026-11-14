@@ -12,10 +12,10 @@
 window.FIREBASE_CONFIG = {
   apiKey: "AIzaSyAuDHStPr6r2FE3EaBxyJgxpXEbsKdfZ3M",
   authDomain: "abbowaechter.firebaseapp.com",
-  projectId: "HIER_EINFUEGEN",
-  storageBucket: "HIER_EINFUEGEN",
-  messagingSenderId: "HIER_EINFUEGEN",
-  appId: "HIER_EINFUEGEN"
+  projectId: "abbowaechter",
+  storageBucket: "abbowaechter.firebasestorage.app",
+  messagingSenderId: "45413811797",
+  appId: "1:45413811797:web:13e4db0ef5e51316aab6dc"
 };
 
 // 2) Support-Adresse (wird z. B. gesperrten Nutzern angezeigt)
