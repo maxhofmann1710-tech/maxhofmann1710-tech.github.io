@@ -7,7 +7,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="einstellungen.js"></script>
-<script>window.__T0=Date.now();try{var __u=JSON.parse(localStorage.getItem("aw_ui")||"{}");if(__u.theme==="dark"||__u.theme==="light")document.documentElement.setAttribute("data-theme",__u.theme);if(__u.anim===false)document.documentElement.classList.add("noanim")}catch(e){}</script>
+<script>window.__T0=Date.now();try{var __u=JSON.parse(localStorage.getItem("aw_ui")||"{}");if(__u.theme==="dark"||__u.theme==="light")document.documentElement.setAttribute("data-theme",__u.theme);if(__u.anim===false)document.documentElement.classList.add("noanim");var __a=({d:.75,n:1,s:1.35}[__u.ai||"n"]||1)/(__u.asp||1);window.__AT=__a;document.documentElement.style.setProperty("--at",__a.toFixed(3))}catch(e){}</script>
 <style>
 :root{--bg:#f3f4fa;--card:#fff;--tx:#17182b;--mu:#6c6f8a;--bd:#e5e7f2;--ac:#5b5bd6;--ac2:#8b5cf6;--onac:#fff;--red:#c4262e;--redbg:#fde8ea;--amb:#8f5b00;--ambbg:#fff1d0;--ok:#1f7a45;--okbg:#e2f5ea;--sh:0 4px 18px rgba(40,40,100,.08);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1020;--card:#191a2e;--tx:#eef0ff;--mu:#9a9dc0;--bd:#2a2c47;--ac:#8b8bff;--ac2:#b08cff;--onac:#0f1020;--red:#ffb4b8;--redbg:#4b1d22;--amb:#ffd990;--ambbg:#4a3813;--ok:#9ae6b8;--okbg:#17382a;--sh:0 4px 18px rgba(0,0,0,.35)}}
@@ -84,14 +84,14 @@ textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);backgroun
 .fab{width:auto;min-width:48px;padding:0 18px;border-radius:24px;font-size:15px}
 .gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;background:#fff;color:#1f1f1f;border:1px solid #dadce0;font-weight:600}
 .orl{display:flex;align-items:center;gap:10px;color:var(--mu);font-size:13px;margin:14px 0 4px}.orl:before,.orl:after{content:"";flex:1;height:1px;background:var(--bd)}
-#splash{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#0f1020;transition:opacity .45s ease,visibility .45s}
+#splash{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#0f1020;transition:opacity calc(.45s*var(--at)) ease,visibility calc(.45s*var(--at))}
 #splash.out{opacity:0;visibility:hidden}
-#splash .sp-logo{animation:spPop .7s cubic-bezier(.2,1.4,.4,1) both,spFloat 2.4s ease-in-out .8s infinite}
-#splash .sp-check{stroke-dasharray:240;stroke-dashoffset:240;animation:spDraw .6s .45s ease forwards}
-#splash .sp-name{font-size:26px;font-weight:700;color:#eef0ff;animation:spUp .6s .15s ease both}
-#splash .sp-sub{font-size:14px;color:#9a9dc0;margin-top:-8px;animation:spUp .6s .25s ease both}
-#splash .sp-bar{width:150px;height:4px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:8px;animation:spUp .6s .35s ease both}
-#splash .sp-bar i{display:block;height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,#5b5bd6,#8b5cf6);animation:spLoad 1.1s ease-in-out infinite}
+#splash .sp-logo{animation:spPop calc(.7s*var(--at)) cubic-bezier(.2,1.4,.4,1) both,spFloat calc(2.4s*var(--at)) ease-in-out calc(.8s*var(--at)) infinite}
+#splash .sp-check{stroke-dasharray:240;stroke-dashoffset:240;animation:spDraw calc(.6s*var(--at)) calc(.45s*var(--at)) ease forwards}
+#splash .sp-name{font-size:26px;font-weight:700;color:#eef0ff;animation:spUp calc(.6s*var(--at)) calc(.15s*var(--at)) ease both}
+#splash .sp-sub{font-size:14px;color:#9a9dc0;margin-top:-8px;animation:spUp calc(.6s*var(--at)) calc(.25s*var(--at)) ease both}
+#splash .sp-bar{width:150px;height:4px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:8px;animation:spUp calc(.6s*var(--at)) calc(.35s*var(--at)) ease both}
+#splash .sp-bar i{display:block;height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,#5b5bd6,#8b5cf6);animation:spLoad calc(1.1s*var(--at)) ease-in-out infinite}
 @keyframes spPop{from{transform:scale(.55);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes spFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes spUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -112,10 +112,10 @@ textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);backgroun
 .hero-in{animation:heroIn calc(.65s*var(--at)) var(--ae) both}
 @keyframes heroIn{from{opacity:0;transform:translateY(calc(var(--ad)*-.6)) scale(var(--as))}to{opacity:1;transform:none}}
 .hero{position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.2) 50%,transparent 70%);transform:translateX(-130%);animation:shine calc(7s/var(--at)) ease-in-out 1.4s infinite}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.2) 50%,transparent 70%);transform:translateX(-130%);animation:shine calc(7s*var(--at)) ease-in-out 1.4s infinite}
 @keyframes shine{0%{transform:translateX(-130%)}28%,100%{transform:translateX(130%)}}
 .ai-d .hero::after,.ai-d .fab::after{display:none}
-.fab::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;animation:pulse 2.8s ease-out 1s infinite}
+.fab::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;animation:pulse calc(2.8s*var(--at)) ease-out 1s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(139,92,246,.55)}80%,100%{box-shadow:0 0 0 18px rgba(139,92,246,0)}}
 .pri,.sec,.mini,.chip,.gbtn,.tg{position:relative;overflow:hidden}
 .chips>*,.acts>*{flex:none}
@@ -123,7 +123,7 @@ textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);backgroun
 @keyframes rip{to{transform:scale(2.6);opacity:0}}
 .wn{position:fixed;inset:0;z-index:90;background:rgba(10,10,30,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;box-sizing:border-box;animation:wnBg calc(.3s*var(--at)) ease both}
 @media (min-height:640px){.wn{align-items:center}}
-.wn.out{animation:wnBgOut .3s ease both}.wn.out .wn-card{animation:wnOut .3s ease both}
+.wn.out{animation:wnBgOut calc(.3s*var(--at)) ease both}.wn.out .wn-card{animation:wnOut calc(.3s*var(--at)) ease both}
 .wn-card{position:relative;overflow:hidden;width:100%;max-width:440px;max-height:86vh;overflow-y:auto;box-sizing:border-box;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:24px;padding:22px 18px 18px;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:wnIn calc(.6s*var(--at)) var(--ae) both}
 .wn-x{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;background:var(--bg);font-size:24px;line-height:1;color:var(--mu);z-index:2}
 .wn-top{display:flex;align-items:center;gap:14px;margin-bottom:8px;padding-right:40px}
@@ -138,7 +138,7 @@ textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);backgroun
 @keyframes wnItem{from{opacity:0;transform:translateX(calc(var(--ad)*.6))}to{opacity:1;transform:none}}
 .cf{position:absolute;top:-14px;width:8px;height:13px;border-radius:2px;pointer-events:none;animation:cf calc(1.7s*var(--at)) cubic-bezier(.2,.6,.4,1) forwards}
 @keyframes cf{to{transform:translate(var(--x),360px) rotate(var(--r));opacity:0}}
-nav button{position:relative}nav button svg{position:relative;z-index:1;transition:transform .25s cubic-bezier(.2,1.3,.4,1)}nav button span{position:relative;z-index:1}
+nav button{position:relative}nav button svg{position:relative;z-index:1;transition:transform calc(.25s*var(--at)) cubic-bezier(.2,1.3,.4,1)}nav button span{position:relative;z-index:1}
 nav button.on svg{transform:translateY(-1px) scale(1.12)}
 nav button.on::before{content:"";position:absolute;top:3px;left:50%;width:44px;height:30px;margin-left:-22px;border-radius:99px;background:var(--ac);opacity:.16}
 nav.chg button.on::before{animation:navPill calc(.4s*var(--at)) var(--ae) both}
@@ -153,10 +153,11 @@ body{transition:background-color .3s}
 @keyframes barUp{from{transform:scaleY(0)}to{transform:none}}
 .donut circle+circle{animation:donIn calc(.8s*var(--at)) ease both}@keyframes donIn{from{opacity:0}to{opacity:1}}
 .dwrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.dleg{flex:1;min-width:140px}.drow{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:14px}.drow span:nth-child(2){flex:1}.ddot{width:10px;height:10px;border-radius:50%;flex:none}
-.fab,#lgb{transition:transform .3s,opacity .3s}
+.fab,#lgb{transition:transform calc(.3s*var(--at)),opacity calc(.3s*var(--at))}
 body.hidefab .fab,body.hidefab #lgb{transform:translateY(160px);opacity:0;pointer-events:none}
 main{padding-bottom:84px!important}
-.spd{display:flex;align-items:center;gap:10px}.spd input{flex:1}
+#offp{position:fixed;left:0;right:0;margin:0 auto;width:max-content;top:calc(8px + env(safe-area-inset-top,0px));z-index:60;background:var(--ambbg);color:var(--amb);border:1px solid var(--bd);padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.18);pointer-events:none;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis;animation:pop calc(.42s*var(--at)) var(--ae) both}
+.spd{display:flex;align-items:center;gap:10px}.spd input{flex:1}.spd b{min-width:46px;text-align:right}.spdl{display:flex;justify-content:space-between;align-items:center;margin:2px 0 8px}.spprev{display:flex;gap:6px;height:48px;align-items:flex-end;margin:6px 0 10px;padding:8px;border-radius:12px;background:var(--bg)}.spprev i{flex:1;border-radius:6px;background:linear-gradient(180deg,var(--ac),var(--ac2));height:100%;transform-origin:bottom}.spprev.go i{animation:spPrev calc(.7s*var(--at)) var(--ae) both}.spprev.go i:nth-child(2){animation-delay:calc(var(--sd)*1)}.spprev.go i:nth-child(3){animation-delay:calc(var(--sd)*2)}.spprev.go i:nth-child(4){animation-delay:calc(var(--sd)*3)}.spprev.go i:nth-child(5){animation-delay:calc(var(--sd)*4)}.spprev.go i:nth-child(6){animation-delay:calc(var(--sd)*5)}@keyframes spPrev{from{transform:scaleY(.08);opacity:.3}to{transform:none;opacity:1}}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation;overscroll-behavior:none}
 body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input,textarea,select,.sel{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
@@ -202,7 +203,7 @@ ACC[m]=Object.assign(ACC[m]||{},{user:u,pw:hs})}
 else{var a=ACC[m];if(!a)return setErr("Kein Konto mit dieser E-Mail. Bitte registrieren.");
 if(!a.pw)a.pw=hs;else if(a.pw!==hs)return setErr("E-Mail oder Passwort stimmt nicht.")}
 ensure(ACC[m]);saveAcc();UNL=true;CUR=m;wr("aw_cur",m);items=rd("aw_d_"+m,[]);NOTES=rd("aw_n_"+m,[]);TPLS=rd("aw_t_"+m,[]);tab="v";filt="Alle";armed=false;note="";render();fire()}
-function logout(){if(CLOUD&&FBU){cloudSaveNow().then(function(){firebase.auth().signOut()},function(){firebase.auth().signOut()});return}UNL=false;CUR=null;wr("aw_cur",null);items=[];render()}
+function logout(){if(OFFNOSDK||(CLOUD&&!ONLINE&&isDirty())){note="Abmelden geht nur mit Internet, damit nichts verloren geht.";render();return}if(CLOUD&&FBU){cloudSaveNow().then(function(){firebase.auth().signOut()},function(){firebase.auth().signOut()});return}UNL=false;CUR=null;wr("aw_cur",null);items=[];render()}
 function loginView(){
 var a=$("app");a.textContent="";
 var hero=h("div","hero");var lgo=h("div");lgo.innerHTML=logoSvg(56);lgo.style.marginBottom="10px";hero.appendChild(lgo);hero.appendChild(h("h1",null,"AboWächter"));hero.appendChild(h("div","mu","Behalte deine Kündigungsfristen im Blick. Melde dich an oder registriere dich, um zu starten."));a.appendChild(hero);
@@ -328,13 +329,13 @@ var d=h("button","sec",armed?"Wirklich alle Daten löschen? Nochmal tippen":"Kon
 d.onclick=function(){if(!armed){armed=true;render();return}
 if(CLOUD&&FBU){cloudDelete();return}try{localStorage.removeItem("aw_d_"+CUR);localStorage.removeItem("aw_s_"+CUR);localStorage.removeItem("aw_n_"+CUR)}catch(x){}delete ACC[CUR];saveAcc();armed=false;logout()};
 c.appendChild(d);box.appendChild(c)}
-var UI=rd("aw_ui",{hue:255,sat:70,theme:"auto",fs:16}),PRE=[255,330,170,25,210,130],Q="",SORT="Frist";
+var UI=Object.assign({hue:255,sat:70,theme:"auto",fs:16},rd("aw_ui",{})||{}),PRE=[255,330,170,25,210,130],Q="",SORT="Frist";
 function sv(){wr("aw_ui",UI)}
 var NEW=false,OPEN=null,DEL=null,EDIT=null,UNL=false,PAYS={"täglich":1,"wöchentlich":7,"alle 2 Wochen":14,"monatlich":30.4375,"vierteljährlich":91.3125,"halbjährlich":182.625,"jährlich":365.25,"Eigener Rhythmus":0,"Fester Tag im Monat":30.4375},MO={"monatlich":1,"vierteljährlich":3,"halbjährlich":6,"jährlich":12},TPL=[{n:"Mitternacht",hue:235,sat:60,lt:-12,theme:"dark"},{n:"Ozean",hue:195,sat:75,lt:-4,theme:"light"},{n:"Sunset",hue:335,sat:80,lt:0,theme:"dark"},{n:"Wald",hue:150,sat:55,lt:-14,theme:"dark"},{n:"Sakura",hue:340,sat:70,lt:16,theme:"light"}];
 function cs(){return UI.cur||"€"}
 function dd(i){return i.p==="Eigener Rhythmus"?Math.max(1,i.c||7):(PAYS[i.p]||30.4375)}
 function mon(i){return i.rt==="R"&&rOpen(i)<=0?0:i.k/dd(i)*30.4375/(i.sh>1?i.sh:1)}
-var SUB=null,HC="Erste Schritte",HQ="",NOTES=[],NQ="",NF="Alle",NE=null,NDEL=null,VER="1.6",QK=[["Netflix","Streaming","monatlich"],["Spotify","Musik","monatlich"],["Fitnessstudio","Fitness","monatlich"],["Handyvertrag","Handy & Internet","monatlich"],["Haftpflicht","Versicherung","jährlich"],["Strom","Wohnen & Energie","monatlich"]];
+var SUB=null,HC="Erste Schritte",HQ="",NOTES=[],NQ="",NF="Alle",NE=null,NDEL=null,VER="1.7",QK=[["Netflix","Streaming","monatlich"],["Spotify","Musik","monatlich"],["Fitnessstudio","Fitness","monatlich"],["Handyvertrag","Handy & Internet","monatlich"],["Haftpflicht","Versicherung","jährlich"],["Strom","Wohnen & Energie","monatlich"]];
 var EULA=["1. Nutzungsrecht: Du erhältst ein einfaches, nicht übertragbares Recht, AboWächter privat zu nutzen.","2. Urheberrecht: Die App, ihr Design und ihr Quelltext sind urheberrechtlich geschützt. Kopieren, Nachbauen, Weiterverkaufen und das Entfernen von Urheberhinweisen oder Wasserzeichen sind nicht erlaubt.","3. Inhalte: Du bist für deine Eingaben verantwortlich. Beleidigungen, Hass, Rassismus und rechtswidrige Inhalte sind verboten und werden gefiltert.","4. Keine Gewähr: Du trägst Fristen und Beträge selbst ein. Erinnerungen können ausfallen. Prüfe wichtige Fristen immer zusätzlich im Vertrag. Für verpasste Kündigungen wird nicht gehaftet, außer bei Vorsatz und grober Fahrlässigkeit.","5. Datenspeicherung: Deine Daten liegen nur lokal auf deinem Gerät. Löschst du Browserdaten oder die App, sind sie weg. Sichere sie regelmäßig.","6. Änderungen: Funktionen und diese Bedingungen können sich ändern. Bei wesentlichen Änderungen wirst du erneut um Zustimmung gebeten.","7. Beendigung: Du kannst dein Konto jederzeit löschen. Bei Verstößen kann die Nutzung beendet werden.","8. Recht: Es gilt deutsches Recht, soweit zwingende Verbraucherschutzvorschriften nichts anderes bestimmen."];
 var PRIV=["Es werden keine Daten an einen Server gesendet. E-Mail, Nutzername, Verträge und Notizen bleiben auf deinem Gerät. Passwort und PIN werden nur als Hash gespeichert. Benachrichtigungen nutzen die Funktion deines Browsers."];
 var RIGHTS=["Auskunft und Export: Mehr, Einstellungen, Daten.","Berichtigung: Verträge und Notizen kannst du jederzeit bearbeiten.","Löschung: Mehr, Konto, Konto und Daten löschen.","Widerruf der Zustimmung: Unten auf dieser Seite. Danach wirst du abgemeldet und musst erneut zustimmen.","Keine Weitergabe: Deine Daten werden nicht an Dritte übermittelt."];
@@ -346,7 +347,7 @@ var HELP={"Erste Schritte":[["Was kann der Helper?","Er beantwortet Fragen zur A
 "Design":[["Wie ändere ich die Farben?","Mehr, Einstellungen: Farbrad, Vorlagen, Helligkeit, Intensität und farbiger Hintergrund."]],
 "Konto & Sicherheit":[["Was macht die App-PIN?","Sie sperrt die App beim Öffnen. Du legst sie unter Mehr, Konto fest."],["Passwort vergessen?","Es gibt keine Zurücksetzen-Mail, weil das Konto nur auf deinem Gerät liegt. Lege notfalls ein neues Konto an."]],
 "Daten & Datenschutz":[["Wo liegen meine Daten?","Nur auf deinem Gerät. Sichere sie unter Mehr, Einstellungen, Daten."],["Wie lösche ich alles?","Mehr, Konto, Konto und Daten löschen."]]};
-var LOG=[["1.6","15.11.2026",["Testphasen mit Erinnerung","Abos teilen: nur dein Anteil zählt","Kündigungstag-Rechner","Anbieter-Kontakt mit Kündigung per E-Mail","Diagramme: 12-Monats-Ausgaben und Kategorien","Sparziel und Preisänderungen","Export als Tabelle und Kalender","Animationsgeschwindigkeit einstellbar","Vibration beim Tippen","Berechtigungen für Mitteilungen und Mikrofon","Fühlt sich an wie eine echte App: kein Zoomen, kein Neuladen"]],["1.5.1","15.11.2026",["Neuigkeiten bei jedem Start, in den Einstellungen abschaltbar","Kategorien wieder gut lesbar","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.5","15.11.2026",["Neuigkeiten-Fenster nach Updates","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.4","15.11.2026",["Ladebildschirm beim Start","Animierte Übergänge zwischen den Seiten","Animationen unter Einstellungen, Leistung abschaltbar"]],["1.3","14.11.2026",["Helper vereint Hilfe und Aufgaben","Vollbild ohne farbige Leisten"]],["1.2","14.11.2026",["Anmeldung mit Google oder E-Mail","Daten in der Cloud, auf allen Geräten gleich","Passwort vergessen per E-Mail","KI-Agent jetzt kostenlos für alle","Benachrichtigungen auf Android"]],["1.1","14.11.2026",["Vier Sprachen mit Sprachknopf auf jeder Seite","Schnell-Eingabe mit Vorschau, Raten und Preis-Erkennung","Neues Logo und installierbare App"]],["1.0","13.11.2026",["Notizblock mit Farben, Anheften, Archiv und Suche","Alternative Zahlungstermine mit festem Zahltag und Enddatum","Hilfe-Center mit Themen und Suche","Nutzungsbedingungen mit Zustimmung im Konto","Neues Menü Mehr, Update-Log und Wasserzeichen"]],["0.9","13.11.2026",["Farbrad, Vorlagen und Helligkeit","Eigene Zahlungsrhythmen und Zahlungskalender","Verträge bearbeiten, Favoriten, Duplizieren","App-PIN und Passwort ändern"]],["0.8","13.11.2026",["Registrieren und Anmelden","Erinnerungen vor der Frist","Inhaltsfilter gegen Beleidigungen","Übersicht mit Budget"]]];
+var LOG=[["1.7","15.11.2026",["Komplett offline nutzbar","Offline-Änderungen werden automatisch in die Cloud geladen","Schnellerer Start mit gespeicherten Daten","Animationsgeschwindigkeit genauer, mit Vorschau und Stufen","Bis zu 5× schnellere Animationen"]],["1.6","15.11.2026",["Testphasen mit Erinnerung","Abos teilen: nur dein Anteil zählt","Kündigungstag-Rechner","Anbieter-Kontakt mit Kündigung per E-Mail","Diagramme: 12-Monats-Ausgaben und Kategorien","Sparziel und Preisänderungen","Export als Tabelle und Kalender","Animationsgeschwindigkeit einstellbar","Vibration beim Tippen","Berechtigungen für Mitteilungen und Mikrofon","Fühlt sich an wie eine echte App: kein Zoomen, kein Neuladen"]],["1.5.1","15.11.2026",["Neuigkeiten bei jedem Start, in den Einstellungen abschaltbar","Kategorien wieder gut lesbar","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.5","15.11.2026",["Neuigkeiten-Fenster nach Updates","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.4","15.11.2026",["Ladebildschirm beim Start","Animierte Übergänge zwischen den Seiten","Animationen unter Einstellungen, Leistung abschaltbar"]],["1.3","14.11.2026",["Helper vereint Hilfe und Aufgaben","Vollbild ohne farbige Leisten"]],["1.2","14.11.2026",["Anmeldung mit Google oder E-Mail","Daten in der Cloud, auf allen Geräten gleich","Passwort vergessen per E-Mail","KI-Agent jetzt kostenlos für alle","Benachrichtigungen auf Android"]],["1.1","14.11.2026",["Vier Sprachen mit Sprachknopf auf jeder Seite","Schnell-Eingabe mit Vorschau, Raten und Preis-Erkennung","Neues Logo und installierbare App"]],["1.0","13.11.2026",["Notizblock mit Farben, Anheften, Archiv und Suche","Alternative Zahlungstermine mit festem Zahltag und Enddatum","Hilfe-Center mit Themen und Suche","Nutzungsbedingungen mit Zustimmung im Konto","Neues Menü Mehr, Update-Log und Wasserzeichen"]],["0.9","13.11.2026",["Farbrad, Vorlagen und Helligkeit","Eigene Zahlungsrhythmen und Zahlungskalender","Verträge bearbeiten, Favoriten, Duplizieren","App-PIN und Passwort ändern"]],["0.8","13.11.2026",["Registrieren und Anmelden","Erinnerungen vor der Frist","Inhaltsfilter gegen Beleidigungen","Übersicht mit Budget"]]];
 function wm(){}
 function eulaView(){var a=$("app");a.textContent="";var c=h("div","card");c.appendChild(h("h2",null,"Nutzungsbedingungen"));
 c.appendChild(h("div","mu","Bitte lies die Bedingungen und bestätige sie, um die App zu nutzen."));
@@ -713,7 +714,7 @@ st("--hg1","hsl("+H+" "+S+"% "+Math.min(L,48)+"%)");st("--hg2","hsl("+((H+45)%36
 st("--onac",L>62?"#10101e":"#fff");
 if(UI.bgt){st("--bg",d?"hsl("+H+" 38% 6%)":"hsl("+H+" 60% 96%)");st("--card",d?"hsl("+H+" 30% 11%)":"#fff");st("--bd",d?"hsl("+H+" 24% 19%)":"hsl("+H+" 30% 90%)")}
 else{["--bg","--card","--bd"].forEach(function(k){r.style.removeProperty(k)})}
-document.body.style.fontSize=UI.fs+"px";document.body.className=UI.cp?"cp":"";document.documentElement.classList.toggle("noanim",UI.anim===false);var AV={d:["12px",".99",".75",".03s","ease"],n:["40px",".95","1",".055s","cubic-bezier(.2,.9,.25,1.08)"],s:["84px",".86","1.35",".085s","cubic-bezier(.18,1.4,.32,1)"]}[UI.ai||"n"]||["40px",".95","1",".055s","ease"];st("--ad",AV[0]);st("--as",AV[1]);st("--at",(parseFloat(AV[2])/(UI.asp||1)).toFixed(3));st("--sd",AV[3]);st("--ae",AV[4]);["ai-d","ai-n","ai-s"].forEach(function(c){r.classList.remove(c)});r.classList.add("ai-"+(UI.ai||"n"))}
+document.body.style.fontSize=UI.fs+"px";document.body.className=UI.cp?"cp":"";document.documentElement.classList.toggle("noanim",UI.anim===false);var AV={d:["12px",".99",".75",".03s","ease"],n:["40px",".95","1",".055s","cubic-bezier(.2,.9,.25,1.08)"],s:["84px",".86","1.35",".085s","cubic-bezier(.18,1.4,.32,1)"]}[UI.ai||"n"]||["40px",".95","1",".055s","ease"];st("--ad",AV[0]);st("--as",AV[1]);var ATv=parseFloat(AV[2])/(UI.asp||1);window.__AT=ATv;st("--at",ATv.toFixed(3));st("--sd",(parseFloat(AV[3])*ATv/parseFloat(AV[2])).toFixed(4)+"s");st("--ae",AV[4]);["ai-d","ai-n","ai-s"].forEach(function(c){r.classList.remove(c)});r.classList.add("ai-"+(UI.ai||"n"))}
 try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyUI)}catch(x){}
 function view(){var q=Q.toLowerCase(),l=sorted().filter(function(x){return(filt==="Alle"||(filt==="Ratenzahlungen"?x.rt==="R":x.g===filt))&&(!q||(x.n+" "+(x.o||"")).toLowerCase().indexOf(q)>-1)});
 if(SORT==="Kosten")l.sort(function(a,b){return mon(b)-mon(a)});
@@ -753,6 +754,9 @@ w.onpointerdown=function(e){dn=true;try{w.setPointerCapture(e.pointerId)}catch(x
 w.onpointermove=function(e){if(dn)pick(e)};
 w.onpointerup=function(){dn=false};
 pos();return w}
+function spVal(v){v=Math.max(0,Math.min(100,+v));var t=(v-50)/50,a=t<0?Math.pow(4,t):Math.pow(5,t);return Math.round(a*100)/100}
+function spPos(a){a=+a||1;return Math.round(a<1?50+50*Math.log(a)/Math.log(4):50+50*Math.log(a)/Math.log(5))}
+function spName(a){return a<0.45?"Sehr langsam":a<0.85?"Langsam":a<=1.15?"Normal":a<2?"Schnell":a<3.5?"Sehr schnell":"Blitzschnell"}
 function rng(min,max,val,fn){var r=h("input");r.type="range";r.min=min;r.max=max;r.value=val;r.oninput=function(){fn(+r.value)};return r}
 function viewD(box){
 var m=me(),c=h("div","card");c.appendChild(h("h2",null,"Farbschema"));
@@ -773,7 +777,14 @@ c.appendChild(sg);
 c.appendChild(h("label",null,"Schriftgröße"));c.appendChild(rng(14,20,UI.fs,function(v){UI.fs=v;applyUI();sv()}));
 box.appendChild(c);
 var pf=h("div","card");pf.appendChild(h("h2",null,"Leistung"));pf.appendChild(tg("Animationen","Ladebildschirm, Seitenübergänge und Effekte",UI.anim!==false,function(){UI.anim=UI.anim===false;sv();applyUI();render()}));if(UI.anim!==false){pf.appendChild(h("label",null,"Intensität"));var asg=h("div","seg");[["d","Dezent"],["n","Normal"],["s","Stark"]].forEach(function(t){var ab=h("button",(UI.ai||"n")===t[0]?"on":"",t[1]);ab.onclick=function(){UI.ai=t[0];sv();applyUI();VKEY=null;render()};asg.appendChild(ab)});pf.appendChild(asg)}
-if(UI.anim!==false){pf.appendChild(h("label",null,"Geschwindigkeit"));var spw=h("div","spd"),spv=h("b",null,(UI.asp||1).toFixed(2).replace(/0$/,"")+"×"),spr=rng(50,200,Math.round((UI.asp||1)*100),function(v){UI.asp=v/100;spv.textContent=(v/100).toFixed(2).replace(/0$/,"")+"×";applyUI();sv()});spr.onchange=function(){VKEY=null;render()};spw.appendChild(h("span","mu","Langsam"));spw.appendChild(spr);spw.appendChild(h("span","mu","Schnell"));spw.appendChild(spv);pf.appendChild(spw)}
+if(UI.anim!==false){pf.appendChild(h("label",null,"Geschwindigkeit"));var spl=h("div","spdl"),sptx=h("b",null,""),spv=h("span","badge ok","");spl.appendChild(sptx);spl.appendChild(spv);pf.appendChild(spl);
+var prev=h("div","spprev");for(var pi0=0;pi0<6;pi0++){var bi=h("i");bi.style.height=(35+((pi0*37)%60))+"%";prev.appendChild(bi)}
+function spShow(){var a=UI.asp||1;sptx.textContent=L(spName(a));spv.textContent=a.toLocaleString(LC(),{minimumFractionDigits:2,maximumFractionDigits:2})+"×";prev.classList.remove("go");void prev.offsetWidth;prev.classList.add("go")}
+var spw=h("div","spd"),spr=rng(0,100,spPos(UI.asp||1),function(v){UI.asp=spVal(v);applyUI();spShow();sv();syncSpChips()});spr.step=1;spr.onchange=function(){VKEY=null;render()};
+spw.appendChild(h("span","mu","Langsam"));spw.appendChild(spr);spw.appendChild(h("span","mu","Schnell"));pf.appendChild(spw);pf.appendChild(prev);
+var spc=h("div","seg");spc.style.marginTop="2px";[[0.25,"¼×"],[0.5,"½×"],[1,"1×"],[2,"2×"],[5,"5×"]].forEach(function(t){var b=h("button","","");b.setAttribute("data-v",t[0]);b.setAttribute("data-nt","1");b.textContent=t[1];b.onclick=function(){UI.asp=t[0];spr.value=spPos(t[0]);applyUI();spShow();sv();syncSpChips()};spc.appendChild(b)});pf.appendChild(spc);
+function syncSpChips(){[].forEach.call(spc.children,function(b){b.classList.toggle("on",Math.abs(+b.getAttribute("data-v")-(UI.asp||1))<0.01)})}
+syncSpChips();spShow()}
 pf.appendChild(h("p","mu","Ausschalten spart Akku und macht die App auf älteren Handys schneller."));
 pf.appendChild(tg("Vibration","Kurzes Feedback beim Tippen",UI.vib!==false,function(){UI.vib=UI.vib===false;sv();render()}));
 pf.appendChild(tg("Neuigkeiten bei jedem Start","Zeigt nach dem Öffnen der App die Neuerungen",UI.wnAlways!==false,function(){UI.wnAlways=UI.wnAlways===false;sv();render()}));var wnb=h("button","sec","Neuigkeiten jetzt anzeigen");wnb.onclick=showWN;pf.appendChild(wnb);box.insertBefore(pf,box.children[1]||null);
@@ -809,36 +820,52 @@ box.appendChild(d);
 var ab=h("div","card");ab.appendChild(h("h2",null,"Über AboWächter"));
 ab.appendChild(h("div","mu","Alle Daten bleiben auf diesem Gerät. Tippe in der Vertragsliste auf einen Vertrag, um Details, Bearbeiten, Favorit, Duplizieren und Kündigen zu sehen."));
 box.appendChild(ab)}
-var ABO_AKTIV=false,CLOUD=false,FBU=null,FBDB=null,SYNC_T=null,SYNCST="",PENDNAME="",BLOCKED=false,AUTHWAIT=false,NETERR=false,LOGERR="",LOGOK="",JUSTLOG=false;
+var OFFNOSDK=false,ONLINE=navigator.onLine!==false,ABO_AKTIV=false,CLOUD=false,FBU=null,FBDB=null,SYNC_T=null,SYNCST="",PENDNAME="",BLOCKED=false,AUTHWAIT=false,NETERR=false,LOGERR="",LOGOK="",JUSTLOG=false;
 function PLUSB(){return ABO_AKTIV&&agentOn()}
 function fbReady(){try{return !!(window.firebase&&window.FIREBASE_CONFIG&&FIREBASE_CONFIG.apiKey&&!/HIER/.test(FIREBASE_CONFIG.apiKey))}catch(e){return false}}
 function clean(x){return JSON.parse(JSON.stringify(x))}
 function emOk(m){return /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(m)}
 function fbErr(e){var c=(e&&e.code)||"";return ({"auth/email-already-in-use":"Zu dieser E-Mail gibt es schon ein Konto. Bitte anmelden.","auth/invalid-email":"Bitte eine gültige E-Mail eingeben.","auth/missing-email":"Bitte eine gültige E-Mail eingeben.","auth/weak-password":"Das Passwort braucht mindestens 8 Zeichen.","auth/invalid-credential":"E-Mail oder Passwort stimmt nicht.","auth/invalid-login-credentials":"E-Mail oder Passwort stimmt nicht.","auth/wrong-password":"E-Mail oder Passwort stimmt nicht.","auth/user-not-found":"E-Mail oder Passwort stimmt nicht.","auth/too-many-requests":"Zu viele Versuche. Bitte warte kurz und versuche es erneut.","auth/network-request-failed":"Keine Internetverbindung.","unavailable":"Keine Internetverbindung.","auth/popup-closed-by-user":"Die Google-Anmeldung wurde abgebrochen.","auth/cancelled-popup-request":"Die Google-Anmeldung wurde abgebrochen.","auth/popup-blocked":"Das Anmeldefenster wurde blockiert. Bitte Pop-ups erlauben.","auth/unauthorized-domain":"Diese Adresse ist in Firebase noch nicht freigegeben (Authorized domains).","auth/operation-not-allowed":"Diese Anmeldeart ist in Firebase noch nicht aktiviert.","auth/requires-recent-login":"Aus Sicherheitsgründen bitte ab- und wieder anmelden und es dann erneut versuchen.","auth/user-disabled":"Dieses Konto wurde gesperrt. Bitte wende dich an den Support.","permission-denied":"Keine Berechtigung für die Datenbank."})[c]||"Das hat nicht geklappt. Bitte versuche es erneut."}
-function cloudInit(){if(!fbReady())return;
+function cloudInit(){if(!fbReady()){try{if(window.FIREBASE_CONFIG&&FIREBASE_CONFIG.apiKey&&!/HIER/.test(FIREBASE_CONFIG.apiKey)&&!window.firebase){OFFNOSDK=true;if(CUR&&ACC[CUR])UNL=UNL||!ACC[CUR].pin}}catch(e){}return}
 try{if(!firebase.apps||!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);FBDB=firebase.firestore();try{FBDB.enablePersistence({synchronizeTabs:true}).catch(function(){})}catch(e){}}catch(e){return}
 CLOUD=true;AUTHWAIT=true;cloudTexts();
 firebase.auth().onAuthStateChanged(function(u){
 if(!u){var was=CUR;FBU=null;mode="in";BLOCKED=false;NETERR=false;AUTHWAIT=false;JUSTLOG=false;if(was)localDrop(was);CUR=null;wr("aw_cur",null);items=[];NOTES=[];TPLS=[];render();return}
-FBU=u;AUTHWAIT=true;NETERR=false;render();
-cloudLoad(u).then(function(){AUTHWAIT=false;JUSTLOG=false;render();fire()},function(e){AUTHWAIT=false;JUSTLOG=false;
+FBU=u;NETERR=false;var em0=(u.email||u.uid).toLowerCase(),fast=!JUSTLOG&&!!ACC[em0]&&CUR===em0;
+if(fast){AUTHWAIT=false;items=rd("aw_d_"+em0,[]);NOTES=rd("aw_n_"+em0,[]);TPLS=rd("aw_t_"+em0,[]);UNL=UNL||!ACC[em0].pin;SYNCST=isDirty()?(ONLINE?"wait":"off"):"ok";render();fire()}else{AUTHWAIT=true;render()}
+cloudLoad(u,fast).then(function(){AUTHWAIT=false;JUSTLOG=false;render();fire()},function(e){AUTHWAIT=false;JUSTLOG=false;
 if(e&&e.code==="permission-denied"){LOGERR=fbErr(e);firebase.auth().signOut();return}
-var em=(u.email||u.uid).toLowerCase();if(ACC[em]){CUR=em;items=rd("aw_d_"+em,[]);NOTES=rd("aw_n_"+em,[]);TPLS=rd("aw_t_"+em,[]);UNL=UNL||!ACC[em].pin;render();fire()}else{NETERR=true;render()}})})}
+var em=(u.email||u.uid).toLowerCase();if(ACC[em]){CUR=em;items=rd("aw_d_"+em,[]);NOTES=rd("aw_n_"+em,[]);TPLS=rd("aw_t_"+em,[]);UNL=UNL||!ACC[em].pin;SYNCST="off";render();fire()}else{NETERR=true;render()}})})}
+function isDirty(){return CUR?+(rd("aw_dirty_"+CUR,0)||0):0}
+function withTO(p,ms){return new Promise(function(res,rej){var t=setTimeout(function(){var e=new Error("timeout");e.code="timeout";rej(e)},ms);p.then(function(v){clearTimeout(t);res(v)},function(e){clearTimeout(t);rej(e)})})}
+function netChange(){var was=ONLINE;ONLINE=navigator.onLine!==false;if(ONLINE&&!was){if(OFFNOSDK){location.reload();return}if(CLOUD&&FBU&&CUR&&!AUTHWAIT){if(isDirty())cloudSaveNow().then(function(){render()});else if(FBU)cloudLoad(FBU,true).then(function(){render()},function(){})}}if(!ONLINE&&SYNCST==="wait")SYNCST="off";if(was!==ONLINE)render()}
+window.addEventListener("online",netChange);window.addEventListener("offline",netChange);
 function localDrop(em){try{["aw_d_","aw_n_","aw_t_","aw_s_"].forEach(function(k){localStorage.removeItem(k+em)})}catch(x){}if(ACC[em]){delete ACC[em];try{localStorage.setItem("aw_acc",JSON.stringify(ACC))}catch(x){}}}
-async function cloudLoad(u){var em=(u.email||u.uid).toLowerCase(),ref=FBDB.collection("users").doc(u.uid),sn=await ref.get(),d=sn.exists?sn.data():null;
-var p=Object.assign({},d&&d.profile?d.profile:(ACC[em]||{}));delete p.pw;
+async function cloudLoad(u,bg){var em=(u.email||u.uid).toLowerCase(),ref=FBDB.collection("users").doc(u.uid),d0=+(rd("aw_dirty_"+em,0)||0),sn;
+try{sn=await withTO(ref.get(),bg?8000:12000)}catch(e){if(e&&e.code==="permission-denied")throw e;if(bg){SYNCST="off";return}throw e}
+if(bg&&sn.metadata&&sn.metadata.fromCache){SYNCST=d0?"off":SYNCST;return}
+var d=sn.exists?sn.data():null;
+if(bg&&CUR!==em)return;
+var dirty=+(rd("aw_dirty_"+em,0)||0),keepLocal=!!(dirty&&(!d||dirty>(d.edited||d.updated||0)));
+var p=keepLocal&&ACC[em]?Object.assign({},ACC[em]):Object.assign({},d&&d.profile?d.profile:(ACC[em]||{}));delete p.pw;
 if(!p.user)p.user=String(PENDNAME||u.displayName||em.split("@")[0]).slice(0,30);PENDNAME="";
 ensure(p);BLOCKED=!!(d&&d.blocked);
 var meta={uid:u.uid,email:em,user:p.user,provider:((u.providerData&&u.providerData[0])||{}).providerId||"password",lastLogin:Date.now()};if(!d)meta.created=Date.now();
-await ref.set(meta,{merge:true});
-ACC[em]=p;CUR=em;UNL=JUSTLOG||!p.pin;tab="v";filt="Alle";armed=false;note="";SUB=null;
-if(d){items=d.items||[];NOTES=d.notes||[];TPLS=d.tpls||[]}else{items=rd("aw_d_"+em,[]);NOTES=rd("aw_n_"+em,[]);TPLS=rd("aw_t_"+em,[])}
+ref.set(meta,{merge:true}).catch(function(){});
+ACC[em]=p;CUR=em;UNL=UNL||JUSTLOG||!p.pin;
+if(!bg){tab="v";filt="Alle";armed=false;note="";SUB=null}
+if(keepLocal){items=rd("aw_d_"+em,items||[]);NOTES=rd("aw_n_"+em,NOTES||[]);TPLS=rd("aw_t_"+em,TPLS||[])}
+else if(d){items=d.items||[];NOTES=d.notes||[];TPLS=d.tpls||[]}else{items=rd("aw_d_"+em,[]);NOTES=rd("aw_n_"+em,[]);TPLS=rd("aw_t_"+em,[])}
 try{localStorage.setItem("aw_acc",JSON.stringify(ACC));localStorage.setItem("aw_cur",JSON.stringify(em));localStorage.setItem("aw_d_"+em,JSON.stringify(items));localStorage.setItem("aw_n_"+em,JSON.stringify(NOTES));localStorage.setItem("aw_t_"+em,JSON.stringify(TPLS))}catch(x){}
-if(!BLOCKED)await cloudSaveNow()}
-function cloudSave(){if(!CLOUD||!FBU||!CUR||BLOCKED||AUTHWAIT)return;clearTimeout(SYNC_T);SYNCST="wait";SYNC_T=setTimeout(function(){cloudSaveNow().then(function(){if(tab==="d"&&SUB==="acc")render()})},1200)}
-function cloudSaveNow(){if(!CLOUD||!FBU||!CUR||!ACC[CUR]||BLOCKED)return Promise.resolve();clearTimeout(SYNC_T);var p=Object.assign({},ACC[CUR]);delete p.pw;
-return FBDB.collection("users").doc(FBU.uid).update(clean({profile:p,items:items,notes:NOTES,tpls:TPLS,user:p.user,count:items.length,updated:Date.now(),trialUsed:!!(p.mem&&p.mem.trialUsed)})).then(function(){SYNCST="ok"},function(e){SYNCST="err"})}
-var _wr0=wr;wr=function(k,v){_wr0(k,v);if(/^aw_(acc|d_|n_|t_)/.test(k))cloudSave()};
+if(BLOCKED)return;
+if(keepLocal||!d)cloudSaveNow();else{SYNCST="ok";if(dirty)try{localStorage.removeItem("aw_dirty_"+em)}catch(x){}}}
+function markDirty(){if(!CUR)return;try{localStorage.setItem("aw_dirty_"+CUR,JSON.stringify(Date.now()))}catch(x){}}
+function cloudSave(){if(!CUR)return;if(CLOUD&&AUTHWAIT)return;markDirty();if(!CLOUD||!FBU||BLOCKED){SYNCST="off";return}clearTimeout(SYNC_T);SYNCST=ONLINE?"wait":"off";SYNC_T=setTimeout(function(){cloudSaveNow().then(function(){if(tab==="d"&&SUB==="acc")render()})},1200)}
+function cloudSaveNow(){if(!CLOUD||!FBU||!CUR||!ACC[CUR]||BLOCKED)return Promise.resolve();clearTimeout(SYNC_T);var p=Object.assign({},ACC[CUR]);delete p.pw;var em=CUR,stamp=+(rd("aw_dirty_"+em,0)||0)||Date.now();
+var pr=FBDB.collection("users").doc(FBU.uid).update(clean({profile:p,items:items,notes:NOTES,tpls:TPLS,user:p.user,count:items.length,updated:Date.now(),edited:stamp,trialUsed:!!(p.mem&&p.mem.trialUsed)}));
+if(!ONLINE){SYNCST="off";pr.then(function(){if(+(rd("aw_dirty_"+em,0)||0)<=stamp)try{localStorage.removeItem("aw_dirty_"+em)}catch(x){}SYNCST="ok";render()},function(){});return Promise.resolve()}
+SYNCST="wait";return withTO(pr,15000).then(function(){SYNCST="ok";if(+(rd("aw_dirty_"+em,0)||0)<=stamp)try{localStorage.removeItem("aw_dirty_"+em)}catch(x){}},function(e){SYNCST=e&&e.code==="timeout"?"off":"err"})}
+var _wr0=wr;wr=function(k,v){_wr0(k,v);if(/^aw_(acc|d_|n_|t_)/.test(k)&&(CLOUD||OFFNOSDK))cloudSave()};
 async function authCloud(){var m=$("lm").value.trim().toLowerCase(),p=$("lp").value,u=mode==="reg"?$("lu").value.trim():"";
 if(!emOk(m))return setErr("Bitte eine gültige E-Mail eingeben.");
 if(p.length<8)return setErr("Das Passwort braucht mindestens 8 Zeichen.");
@@ -862,7 +889,7 @@ if(NETERR){var c=h("div","card");c.appendChild(h("h2",null,"Keine Verbindung"));
 else a.appendChild(h("div","empty","Wird geladen …"))}
 function acctLines(c){if(!CLOUD||!FBU)return;var pv=((FBU.providerData&&FBU.providerData[0])||{}).providerId||"password";
 c.appendChild(h("div","kv",null,[h("span","mu","Anmeldung über"),h("span",null,pv==="google.com"?"Google":"E-Mail und Passwort")]));
-c.appendChild(h("div","kv",null,[h("span","mu","Synchronisierung"),h("span",SYNCST==="err"?"badge red":"badge ok",SYNCST==="err"?"Fehler beim Speichern":SYNCST==="wait"?"Wird gespeichert …":"Gespeichert")]));
+c.appendChild(h("div","kv",null,[h("span","mu","Synchronisierung"),h("span",SYNCST==="err"?"badge red":SYNCST==="off"?"badge amb":"badge ok",SYNCST==="err"?"Fehler beim Speichern":SYNCST==="off"?"Offline – wird später hochgeladen":SYNCST==="wait"?"Wird gespeichert …":"Gespeichert")]));
 if(pv!=="google.com"){c.appendChild(h("div","kv",null,[h("span","mu","E-Mail"),h("span",null,FBU.emailVerified?"E-Mail bestätigt":"E-Mail nicht bestätigt")]));
 if(!FBU.emailVerified){var v=h("button","sec","Bestätigungs-Mail senden");v.onclick=function(){FBU.sendEmailVerification().then(function(){note="Bestätigungs-Mail gesendet.";render()},function(e){note=fbErr(e);render()})};c.appendChild(v)}}}
 function cloudTexts(){EULA[4]="5. Datenspeicherung: Deine Daten werden in deinem Konto bei Google Firebase gespeichert und mit deinen Geräten synchronisiert. Der Support kann dein Konto zur Hilfe bei Problemen einsehen. Passwörter kann niemand einsehen.";
@@ -875,8 +902,8 @@ if(EDIT||NEW||OPEN||NE||CHK||CANC){EDIT=null;NEW=false;OPEN=null;NE=null;CHK=fal
 if(SUB){SUB=null;note="";armed=false;render();return true}
 if(CUR&&ACC[CUR]&&tab!=="v"){tab="v";render();window.scrollTo(0,0);return true}return false}
 var VKEY=null,VORD=["v","u","c","n","b","d","ag","k"],LASTOPEN=null,HSEEN=0;
-function hideSplash(){var sp=$("splash");if(!sp||sp.getAttribute("data-h"))return;sp.setAttribute("data-h","1");var off=UI.anim===false,wait=off?0:Math.max(0,1100/(UI.asp||1)-(Date.now()-(window.__T0||0)));
-setTimeout(function(){sp.classList.add("out");setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp);maybeWhatsNew()},off?0:500)},wait)}
+function hideSplash(){var sp=$("splash");if(!sp||sp.getAttribute("data-h"))return;sp.setAttribute("data-h","1");var off=UI.anim===false,wait=off?0:Math.max(0,1100*(window.__AT||1)-(Date.now()-(window.__T0||0)));
+setTimeout(function(){sp.classList.add("out");setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp);maybeWhatsNew()},off?0:Math.round(480*(window.__AT||1)))},wait)}
 function curKey(){if(CLOUD&&(AUTHWAIT||NETERR))return "wait";if(!CUR||!ACC[CUR])return "login:"+mode;if(BLOCKED)return "blocked";if(!me().eula)return "eula";if(me().pin&&!UNL)return "pin";return tab+":"+(SUB||"")}
 function postAnim(){var k=curKey(),a=$("app");LASTOPEN=OPEN;
 if(UI.anim===false||k===VKEY){VKEY=k;return}
@@ -894,17 +921,17 @@ sh.appendChild(x);sh.appendChild(h("div","wn-top",null,[h("div","wn-ico","✨"),
 e[2].forEach(function(t,i){var li=h("div","wn-it",null,[h("span","wn-dot","✓"),h("span",null,L(t))]);li.style.animationDelay="calc(var(--at)*"+(0.28+i*0.09).toFixed(2)+"s)";sh.appendChild(li)});
 var al=h("label","ck"),cb=h("input");cb.type="checkbox";cb.checked=UI.wnAlways!==false;cb.onchange=function(){UI.wnAlways=cb.checked;sv()};al.appendChild(cb);al.appendChild(document.createTextNode(L("Bei jedem Start anzeigen")));sh.appendChild(al);
 var b=h("button","pri",L("Los geht's"));sh.appendChild(b);ov.appendChild(sh);
-function close(){UI.wnSeen=VER;sv();ov.classList.add("out");setTimeout(function(){if(ov.parentNode)ov.parentNode.removeChild(ov)},UI.anim===false?0:300)}
+function close(){UI.wnSeen=VER;sv();ov.classList.add("out");setTimeout(function(){if(ov.parentNode)ov.parentNode.removeChild(ov)},UI.anim===false?0:Math.round(300*(window.__AT||1)))}
 x.onclick=close;b.onclick=close;ov.onclick=function(ev){if(ev.target===ov)close()};
 document.body.appendChild(ov);if(UI.anim!==false&&UI.ai!=="d")confetti(sh)}
 function confetti(box){var C=["#5b5bd6","#8b5cf6","#f5b301","#ff7a18","#1f9d55","#e5484d","#3b82f6"],n=UI.ai==="s"?34:20;
 for(var i=0;i<n;i++){var p=document.createElement("span");p.className="cf";p.style.left=(Math.random()*100)+"%";p.style.background=C[i%C.length];p.style.setProperty("--x",(Math.random()*120-60)+"px");p.style.setProperty("--r",(Math.random()*720-360)+"deg");p.style.animationDelay=(Math.random()*.35)+"s";box.appendChild(p)}}
 function maybeWhatsNew(){if(SESSION_WN||$("wn"))return;var k=curKey();if(k.indexOf(":")<0||k.indexOf("login")===0)return;if(!UI.permAsked){SESSION_WN=true;setTimeout(showPermSheet,UI.anim===false?0:300);return}if(UI.wnAlways===false)return;SESSION_WN=true;setTimeout(showWN,UI.anim===false?0:250)}
-function countUp(){if(UI.anim===false)return;var dur=900*(UI.ai==="d"?.6:UI.ai==="s"?1.35:1)/(UI.asp||1);
+function countUp(){if(UI.anim===false)return;var dur=900*(window.__AT||1)*(UI.ai==="d"?.8:1);
 Array.prototype.forEach.call(document.querySelectorAll(".stats b[data-n]"),function(b){var v=parseFloat(b.getAttribute("data-n"))||0,m=b.getAttribute("data-m")==="1",t0=null;if(!v)return;
 function f(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/dur),q=1-Math.pow(1-p,3),c=v*q;b.textContent=m?fmt(c)+" "+cs():String(Math.round(c));if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)})}
 document.addEventListener("pointerdown",function(e){var bt=e.target&&e.target.closest&&e.target.closest("button");if(bt&&UI.vib!==false&&navigator.vibrate){try{navigator.vibrate(8)}catch(x){}}if(UI.anim===false||UI.ai==="d")return;var b=e.target&&e.target.closest&&e.target.closest(".pri,.sec,.mini,.chip,.gbtn,.tg");if(!b)return;
-var r=b.getBoundingClientRect(),d=Math.max(r.width,r.height),sp=document.createElement("span");sp.className="rip";sp.style.width=sp.style.height=d+"px";sp.style.left=(e.clientX-r.left-d/2)+"px";sp.style.top=(e.clientY-r.top-d/2)+"px";b.appendChild(sp);setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp)},900)},{passive:true});
+var r=b.getBoundingClientRect(),d=Math.max(r.width,r.height),sp=document.createElement("span");sp.className="rip";sp.style.width=sp.style.height=d+"px";sp.style.left=(e.clientX-r.left-d/2)+"px";sp.style.top=(e.clientY-r.top-d/2)+"px";b.appendChild(sp);setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp)},Math.round(650*(window.__AT||1))+50)},{passive:true});
 document.addEventListener("touchmove",function(e){if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});var LSY=0;window.addEventListener("scroll",function(){var y=window.scrollY||0;if(Math.abs(y-LSY)<8)return;document.body.classList.toggle("hidefab",y>LSY&&y>80);LSY=y},{passive:true});
 document.addEventListener("gesturestart",function(e){e.preventDefault()});document.addEventListener("wheel",function(e){if(e.ctrlKey)e.preventDefault()},{passive:false});document.addEventListener("contextmenu",function(e){if(!(e.target.closest&&e.target.closest("input,textarea,.sel")))e.preventDefault()});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){var w=$("wn");if(w)w.querySelector(".wn-x").click()}});
@@ -959,9 +986,10 @@ function showPermSheet(){if($("wn"))return;var ov=document.createElement("div");
 sh.appendChild(h("div","wn-top",null,[h("div","wn-ico","🔔"),h("div",null,null,[h("div","wn-k",L("Berechtigungen")),h("h2",null,L("Damit alles klappt"))])]));
 PERMS.forEach(function(r,i){var li=h("div","wn-it",null,[h("span","wn-dot","✓"),h("div",null,null,[h("div",null,L(r[1])),h("div","mu",L(r[2]))])]);li.style.animationDelay="calc(var(--at)*"+(0.25+i*0.09).toFixed(2)+"s)";sh.appendChild(li)});
 var b=h("button","pri",L("Alle erlauben")),l=h("button","sec",L("Später"));sh.appendChild(b);sh.appendChild(l);ov.appendChild(sh);
-function close(){UI.permAsked=1;sv();ov.classList.add("out");setTimeout(function(){if(ov.parentNode)ov.parentNode.removeChild(ov)},UI.anim===false?0:300)}
+function close(){UI.permAsked=1;sv();ov.classList.add("out");setTimeout(function(){if(ov.parentNode)ov.parentNode.removeChild(ov)},UI.anim===false?0:Math.round(300*(window.__AT||1)))}
 x.onclick=close;l.onclick=close;b.onclick=function(){close();askAll()};document.body.appendChild(ov)}
-function render(){render0();trAll();langUI();postAnim();if(!(CLOUD&&AUTHWAIT))hideSplash();if(!$("splash"))maybeWhatsNew()}
+function offPill(){var e=$("offp"),need=!!CUR&&(!ONLINE||OFFNOSDK);if(!need){if(e)e.remove();return}if(!e){e=document.createElement("div");e.id="offp";e.setAttribute("data-nt","1");document.body.appendChild(e)}var t=L(isDirty()?"Offline · Änderungen werden später hochgeladen":"Offline · Die App funktioniert trotzdem");if(e.textContent!==t)e.textContent=t}
+function render(){render0();trAll();langUI();postAnim();offPill();if(!(CLOUD&&AUTHWAIT))hideSplash();if(!$("splash"))maybeWhatsNew()}
 function logoSvg(n){return '<svg width="'+n+'" height="'+n+'" viewBox="0 0 512 512"><defs><linearGradient id="lgx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b5bd6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgx)"/><rect x="116" y="140" width="280" height="260" rx="40" fill="#fff"/><path d="M116 180a40 40 0 0 1 40-40h200a40 40 0 0 1 40 40v40H116z" fill="#e4e1ff"/><rect x="176" y="104" width="28" height="64" rx="14" fill="#fff"/><rect x="308" y="104" width="28" height="64" rx="14" fill="#fff"/><path d="M186 306l48 48 94-100" fill="none" stroke="#5b5bd6" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
 function notice(c){if(UI.lang&&UI.lang!=="de")c.appendChild(h("p","mu","Die Übersetzung dient der Orientierung. Rechtlich maßgeblich ist die deutsche Fassung."))}
 var WORDS=["Fester Tag im Monat", "Steuern & Gebühren", "Handy & Internet", "Wohnen & Energie", "Eigener Rhythmus", "vierteljährlich", "Möbel & Technik", "alle 2 Wochen", "halbjährlich", "Versicherung", "wöchentlich", "Handy-Raten", "monatlich", "Ratenkauf", "Sonstiges", "jährlich", "Finanzen", "täglich", "Bildung", "Kredit", "Musik"];
@@ -1570,6 +1598,19 @@ Monatliches Sparziel|Monthly savings goal|Ежемесячная цель эко
 Ziel speichern|Save goal|Сохранить цель|Hedefi kaydet
 Preisänderungen|Price changes|Изменения цен|Fiyat değişiklikleri
 Geschwindigkeit|Speed|Скорость|Hız
+Sehr langsam|Very slow|Очень медленно|Çok yavaş
+Sehr schnell|Very fast|Очень быстро|Çok hızlı
+Blitzschnell|Lightning fast|Молниеносно|Şimşek hızında
+Blitz|Lightning|Молния|Şimşek
+Offline – wird später hochgeladen|Offline – will upload later|Офлайн – загрузится позже|Çevrimdışı – sonra yüklenecek
+Offline · Änderungen werden später hochgeladen|Offline · changes will upload later|Офлайн · изменения загрузятся позже|Çevrimdışı · değişiklikler sonra yüklenecek
+Offline · Die App funktioniert trotzdem|Offline · the app still works|Офлайн · приложение всё равно работает|Çevrimdışı · uygulama yine de çalışır
+Abmelden geht nur mit Internet, damit nichts verloren geht.|Signing out needs internet so nothing gets lost.|Выход возможен только с интернетом, чтобы ничего не потерять.|Hiçbir şey kaybolmasın diye çıkış yalnızca internetle yapılabilir.
+Komplett offline nutzbar|Fully usable offline|Полностью работает офлайн|Tamamen çevrimdışı kullanılabilir
+Offline-Änderungen werden automatisch in die Cloud geladen|Offline changes upload to the cloud automatically|Офлайн-изменения автоматически загружаются в облако|Çevrimdışı değişiklikler otomatik olarak buluta yüklenir
+Schnellerer Start mit gespeicherten Daten|Faster start with saved data|Быстрый запуск с сохранёнными данными|Kayıtlı verilerle daha hızlı başlangıç
+Animationsgeschwindigkeit genauer, mit Vorschau und Stufen|More precise animation speed with preview and presets|Более точная скорость анимации с превью и пресетами|Önizleme ve hazır ayarlarla daha hassas animasyon hızı
+Bis zu 5× schnellere Animationen|Up to 5× faster animations|Анимации до 5× быстрее|5 kata kadar daha hızlı animasyonlar
 Langsam|Slow|Медленно|Yavaş
 Schnell|Fast|Быстро|Hızlı
 Vibration|Vibration|Вибрация|Titreşim
@@ -1648,4 +1689,4 @@ cloudInit();
 render();fire();
 setInterval(function(){if(CUR)fire()},60000);
 setTimeout(hideSplash,9000);
-</script><script>if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(function(){})</script></body></html>
+</script><script>if("serviceWorker" in navigator&&window.isSecureContext)navigator.serviceWorker.register("sw.js").catch(function(){})</script></body></html>
