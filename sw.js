@@ -1,5 +1,5 @@
 /* AboWächter Service Worker – App läuft auch offline */
-const C="abowaechter-v1.7";
+const C="abowaechter-v1.8";
 const SDK="https://www.gstatic.com/firebasejs/10.14.1/";
 const F=["./","index.html","einstellungen.js","manifest.webmanifest","icon-192.png","icon-512.png","icon-maskable-512.png","datenschutz.html",
 SDK+"firebase-app-compat.js",SDK+"firebase-auth-compat.js",SDK+"firebase-firestore-compat.js"];

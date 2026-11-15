@@ -156,6 +156,30 @@ body{transition:background-color .3s}
 .fab,#lgb{transition:transform calc(.3s*var(--at)),opacity calc(.3s*var(--at))}
 body.hidefab .fab,body.hidefab #lgb{transform:translateY(160px);opacity:0;pointer-events:none}
 main{padding-bottom:84px!important}
+@keyframes fadeIn{from{opacity:0}}@keyframes fadeOut{to{opacity:0}}
+#tour{position:fixed;inset:0;z-index:95;animation:fadeIn calc(.3s*var(--at)) ease both}#tour.tout{animation:fadeOut calc(.26s*var(--at)) ease both}
+#tour .tbk{position:absolute;inset:0;background:rgba(6,6,18,.74);opacity:0;transition:opacity calc(.3s*var(--at))}#tour.modal .tbk{opacity:1}
+#tspot{position:absolute;box-shadow:0 0 0 9999px rgba(6,6,18,.74),0 0 0 3px var(--ac),0 0 26px 4px var(--ac);transition:left calc(.45s*var(--at)) cubic-bezier(.2,.9,.25,1.05),top calc(.45s*var(--at)) cubic-bezier(.2,.9,.25,1.05),width calc(.45s*var(--at)) cubic-bezier(.2,.9,.25,1.05),height calc(.45s*var(--at)) cubic-bezier(.2,.9,.25,1.05),border-radius calc(.45s*var(--at)),opacity calc(.3s*var(--at));pointer-events:none}
+#tspot::after{content:"";position:absolute;inset:-3px;border-radius:inherit;border:3px solid var(--ac);animation:tpulse calc(1.6s*var(--at)) ease-out infinite}
+@keyframes tpulse{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.18)}}
+#ttip{position:absolute;left:16px;right:16px;max-width:440px;margin:0 auto;background:var(--card);color:var(--tx);border-radius:24px;padding:18px 18px 16px;box-shadow:0 24px 70px rgba(0,0,0,.45);transition:top calc(.45s*var(--at)) cubic-bezier(.2,.9,.25,1.05)}
+#ttip.tin>*{animation:tTxt calc(.4s*var(--at)) var(--ae) both}#ttip.tin>*:nth-child(2){animation-delay:calc(var(--sd)*1)}#ttip.tin>*:nth-child(3){animation-delay:calc(var(--sd)*2)}#ttip.tin>*:nth-child(n+4){animation-delay:calc(var(--sd)*3)}
+@keyframes tTxt{from{opacity:0;transform:translateY(10px)}}
+#ttip.nudge{animation:tNudge calc(.4s*var(--at)) ease}@keyframes tNudge{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+#ttip h3{margin:6px 0 6px;font-size:20px}#ttip p{margin:0 0 12px;color:var(--mu);font-size:15px;line-height:1.5}
+#tour.modal #ttip{text-align:center;padding:26px 22px 20px}.tlogo{display:flex;justify-content:center;margin-bottom:6px}.tname{font-weight:700;font-size:17px;margin-bottom:6px;color:var(--ac)}
+.ttop{display:flex;justify-content:space-between;align-items:center}.tstep{font-size:12px;font-weight:700;color:var(--ac);background:var(--bg);padding:4px 10px;border-radius:99px}
+.tskip{background:transparent;color:var(--mu);font-size:14px;font-weight:600;padding:6px 4px}
+.tprog{height:6px;border-radius:99px;background:var(--bg);overflow:hidden;margin:0 0 14px}.tprog i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width calc(.4s*var(--at)) var(--ae)}
+.tbtns{display:flex;gap:10px}.tbtns>button{flex:1;margin:0}.tbtns.col{flex-direction:column}
+.tarrow{position:absolute;width:18px;height:18px;background:var(--card);transform:rotate(45deg);border-radius:3px}.tarrow.up{top:-8px}.tarrow.down{bottom:-8px}
+#bgl{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}#bgl .bgi{position:absolute;inset:0;background:center/cover no-repeat;transition:filter .3s}#bgl .bgd{position:absolute;inset:0;background:var(--bg)}
+body.hasbg{background:transparent!important}body.hasbg #app .empty,body.hasbg .foot{background:var(--card);border-radius:16px;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.08)}body.hasbg .foot{display:flex;width:max-content;max-width:100%;margin-left:auto;margin-right:auto;padding:8px 14px}
+.bgg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bgt{position:relative;aspect-ratio:9/14;border-radius:16px;background:var(--bg) center/cover no-repeat;border:2px solid var(--bd);overflow:hidden;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.bgt span{display:block;width:100%;font-size:12px;font-weight:600;color:#fff;padding:16px 4px 6px;background:linear-gradient(transparent,rgba(0,0,0,.55));text-align:center}
+.bgt.on{border-color:var(--ac);box-shadow:0 0 0 3px var(--ac)}.bgt.on::after{content:"✓";position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:var(--ac);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.bgt.add{border-style:dashed}.bgt.add b{flex:1;display:flex;align-items:center;font-size:34px;color:var(--ac)}.bgt.add:not([style*="background-image"]) span{color:var(--tx);background:none}
 #offp{position:fixed;left:0;right:0;margin:0 auto;width:max-content;top:calc(8px + env(safe-area-inset-top,0px));z-index:60;background:var(--ambbg);color:var(--amb);border:1px solid var(--bd);padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.18);pointer-events:none;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis;animation:pop calc(.42s*var(--at)) var(--ae) both}
 .spd{display:flex;align-items:center;gap:10px}.spd input{flex:1}.spd b{min-width:46px;text-align:right}.spdl{display:flex;justify-content:space-between;align-items:center;margin:2px 0 8px}.spprev{display:flex;gap:6px;height:48px;align-items:flex-end;margin:6px 0 10px;padding:8px;border-radius:12px;background:var(--bg)}.spprev i{flex:1;border-radius:6px;background:linear-gradient(180deg,var(--ac),var(--ac2));height:100%;transform-origin:bottom}.spprev.go i{animation:spPrev calc(.7s*var(--at)) var(--ae) both}.spprev.go i:nth-child(2){animation-delay:calc(var(--sd)*1)}.spprev.go i:nth-child(3){animation-delay:calc(var(--sd)*2)}.spprev.go i:nth-child(4){animation-delay:calc(var(--sd)*3)}.spprev.go i:nth-child(5){animation-delay:calc(var(--sd)*4)}.spprev.go i:nth-child(6){animation-delay:calc(var(--sd)*5)}@keyframes spPrev{from{transform:scaleY(.08);opacity:.3}to{transform:none;opacity:1}}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation;overscroll-behavior:none}
@@ -238,7 +262,7 @@ function viewV(box){
 var c=h("div","card");
 c.innerHTML='<h2>Neuer Eintrag</h2><label for="ty">Art</label><select id="ty"><option value="Vertrag">Vertrag</option><option value="Ratenzahlung">Ratenzahlung</option></select><label>Schnellauswahl</label><div class="chips" id="qk"></div><label for="n">Name des Vertrags</label><input id="n" type="text" maxlength="60"><label for="k" id="kl">Kosten pro Zahlung</label><input id="k" type="number" inputmode="decimal" min="0" step="0.01"><label for="g">Kategorie</label><select id="g"></select><label for="p">Zahlweise</label><label class="ck"><input id="alt" type="checkbox">Alternative Zahlungstermine</label><label for="p">Zahlweise</label><select id="p"></select><div id="cw" style="display:none"><label for="c">Alle wie viele Tage?</label><input id="c" type="number" inputmode="numeric" min="1" max="3650" value="7"></div><div id="dw" style="display:none"><label for="dm">Zahltag im Monat (1 bis 31)</label><input id="dm" type="number" inputmode="numeric" min="1" max="31" value="1"></div><label for="s" id="sl">Nächste oder erste Zahlung am (optional)</label><input id="s" type="date"><div id="ew" style="display:none"><label for="en">Zahlungen laufen bis (optional)</label><input id="en" type="date"></div><div id="rw" style="display:none"><label for="tt">Gesamtbetrag</label><input id="tt" type="number" inputmode="decimal" min="0" step="0.01"><label for="nr">Anzahl der Raten</label><input id="nr" type="number" inputmode="numeric" min="1" max="600" value="12"></div><div id="dwv"><label for="d">Letzter Tag zum Kündigen</label><input id="d" type="date"></div><label for="o">Notiz (optional)</label><input id="o" type="text" maxlength="120"><details class="more" id="mdet"><summary>Weitere Details (optional)</summary><div id="trw"><label for="tr">Testphase endet am</label><input id="tr" type="date"></div><label for="sh">Geteilt mit (Personen inkl. dir)</label><input id="sh" type="number" inputmode="numeric" min="1" max="20" value="1"><div id="fcw"><label>Frist berechnen</label><div class="fc"><input id="fce" type="date" aria-label="Vertragsende"><input id="fcn" type="number" min="0" max="36" value="1" inputmode="numeric" aria-label="Kündigungsfrist"><select id="fcu"><option value="m">Monate</option><option value="w">Wochen</option><option value="t">Tage</option></select></div><button class="mini" id="fcb" type="button">Kündigungstag übernehmen</button><div class="mu">Vertragsende und Kündigungsfrist eingeben, dann übernehmen.</div></div><label for="web">Website des Anbieters</label><input id="web" type="url" inputmode="url" maxlength="200" placeholder="https://"><label for="tel">Telefon</label><input id="tel" type="tel" maxlength="40"><label for="mail">E-Mail für Kündigungen</label><input id="mail" type="email" maxlength="120"></details><div class="err" id="e"></div>';
 box.appendChild(c);
-var shown=NEW||EDIT;c.style.display=shown?"":"none";quickAdd(box);var qc=box.lastChild;box.insertBefore(qc,c);qc.style.display=shown?"":"none";var nb=h("button","pri","+ Neuer Eintrag");nb.style.display=shown?"none":"";nb.onclick=function(){NEW=true;render()};box.insertBefore(nb,c);CATS.forEach(function(x){var o=document.createElement("option");o.textContent=x;o.value=x;$("g").appendChild(o)});formInit();
+var shown=NEW||EDIT;c.style.display=shown?"":"none";quickAdd(box);var qc=box.lastChild;box.insertBefore(qc,c);qc.style.display=shown?"":"none";var nb=h("button","pri","+ Neuer Eintrag");nb.id="nbtn";nb.style.display=shown?"none":"";nb.onclick=function(){NEW=true;render()};box.insertBefore(nb,c);CATS.forEach(function(x){var o=document.createElement("option");o.textContent=x;o.value=x;$("g").appendChild(o)});formInit();
 var b=h("button","pri",EDIT?"Änderungen speichern":"Vertrag speichern");
 b.onclick=function(){
 var n=$("n").value.trim(),k=parseFloat($("k").value.replace(",",".")),d=$("d").value;
@@ -335,7 +359,7 @@ var NEW=false,OPEN=null,DEL=null,EDIT=null,UNL=false,PAYS={"täglich":1,"wöchen
 function cs(){return UI.cur||"€"}
 function dd(i){return i.p==="Eigener Rhythmus"?Math.max(1,i.c||7):(PAYS[i.p]||30.4375)}
 function mon(i){return i.rt==="R"&&rOpen(i)<=0?0:i.k/dd(i)*30.4375/(i.sh>1?i.sh:1)}
-var SUB=null,HC="Erste Schritte",HQ="",NOTES=[],NQ="",NF="Alle",NE=null,NDEL=null,VER="1.7",QK=[["Netflix","Streaming","monatlich"],["Spotify","Musik","monatlich"],["Fitnessstudio","Fitness","monatlich"],["Handyvertrag","Handy & Internet","monatlich"],["Haftpflicht","Versicherung","jährlich"],["Strom","Wohnen & Energie","monatlich"]];
+var SUB=null,HC="Erste Schritte",HQ="",NOTES=[],NQ="",NF="Alle",NE=null,NDEL=null,VER="1.8",QK=[["Netflix","Streaming","monatlich"],["Spotify","Musik","monatlich"],["Fitnessstudio","Fitness","monatlich"],["Handyvertrag","Handy & Internet","monatlich"],["Haftpflicht","Versicherung","jährlich"],["Strom","Wohnen & Energie","monatlich"]];
 var EULA=["1. Nutzungsrecht: Du erhältst ein einfaches, nicht übertragbares Recht, AboWächter privat zu nutzen.","2. Urheberrecht: Die App, ihr Design und ihr Quelltext sind urheberrechtlich geschützt. Kopieren, Nachbauen, Weiterverkaufen und das Entfernen von Urheberhinweisen oder Wasserzeichen sind nicht erlaubt.","3. Inhalte: Du bist für deine Eingaben verantwortlich. Beleidigungen, Hass, Rassismus und rechtswidrige Inhalte sind verboten und werden gefiltert.","4. Keine Gewähr: Du trägst Fristen und Beträge selbst ein. Erinnerungen können ausfallen. Prüfe wichtige Fristen immer zusätzlich im Vertrag. Für verpasste Kündigungen wird nicht gehaftet, außer bei Vorsatz und grober Fahrlässigkeit.","5. Datenspeicherung: Deine Daten liegen nur lokal auf deinem Gerät. Löschst du Browserdaten oder die App, sind sie weg. Sichere sie regelmäßig.","6. Änderungen: Funktionen und diese Bedingungen können sich ändern. Bei wesentlichen Änderungen wirst du erneut um Zustimmung gebeten.","7. Beendigung: Du kannst dein Konto jederzeit löschen. Bei Verstößen kann die Nutzung beendet werden.","8. Recht: Es gilt deutsches Recht, soweit zwingende Verbraucherschutzvorschriften nichts anderes bestimmen."];
 var PRIV=["Es werden keine Daten an einen Server gesendet. E-Mail, Nutzername, Verträge und Notizen bleiben auf deinem Gerät. Passwort und PIN werden nur als Hash gespeichert. Benachrichtigungen nutzen die Funktion deines Browsers."];
 var RIGHTS=["Auskunft und Export: Mehr, Einstellungen, Daten.","Berichtigung: Verträge und Notizen kannst du jederzeit bearbeiten.","Löschung: Mehr, Konto, Konto und Daten löschen.","Widerruf der Zustimmung: Unten auf dieser Seite. Danach wirst du abgemeldet und musst erneut zustimmen.","Keine Weitergabe: Deine Daten werden nicht an Dritte übermittelt."];
@@ -347,14 +371,14 @@ var HELP={"Erste Schritte":[["Was kann der Helper?","Er beantwortet Fragen zur A
 "Design":[["Wie ändere ich die Farben?","Mehr, Einstellungen: Farbrad, Vorlagen, Helligkeit, Intensität und farbiger Hintergrund."]],
 "Konto & Sicherheit":[["Was macht die App-PIN?","Sie sperrt die App beim Öffnen. Du legst sie unter Mehr, Konto fest."],["Passwort vergessen?","Es gibt keine Zurücksetzen-Mail, weil das Konto nur auf deinem Gerät liegt. Lege notfalls ein neues Konto an."]],
 "Daten & Datenschutz":[["Wo liegen meine Daten?","Nur auf deinem Gerät. Sichere sie unter Mehr, Einstellungen, Daten."],["Wie lösche ich alles?","Mehr, Konto, Konto und Daten löschen."]]};
-var LOG=[["1.7","15.11.2026",["Komplett offline nutzbar","Offline-Änderungen werden automatisch in die Cloud geladen","Schnellerer Start mit gespeicherten Daten","Animationsgeschwindigkeit genauer, mit Vorschau und Stufen","Bis zu 5× schnellere Animationen"]],["1.6","15.11.2026",["Testphasen mit Erinnerung","Abos teilen: nur dein Anteil zählt","Kündigungstag-Rechner","Anbieter-Kontakt mit Kündigung per E-Mail","Diagramme: 12-Monats-Ausgaben und Kategorien","Sparziel und Preisänderungen","Export als Tabelle und Kalender","Animationsgeschwindigkeit einstellbar","Vibration beim Tippen","Berechtigungen für Mitteilungen und Mikrofon","Fühlt sich an wie eine echte App: kein Zoomen, kein Neuladen"]],["1.5.1","15.11.2026",["Neuigkeiten bei jedem Start, in den Einstellungen abschaltbar","Kategorien wieder gut lesbar","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.5","15.11.2026",["Neuigkeiten-Fenster nach Updates","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.4","15.11.2026",["Ladebildschirm beim Start","Animierte Übergänge zwischen den Seiten","Animationen unter Einstellungen, Leistung abschaltbar"]],["1.3","14.11.2026",["Helper vereint Hilfe und Aufgaben","Vollbild ohne farbige Leisten"]],["1.2","14.11.2026",["Anmeldung mit Google oder E-Mail","Daten in der Cloud, auf allen Geräten gleich","Passwort vergessen per E-Mail","KI-Agent jetzt kostenlos für alle","Benachrichtigungen auf Android"]],["1.1","14.11.2026",["Vier Sprachen mit Sprachknopf auf jeder Seite","Schnell-Eingabe mit Vorschau, Raten und Preis-Erkennung","Neues Logo und installierbare App"]],["1.0","13.11.2026",["Notizblock mit Farben, Anheften, Archiv und Suche","Alternative Zahlungstermine mit festem Zahltag und Enddatum","Hilfe-Center mit Themen und Suche","Nutzungsbedingungen mit Zustimmung im Konto","Neues Menü Mehr, Update-Log und Wasserzeichen"]],["0.9","13.11.2026",["Farbrad, Vorlagen und Helligkeit","Eigene Zahlungsrhythmen und Zahlungskalender","Verträge bearbeiten, Favoriten, Duplizieren","App-PIN und Passwort ändern"]],["0.8","13.11.2026",["Registrieren und Anmelden","Erinnerungen vor der Frist","Inhaltsfilter gegen Beleidigungen","Übersicht mit Budget"]]];
+var LOG=[["1.8","15.11.2026",["Geführte Tour nach der Registrierung","Tutorial jederzeit unter Mehr erneut starten","Hintergrundbilder: 8 Motive oder eigenes Foto","Hintergrund abschwächen und weichzeichnen"]],["1.7","15.11.2026",["Komplett offline nutzbar","Offline-Änderungen werden automatisch in die Cloud geladen","Schnellerer Start mit gespeicherten Daten","Animationsgeschwindigkeit genauer, mit Vorschau und Stufen","Bis zu 5× schnellere Animationen"]],["1.6","15.11.2026",["Testphasen mit Erinnerung","Abos teilen: nur dein Anteil zählt","Kündigungstag-Rechner","Anbieter-Kontakt mit Kündigung per E-Mail","Diagramme: 12-Monats-Ausgaben und Kategorien","Sparziel und Preisänderungen","Export als Tabelle und Kalender","Animationsgeschwindigkeit einstellbar","Vibration beim Tippen","Berechtigungen für Mitteilungen und Mikrofon","Fühlt sich an wie eine echte App: kein Zoomen, kein Neuladen"]],["1.5.1","15.11.2026",["Neuigkeiten bei jedem Start, in den Einstellungen abschaltbar","Kategorien wieder gut lesbar","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.5","15.11.2026",["Neuigkeiten-Fenster nach Updates","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.4","15.11.2026",["Ladebildschirm beim Start","Animierte Übergänge zwischen den Seiten","Animationen unter Einstellungen, Leistung abschaltbar"]],["1.3","14.11.2026",["Helper vereint Hilfe und Aufgaben","Vollbild ohne farbige Leisten"]],["1.2","14.11.2026",["Anmeldung mit Google oder E-Mail","Daten in der Cloud, auf allen Geräten gleich","Passwort vergessen per E-Mail","KI-Agent jetzt kostenlos für alle","Benachrichtigungen auf Android"]],["1.1","14.11.2026",["Vier Sprachen mit Sprachknopf auf jeder Seite","Schnell-Eingabe mit Vorschau, Raten und Preis-Erkennung","Neues Logo und installierbare App"]],["1.0","13.11.2026",["Notizblock mit Farben, Anheften, Archiv und Suche","Alternative Zahlungstermine mit festem Zahltag und Enddatum","Hilfe-Center mit Themen und Suche","Nutzungsbedingungen mit Zustimmung im Konto","Neues Menü Mehr, Update-Log und Wasserzeichen"]],["0.9","13.11.2026",["Farbrad, Vorlagen und Helligkeit","Eigene Zahlungsrhythmen und Zahlungskalender","Verträge bearbeiten, Favoriten, Duplizieren","App-PIN und Passwort ändern"]],["0.8","13.11.2026",["Registrieren und Anmelden","Erinnerungen vor der Frist","Inhaltsfilter gegen Beleidigungen","Übersicht mit Budget"]]];
 function wm(){}
 function eulaView(){var a=$("app");a.textContent="";var c=h("div","card");c.appendChild(h("h2",null,"Nutzungsbedingungen"));
 c.appendChild(h("div","mu","Bitte lies die Bedingungen und bestätige sie, um die App zu nutzen."));
 var bx=h("div","legal");EULA.forEach(function(p){bx.appendChild(h("p",null,p))});c.appendChild(bx);
 var l=h("label","ck"),k=h("input");k.type="checkbox";l.appendChild(k);l.appendChild(document.createTextNode("Ich habe die Bedingungen gelesen und stimme zu."));c.appendChild(l);
 var e=h("div","err");c.appendChild(e);
-var b=h("button","pri","Zustimmen und fortfahren");b.onclick=function(){if(!k.checked){e.textContent=L("Bitte stimme den Bedingungen zu.");return}me().eula=Date.now();saveAcc();render()};c.appendChild(b);
+var b=h("button","pri","Zustimmen und fortfahren");b.onclick=function(){if(!k.checked){e.textContent=L("Bitte stimme den Bedingungen zu.");return}me().eula=Date.now();if(!me().tour)me().tourNew=1;saveAcc();render()};c.appendChild(b);
 var o=h("button","sec","Ablehnen und abmelden");o.onclick=logout;c.appendChild(o);a.appendChild(c)}
 function acc(box,title,arr){var d=h("details","fq",null,[h("summary",null,title)]);arr.forEach(function(p){d.appendChild(h("p","mu",p))});box.appendChild(d)}
 function viewLaw(box){var c=h("div","card");c.appendChild(h("h2",null,"Rechtliches"));notice(c);
@@ -374,9 +398,9 @@ function viewAb(box){var c=h("div","card");c.appendChild(h("h2",null,"Über AboW
 [["Version",VER],["Speicherort",CLOUD?"Dein Konto (Google Firebase)":"Nur dieses Gerät"],["Urheberrecht","© 2026 AboWächter"]].forEach(function(r){c.appendChild(h("div","kv",null,[h("span","mu",r[0]),h("span",null,r[1])]))});
 c.appendChild(h("p","mu","Alle Rechte vorbehalten. Kopieren, Nachbauen und Weitergeben der App sind nicht erlaubt. Am Ende jeder Seite steht das Logo mit Name und Version."));box.appendChild(c)}
 function viewMore(box){
-var T={ai:["Helper","Fragen, Menüs und Aufgaben",viewAg],perm:["Berechtigungen","Benachrichtigungen, Mikrofon, Speicher",viewPerm],mem:["AboWächter Plus",TRIAL+" Tage kostenlos testen",viewMem],set:["Einstellungen","Design, Budget, Währung, Daten",viewD],acc:["Konto & Sicherheit","Profil, PIN, Passwort, Zustimmung",function(b){viewK(b);sec(b)}],help:["Hilfe","Antworten nach Themen",viewHelp],law:["Rechtliches","Bedingungen, Datenschutz, Rechte",viewLaw],log:["Neuigkeiten","Update-Log",viewLog],ab:["Über die App","Version und Urheberrecht",viewAb]};
+var T={ai:["Helper","Fragen, Menüs und Aufgaben",viewAg],perm:["Berechtigungen","Benachrichtigungen, Mikrofon, Speicher",viewPerm],mem:["AboWächter Plus",TRIAL+" Tage kostenlos testen",viewMem],set:["Einstellungen","Design, Budget, Währung, Daten",viewD],acc:["Konto & Sicherheit","Profil, PIN, Passwort, Zustimmung",function(b){viewK(b);sec(b)}],tour:["Tutorial","Die wichtigsten Funktionen in 30 Sekunden",null],help:["Hilfe","Antworten nach Themen",viewHelp],law:["Rechtliches","Bedingungen, Datenschutz, Rechte",viewLaw],log:["Neuigkeiten","Update-Log",viewLog],ab:["Über die App","Version und Urheberrecht",viewAb]};
 if(!ABO_AKTIV)delete T.mem;if(SUB&&T[SUB]){var bk=h("button","sec","‹ Zurück");bk.style.margin="0 0 12px";bk.onclick=function(){SUB=null;note="";armed=false;render()};box.appendChild(bk);T[SUB][2](box);return}
-Object.keys(T).forEach(function(k){var c=h("div","card row",null,[h("div","info",null,[h("div","name",T[k][0]),h("div","mu",T[k][1])]),h("span","mu","›")]);c.style.cursor="pointer";c.onclick=function(){SUB=k;render()};box.appendChild(c)})}
+Object.keys(T).forEach(function(k){var c=h("div","card row",null,[h("div","info",null,[h("div","name",T[k][0]),h("div","mu",T[k][1])]),h("span","mu","›")]);c.style.cursor="pointer";c.onclick=function(){if(k==="tour"){SUB=null;startTour();return}SUB=k;render()};box.appendChild(c)})}
 var NC=["Gelb","Grün","Blau","Rosa","Grau"],NH={"Gelb":48,"Grün":140,"Blau":215,"Rosa":335,"Grau":0};
 function nsave(){wr("aw_n_"+CUR,NOTES)}
 function viewN(box){
@@ -775,7 +799,7 @@ c.appendChild(h("label",null,"Darstellung"));
 var sg=h("div","seg");[["auto","Auto"],["light","Hell"],["dark","Dunkel"]].forEach(function(t){var b=h("button",UI.theme===t[0]?"on":"",t[1]);b.onclick=function(){UI.theme=t[0];sv();applyUI();render()};sg.appendChild(b)});
 c.appendChild(sg);
 c.appendChild(h("label",null,"Schriftgröße"));c.appendChild(rng(14,20,UI.fs,function(v){UI.fs=v;applyUI();sv()}));
-box.appendChild(c);
+box.appendChild(c);bgCard(box);
 var pf=h("div","card");pf.appendChild(h("h2",null,"Leistung"));pf.appendChild(tg("Animationen","Ladebildschirm, Seitenübergänge und Effekte",UI.anim!==false,function(){UI.anim=UI.anim===false;sv();applyUI();render()}));if(UI.anim!==false){pf.appendChild(h("label",null,"Intensität"));var asg=h("div","seg");[["d","Dezent"],["n","Normal"],["s","Stark"]].forEach(function(t){var ab=h("button",(UI.ai||"n")===t[0]?"on":"",t[1]);ab.onclick=function(){UI.ai=t[0];sv();applyUI();VKEY=null;render()};asg.appendChild(ab)});pf.appendChild(asg)}
 if(UI.anim!==false){pf.appendChild(h("label",null,"Geschwindigkeit"));var spl=h("div","spdl"),sptx=h("b",null,""),spv=h("span","badge ok","");spl.appendChild(sptx);spl.appendChild(spv);pf.appendChild(spl);
 var prev=h("div","spprev");for(var pi0=0;pi0<6;pi0++){var bi=h("i");bi.style.height=(35+((pi0*37)%60))+"%";prev.appendChild(bi)}
@@ -897,7 +921,7 @@ PRIV[0]="Deine Daten (E-Mail, Nutzername, Verträge, Notizen, Einstellungen) wer
 HELP["Erste Schritte"][2][1]="Ja, die Anmeldung ist Pflicht. So bleiben deine Daten erhalten, auch wenn du das Handy wechselst.";
 HELP["Konto & Sicherheit"][1][1]="Tippe bei der Anmeldung auf „Passwort vergessen?“. Du bekommst dann eine E-Mail zum Zurücksetzen.";
 HELP["Daten & Datenschutz"][0][1]="In deinem Konto bei Google Firebase. Zusätzlich kannst du unter Mehr, Einstellungen, Daten eine Sicherung kopieren."}
-function awBack(){var wn0=$("wn");if(wn0){wn0.querySelector(".wn-x").click();return true}var m=$("lgm");if(m&&m.style.display!=="none"){m.style.display="none";return true}
+function awBack(){if($("tour")){endTour(false);return true}var wn0=$("wn");if(wn0){wn0.querySelector(".wn-x").click();return true}var m=$("lgm");if(m&&m.style.display!=="none"){m.style.display="none";return true}
 if(EDIT||NEW||OPEN||NE||CHK||CANC){EDIT=null;NEW=false;OPEN=null;NE=null;CHK=false;CANC=false;render();return true}
 if(SUB){SUB=null;note="";armed=false;render();return true}
 if(CUR&&ACC[CUR]&&tab!=="v"){tab="v";render();window.scrollTo(0,0);return true}return false}
@@ -926,7 +950,7 @@ x.onclick=close;b.onclick=close;ov.onclick=function(ev){if(ev.target===ov)close(
 document.body.appendChild(ov);if(UI.anim!==false&&UI.ai!=="d")confetti(sh)}
 function confetti(box){var C=["#5b5bd6","#8b5cf6","#f5b301","#ff7a18","#1f9d55","#e5484d","#3b82f6"],n=UI.ai==="s"?34:20;
 for(var i=0;i<n;i++){var p=document.createElement("span");p.className="cf";p.style.left=(Math.random()*100)+"%";p.style.background=C[i%C.length];p.style.setProperty("--x",(Math.random()*120-60)+"px");p.style.setProperty("--r",(Math.random()*720-360)+"deg");p.style.animationDelay=(Math.random()*.35)+"s";box.appendChild(p)}}
-function maybeWhatsNew(){if(SESSION_WN||$("wn"))return;var k=curKey();if(k.indexOf(":")<0||k.indexOf("login")===0)return;if(!UI.permAsked){SESSION_WN=true;setTimeout(showPermSheet,UI.anim===false?0:300);return}if(UI.wnAlways===false)return;SESSION_WN=true;setTimeout(showWN,UI.anim===false?0:250)}
+function maybeWhatsNew(){if($("tour"))return;var k0=curKey();if(k0.indexOf(":")>-1&&k0.indexOf("login")!==0&&me()&&me().tourNew===1&&!$("wn")&&!$("perm")){setTimeout(function(){if(!$("tour")&&me()&&me().tourNew===1)startTour()},UI.anim===false?0:350);return}if(SESSION_WN||$("wn"))return;var k=curKey();if(k.indexOf(":")<0||k.indexOf("login")===0)return;if(!UI.permAsked){SESSION_WN=true;setTimeout(showPermSheet,UI.anim===false?0:300);return}if(UI.wnAlways===false)return;SESSION_WN=true;setTimeout(showWN,UI.anim===false?0:250)}
 function countUp(){if(UI.anim===false)return;var dur=900*(window.__AT||1)*(UI.ai==="d"?.8:1);
 Array.prototype.forEach.call(document.querySelectorAll(".stats b[data-n]"),function(b){var v=parseFloat(b.getAttribute("data-n"))||0,m=b.getAttribute("data-m")==="1",t0=null;if(!v)return;
 function f(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/dur),q=1-Math.pow(1-p,3),c=v*q;b.textContent=m?fmt(c)+" "+cs():String(Math.round(c));if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)})}
@@ -988,6 +1012,101 @@ PERMS.forEach(function(r,i){var li=h("div","wn-it",null,[h("span","wn-dot","✓"
 var b=h("button","pri",L("Alle erlauben")),l=h("button","sec",L("Später"));sh.appendChild(b);sh.appendChild(l);ov.appendChild(sh);
 function close(){UI.permAsked=1;sv();ov.classList.add("out");setTimeout(function(){if(ov.parentNode)ov.parentNode.removeChild(ov)},UI.anim===false?0:Math.round(300*(window.__AT||1)))}
 x.onclick=close;l.onclick=close;b.onclick=function(){close();askAll()};document.body.appendChild(ov)}
+
+/* ===== Tutorial (Spotlight-Tour) ===== */
+var TSTEPS=[
+{m:"w"},
+{sel:"#app .hero",t:"Deine Übersicht",x:"Hier siehst du die nächste Frist, deine Kosten pro Monat und was bald fällig ist."},
+{sel:"#nbtn",t:"Neuen Vertrag anlegen",x:"Tippe hier, um ein Abo, einen Vertrag oder eine Ratenzahlung einzutragen – mit der Schnell-Eingabe sogar in einer Zeile."},
+{sel:"#q",row:1,t:"Suchen & sortieren",x:"Finde jeden Vertrag in Sekunden und sortiere nach Frist, Preis oder Name."},
+{sel:"nav button:nth-child(2)",t:"Übersicht & Statistik",x:"Kosten pro Tag, Monat und Jahr, nach Kategorie und mit 12-Monats-Prognose."},
+{sel:"nav button:nth-child(3)",t:"Kalender",x:"Alle Fristen, Zahlungen und Raten auf einen Blick."},
+{sel:"nav button:nth-child(5)",t:"Erinnerungen",x:"Lege fest, wann du erinnert wirst – so verpasst du keine Kündigungsfrist mehr."},
+{sel:"nav button:nth-child(6)",t:"Mehr",x:"Einstellungen, Farben, Hintergrundbild, Konto, Hilfe und Neuigkeiten."},
+{sel:".fab",t:"Dein Helper",x:"Eine Frage? Der Helper antwortet sofort und bringt dich direkt an die richtige Stelle."},
+{sel:"#lgb",t:"Sprache",x:"Wechsle jederzeit zwischen Deutsch, English, Русский und Türkçe."},
+{m:"e"}];
+var TOUR=null;
+function tVib(){if(UI.vib!==false&&navigator.vibrate){try{navigator.vibrate(8)}catch(x){}}}
+function tTarget(s){if(!s.sel)return null;var e=document.querySelector(s.sel);if(e&&s.row&&e.parentNode)e=e.parentNode;if(!e)return null;var r=e.getBoundingClientRect();if(!r.width||!r.height)return null;return e}
+function startTour(){if($("tour"))return;tab="v";SUB=null;NEW=false;EDIT=null;OPEN=null;armed=false;note="";render();window.scrollTo(0,0);
+var o=document.createElement("div");o.id="tour";o.innerHTML='<div class="tbk"></div><div id="tspot"></div><div id="ttip"></div>';document.body.appendChild(o);
+o.addEventListener("click",function(ev){if(!TOUR||TOUR.m)return;var sp=$("tspot").getBoundingClientRect();if(ev.clientX>=sp.left&&ev.clientX<=sp.right&&ev.clientY>=sp.top&&ev.clientY<=sp.bottom)tGo(1);else{var tp=$("ttip");if(!tp.contains(ev.target)){tp.classList.remove("nudge");void tp.offsetWidth;tp.classList.add("nudge")}}});
+TOUR={i:0};window.addEventListener("resize",tPlace);window.addEventListener("scroll",tPlace,{passive:true});tShow(0)}
+function tGo(d){if(!TOUR)return;var i=TOUR.i+d;while(i>0&&i<TSTEPS.length-1&&!TSTEPS[i].m&&!tTarget(TSTEPS[i]))i+=d>0?1:-1;if(i<0)i=0;if(i>=TSTEPS.length){endTour(false);return}tVib();tShow(i)}
+function tCount(){return TSTEPS.filter(function(s){return !s.m&&tTarget(s)}).length}
+function tShow(i){TOUR.i=i;var s=TSTEPS[i],o=$("tour"),tp=$("ttip");if(!o)return;TOUR.m=s.m||null;o.className=s.m?"modal":"";tp.textContent="";tp.className="";void tp.offsetWidth;tp.className="tin";
+if(s.m){var lg=h("div","tlogo");lg.innerHTML=s.m==="w"?logoSvg(72):'<div style="font-size:64px;line-height:1">🎉</div>';tp.appendChild(lg);
+var nm=me()&&me().user?String(me().user):"";
+tp.appendChild(h("h3",null,s.m==="w"?L("Willkommen bei AboWächter!"):L("Alles bereit!")));
+if(s.m==="w"&&nm){var hi=h("div","tname");hi.textContent="👋 "+nm;tp.appendChild(hi)}
+tp.appendChild(h("p",null,s.m==="w"?L("In 30 Sekunden zeigen wir dir das Wichtigste. Du kannst die Tour jederzeit überspringen."):L("Du kennst jetzt das Wichtigste. Die Tour findest du jederzeit unter Mehr → Tutorial.")));
+var bx=h("div","tbtns col");
+if(s.m==="w"){var go=h("button","pri",L("Tour starten"));go.onclick=function(){tGo(1)};var sk=h("button","sec",L("Überspringen"));sk.onclick=function(){endTour(false)};bx.appendChild(go);bx.appendChild(sk)}
+else{var f1=h("button","pri",L("Ersten Vertrag anlegen"));f1.onclick=function(){endTour(true)};var f2=h("button","sec",L("Fertig"));f2.onclick=function(){endTour(false)};bx.appendChild(f1);bx.appendChild(f2);if(UI.anim!==false&&UI.ai!=="d")setTimeout(function(){if($("ttip"))confetti($("ttip"))},120)}
+tp.appendChild(bx);tPlace();return}
+var all=TSTEPS.filter(function(x){return !x.m&&tTarget(x)}),pos=all.indexOf(s)+1,n=all.length;
+var top=h("div","ttop");top.appendChild(h("span","tstep",pos+" / "+n));var sk2=h("button","tskip",L("Überspringen"));sk2.onclick=function(){endTour(false)};top.appendChild(sk2);tp.appendChild(top);
+tp.appendChild(h("h3",null,L(s.t)));tp.appendChild(h("p",null,L(s.x)));
+var pr=h("div","tprog"),pf=h("i");pf.style.width=Math.round(pos/n*100)+"%";pr.appendChild(pf);tp.appendChild(pr);
+var bx2=h("div","tbtns");var bk=h("button","sec",L("Zurück"));bk.onclick=function(){tGo(-1)};if(pos<=1)bk.style.visibility="hidden";var nx=h("button","pri",pos===n?L("Fertig"):L("Weiter"));nx.onclick=function(){tGo(1)};bx2.appendChild(bk);bx2.appendChild(nx);tp.appendChild(bx2);tp.appendChild(h("div","tarrow"));
+var el=tTarget(s);if(el){var fx=getComputedStyle(el).position==="fixed"||!!el.closest("nav");if(!fx){var r=el.getBoundingClientRect();if(r.top<70||r.bottom>innerHeight-260)window.scrollTo(0,Math.max(0,window.scrollY+r.top-110))}}
+tPlace()}
+function tPlace(){if(!TOUR||!$("tour"))return;var s=TSTEPS[TOUR.i],sp=$("tspot"),tp=$("ttip"),W=innerWidth,H=innerHeight;
+if(s.m){sp.style.cssText="left:"+(W/2)+"px;top:"+(H/2)+"px;width:0;height:0;opacity:0";tp.style.top=Math.max(20,(H-tp.offsetHeight)/2)+"px";return}
+var el=tTarget(s);if(!el){tGo(1);return}var r=el.getBoundingClientRect(),pd=8,cs=getComputedStyle(el),rad=Math.min(28,(parseFloat(cs.borderRadius)||12)+pd);
+var L0=Math.max(4,r.left-pd),T0=Math.max(4,r.top-pd),W0=Math.min(W-8,r.width+pd*2),H0=r.height+pd*2;
+sp.style.cssText="left:"+L0+"px;top:"+T0+"px;width:"+W0+"px;height:"+H0+"px;border-radius:"+rad+"px;opacity:1";
+var th=tp.offsetHeight,below=T0+H0+14,above=T0-th-14,ar=tp.querySelector(".tarrow"),useB=below+th<H-12||above<12;
+tp.style.top=(useB?Math.min(below,H-th-12):above)+"px";
+var tl=tp.getBoundingClientRect().left,cx=Math.max(24,Math.min(tp.offsetWidth-24,r.left+r.width/2-tl));
+if(ar){ar.className="tarrow "+(useB?"up":"down");ar.style.left=(cx-9)+"px"}}
+function endTour(add){var o=$("tour");TOUR=null;window.removeEventListener("resize",tPlace);window.removeEventListener("scroll",tPlace);
+if(me()){delete me().tourNew;me().tour=Date.now();saveAcc()}
+if(o){o.classList.add("tout");setTimeout(function(){if(o.parentNode)o.parentNode.removeChild(o)},UI.anim===false?0:Math.round(260*(window.__AT||1)))}
+if(add){tab="v";NEW=true}render();if(add)window.scrollTo(0,0)}
+/* ===== Hintergrundbilder ===== */
+var BGERR="";
+function bgStars(n,seed,w,hh,maxr){var s="",x=seed;for(var i=0;i<n;i++){x=(x*16807)%2147483647;var a=x/2147483647;x=(x*16807)%2147483647;var b=x/2147483647;x=(x*16807)%2147483647;var c=x/2147483647;s+='<circle cx="'+(a*w).toFixed(1)+'" cy="'+(b*hh).toFixed(1)+'" r="'+(0.4+c*maxr).toFixed(2)+'" fill="#fff" opacity="'+(0.35+c*0.65).toFixed(2)+'"/>'}return s}
+var BGP=[["aurora","Aurora"],["sunset","Abendrot"],["ocean","Ozean"],["mountains","Berge"],["night","Sternennacht"],["pastel","Pastell"],["bokeh","Bokeh"],["wave","Welle"]];
+function bgSvg(id){var o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice"><defs><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="38"/></filter><filter id="s" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>',z;
+switch(id){
+case "aurora":z='<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#040817"/><stop offset=".6" stop-color="#0a1a35"/><stop offset="1" stop-color="#0d2a3a"/></linearGradient></defs><rect width="400" height="800" fill="url(#g)"/>'+bgStars(90,7,400,500,1.1)+'<g filter="url(#b)"><ellipse cx="110" cy="230" rx="210" ry="55" fill="#19e3a2" transform="rotate(-28 110 230)"/><ellipse cx="300" cy="300" rx="170" ry="45" fill="#7c4dff" transform="rotate(-18 300 300)"/><ellipse cx="200" cy="420" rx="230" ry="38" fill="#00b4ff" opacity=".55"/></g><path d="M0 690 L70 640 L130 670 L200 610 L270 660 L330 630 L400 665 L400 800 L0 800Z" fill="#020611"/>';break;
+case "sunset":z='<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a0f53"/><stop offset=".45" stop-color="#c23a75"/><stop offset=".72" stop-color="#ff8c5a"/><stop offset="1" stop-color="#ffd08a"/></linearGradient></defs><rect width="400" height="800" fill="url(#g)"/><circle cx="200" cy="560" r="95" fill="#ffe2a8" opacity=".55" filter="url(#s)"/><circle cx="200" cy="560" r="70" fill="#fff1c9"/><path d="M0 600 L60 560 L120 590 L190 530 L260 585 L330 545 L400 580 L400 800 L0 800Z" fill="#7a2c63" opacity=".85"/><path d="M0 660 L80 620 L150 650 L230 600 L300 645 L400 610 L400 800 L0 800Z" fill="#4a1a4f"/><path d="M0 720 L100 690 L190 715 L280 680 L400 705 L400 800 L0 800Z" fill="#250b2e"/>';break;
+case "ocean":z='<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b6fae"/><stop offset=".5" stop-color="#0b3d6e"/><stop offset="1" stop-color="#03142a"/></linearGradient></defs><rect width="400" height="800" fill="url(#g)"/><g opacity=".18" fill="#bfe9ff" filter="url(#s)"><path d="M120 0 L170 0 L90 520 L60 520Z"/><path d="M230 0 L270 0 L230 560 L200 560Z"/><path d="M320 0 L350 0 L360 500 L335 500Z"/></g><path d="M0 520 Q100 490 200 520 T400 520 L400 800 L0 800Z" fill="#0a3a66" opacity=".7"/><path d="M0 590 Q100 560 200 590 T400 590 L400 800 L0 800Z" fill="#072c52" opacity=".85"/><path d="M0 660 Q100 630 200 660 T400 660 L400 800 L0 800Z" fill="#041d3a"/><path d="M0 730 Q100 705 200 730 T400 730 L400 800 L0 800Z" fill="#021226"/>';break;
+case "mountains":z='<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe6f0"/><stop offset=".6" stop-color="#f3ece4"/><stop offset="1" stop-color="#f8f2ea"/></linearGradient></defs><rect width="400" height="800" fill="url(#g)"/><circle cx="290" cy="210" r="46" fill="#fff4dc"/><path d="M0 470 L70 400 L130 450 L210 360 L290 440 L350 400 L400 430 L400 800 L0 800Z" fill="#a9c4cf"/><path d="M0 540 L90 470 L160 520 L240 450 L320 515 L400 480 L400 800 L0 800Z" fill="#7d9eac"/><path d="M0 620 L80 570 L170 610 L260 550 L340 600 L400 580 L400 800 L0 800Z" fill="#4f7180"/><path d="M0 700 L110 660 L200 690 L300 650 L400 680 L400 800 L0 800Z" fill="#29434e"/>';break;
+case "night":z='<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070b1f"/><stop offset=".7" stop-color="#18245a"/><stop offset="1" stop-color="#2a2f6e"/></linearGradient></defs><rect width="400" height="800" fill="url(#g)"/>'+bgStars(160,42,400,800,1.3)+'<circle cx="300" cy="170" r="70" fill="#fff6d8" opacity=".25" filter="url(#s)"/><circle cx="300" cy="170" r="42" fill="#fff6d8"/><circle cx="285" cy="160" r="8" fill="#e8dfbf"/><circle cx="312" cy="185" r="6" fill="#e8dfbf"/><path d="M0 720 Q120 670 230 705 T400 690 L400 800 L0 800Z" fill="#05081a"/>';break;
+case "pastel":z='</defs><rect width="400" height="800" fill="#fbf4fb"/><g filter="url(#b)"><circle cx="60" cy="130" r="150" fill="#f9a8d4"/><circle cx="360" cy="260" r="150" fill="#a5b4fc"/><circle cx="80" cy="560" r="160" fill="#99f6e4"/><circle cx="340" cy="700" r="150" fill="#fed7aa"/></g>';break;
+case "bokeh":var c="",x=11,C=["#a855f7","#ec4899","#f59e0b","#6366f1","#22d3ee"];for(var i=0;i<26;i++){x=(x*16807)%2147483647;var a=x/2147483647;x=(x*16807)%2147483647;var b=x/2147483647;x=(x*16807)%2147483647;var r=x/2147483647;c+='<circle cx="'+(a*400).toFixed(0)+'" cy="'+(b*800).toFixed(0)+'" r="'+(14+r*46).toFixed(0)+'" fill="'+C[i%5]+'" opacity="'+(0.18+r*0.35).toFixed(2)+'"/>'}
+z='<radialGradient id="g" cx=".5" cy=".4" r=".8"><stop offset="0" stop-color="#2a1748"/><stop offset="1" stop-color="#0c0818"/></radialGradient></defs><rect width="400" height="800" fill="url(#g)"/><g filter="url(#s)">'+c+'</g>';break;
+default:z='<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b5bd6"/><stop offset=".55" stop-color="#9b5cf6"/><stop offset="1" stop-color="#e03aa8"/></linearGradient></defs><rect width="400" height="800" fill="url(#g)"/><g fill="none" stroke="#fff" stroke-width="2"><path d="M-20 300 C80 240 160 380 260 310 S380 240 440 300" opacity=".35"/><path d="M-20 340 C80 280 160 420 260 350 S380 280 440 340" opacity=".25"/><path d="M-20 520 C90 450 170 600 270 520 S390 450 440 520" opacity=".3"/><path d="M-20 560 C90 490 170 640 270 560 S390 490 440 560" opacity=".2"/></g><path d="M0 640 C100 590 200 700 300 640 S400 600 400 620 L400 800 L0 800Z" fill="#fff" opacity=".1"/>'}
+return o+z+'</svg>'}
+var BGC={};
+function bgUrl(id){if(id==="custom"){try{return localStorage.getItem("aw_bgimg")||""}catch(e){return ""}}if(!BGC[id])BGC[id]="data:image/svg+xml,"+encodeURIComponent(bgSvg(id));return BGC[id]}
+function bgLayer(){var l=$("bgl"),id=UI.bgId||"aurora",u=UI.bgOn?bgUrl(id):"";if(UI.bgOn&&!u){id="aurora";u=bgUrl(id)}
+if(!UI.bgOn){if(l)l.parentNode.removeChild(l);document.body.classList.remove("hasbg");return}
+if(!l){l=document.createElement("div");l.id="bgl";l.setAttribute("aria-hidden","true");l.innerHTML='<div class="bgi"></div><div class="bgd"></div>';document.body.insertBefore(l,document.body.firstChild)}
+var bi=l.firstChild,key=id+":"+u.length;if(bi.getAttribute("data-k")!==key){bi.style.backgroundImage='url("'+u+'")';bi.setAttribute("data-k",key)}
+var bl=+UI.bgBlur||0;bi.style.filter=bl?"blur("+bl+"px)":"";bi.style.transform=bl?"scale(1.1)":"";l.lastChild.style.opacity=((UI.bgDim==null?30:UI.bgDim)/100).toFixed(2);document.body.classList.add("hasbg")}
+function pickBg(){var i=document.createElement("input");i.type="file";i.accept="image/*";i.onchange=function(){var f=i.files&&i.files[0];if(!f)return;var r=new FileReader();
+r.onload=function(){var img=new Image();img.onload=function(){var mx=1440,sc=Math.min(1,mx/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(img.width*sc));c.height=Math.max(1,Math.round(img.height*sc));c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+var q=.85,d=c.toDataURL("image/jpeg",q);while(d.length>1400000&&q>.35){q-=.1;d=c.toDataURL("image/jpeg",q)}
+try{localStorage.setItem("aw_bgimg",d);UI.bgId="custom";UI.bgOn=true;BGERR="";sv();applyUI();render()}catch(e){BGERR="Das Bild ist zu groß. Bitte wähle ein kleineres.";render()}};
+img.onerror=function(){BGERR="Dieses Bild kann nicht geöffnet werden.";render()};img.src=r.result};r.readAsDataURL(f)};i.click()}
+function bgCard(box){var c=h("div","card");c.appendChild(h("h2",null,"Hintergrundbild"));
+c.appendChild(tg("Hintergrundbild","Ein Bild hinter der App anzeigen",!!UI.bgOn,function(){UI.bgOn=!UI.bgOn;if(UI.bgOn&&!UI.bgId)UI.bgId="aurora";sv();applyUI();render()}));
+if(UI.bgOn){c.appendChild(h("label",null,"Bild wählen"));var g=h("div","bgg"),cur=UI.bgId||"aurora";
+BGP.forEach(function(p){var b=h("button","bgt"+(cur===p[0]?" on":""));b.style.backgroundImage='url("'+bgUrl(p[0])+'")';b.appendChild(h("span",null,p[1]));b.setAttribute("aria-label",p[1]);b.onclick=function(){UI.bgId=p[0];BGERR="";sv();applyUI();render()};g.appendChild(b)});
+var cu=bgUrl("custom"),cb=h("button","bgt add"+(cur==="custom"&&cu?" on":""));if(cu){cb.style.backgroundImage='url("'+cu+'")';cb.appendChild(h("span",null,"Eigenes Bild"));cb.onclick=function(){UI.bgId="custom";sv();applyUI();render()}}else{cb.appendChild(h("b",null,"+"));cb.appendChild(h("span",null,"Eigenes Bild"));cb.onclick=pickBg}g.appendChild(cb);c.appendChild(g);
+var up=h("button","sec",cu?"Anderes Bild hochladen":"Eigenes Bild hochladen");up.onclick=pickBg;up.style.marginTop="10px";c.appendChild(up);
+if(cu){var rm=h("button","sec","Eigenes Bild entfernen");rm.style.margin="10px 0 0 8px";rm.onclick=function(){try{localStorage.removeItem("aw_bgimg")}catch(e){}if(UI.bgId==="custom")UI.bgId="aurora";sv();applyUI();render()};c.appendChild(rm)}
+if(BGERR){var er=h("div","err",BGERR);c.appendChild(er)}
+c.appendChild(h("label",null,"Abschwächen"));c.appendChild(rng(0,85,UI.bgDim==null?30:UI.bgDim,function(v){UI.bgDim=+v;applyUI();sv()}));
+c.appendChild(h("label",null,"Weichzeichnen"));c.appendChild(rng(0,20,UI.bgBlur||0,function(v){UI.bgBlur=+v;applyUI();sv()}));
+c.appendChild(h("p","mu","Farben, Karten und Design bleiben wie gewohnt. Eigene Bilder werden nur auf diesem Gerät gespeichert."))}
+box.appendChild(c)}
+var _aUI0=applyUI;applyUI=function(){_aUI0.apply(this,arguments);try{bgLayer()}catch(e){}};
+
 function offPill(){var e=$("offp"),need=!!CUR&&(!ONLINE||OFFNOSDK);if(!need){if(e)e.remove();return}if(!e){e=document.createElement("div");e.id="offp";e.setAttribute("data-nt","1");document.body.appendChild(e)}var t=L(isDirty()?"Offline · Änderungen werden später hochgeladen":"Offline · Die App funktioniert trotzdem");if(e.textContent!==t)e.textContent=t}
 function render(){render0();trAll();langUI();postAnim();offPill();if(!(CLOUD&&AUTHWAIT))hideSplash();if(!$("splash"))maybeWhatsNew()}
 function logoSvg(n){return '<svg width="'+n+'" height="'+n+'" viewBox="0 0 512 512"><defs><linearGradient id="lgx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b5bd6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgx)"/><rect x="116" y="140" width="280" height="260" rx="40" fill="#fff"/><path d="M116 180a40 40 0 0 1 40-40h200a40 40 0 0 1 40 40v40H116z" fill="#e4e1ff"/><rect x="176" y="104" width="28" height="64" rx="14" fill="#fff"/><rect x="308" y="104" width="28" height="64" rx="14" fill="#fff"/><path d="M186 306l48 48 94-100" fill="none" stroke="#5b5bd6" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
@@ -1094,7 +1213,6 @@ Schriftgröße|Font size|Размер шрифта|Yazı boyutu
 Währung|Currency|Валюта|Para birimi
 Monatsbudget|Monthly budget|Месячный бюджет|Aylık bütçe
 Daten|Data|Данные|Veriler
-Sprache|Language|Язык|Dil
 Konto|Account|Аккаунт|Hesap
 Abmelden|Log out|Выйти|Çıkış yap
 Nutzernamen speichern|Save username|Сохранить имя|Kullanıcı adını kaydet
@@ -1598,6 +1716,55 @@ Monatliches Sparziel|Monthly savings goal|Ежемесячная цель эко
 Ziel speichern|Save goal|Сохранить цель|Hedefi kaydet
 Preisänderungen|Price changes|Изменения цен|Fiyat değişiklikleri
 Geschwindigkeit|Speed|Скорость|Hız
+Willkommen bei AboWächter!|Welcome to AboWächter!|Добро пожаловать в AboWächter!|AboWächter'a hoş geldin!
+In 30 Sekunden zeigen wir dir das Wichtigste. Du kannst die Tour jederzeit überspringen.|In 30 seconds we'll show you the essentials. You can skip the tour at any time.|За 30 секунд покажем самое важное. Тур можно пропустить в любой момент.|30 saniyede en önemli şeyleri gösteriyoruz. Turu istediğin zaman atlayabilirsin.
+Tour starten|Start tour|Начать тур|Turu başlat
+Überspringen|Skip|Пропустить|Atla
+Weiter|Next|Далее|İleri
+Zurück|Back|Назад|Geri
+Alles bereit!|All set!|Всё готово!|Her şey hazır!
+Du kennst jetzt das Wichtigste. Die Tour findest du jederzeit unter Mehr → Tutorial.|You now know the essentials. You can find the tour anytime under More → Tutorial.|Теперь ты знаешь самое важное. Тур всегда доступен в разделе Ещё → Обучение.|Artık en önemli şeyleri biliyorsun. Tura her zaman Daha fazla → Eğitim altından ulaşabilirsin.
+Ersten Vertrag anlegen|Add your first contract|Добавить первый договор|İlk sözleşmeni ekle
+Deine Übersicht|Your overview|Твой обзор|Genel bakışın
+Hier siehst du die nächste Frist, deine Kosten pro Monat und was bald fällig ist.|Here you see the next deadline, your monthly costs and what's due soon.|Здесь видно ближайший срок, расходы в месяц и что скоро к оплате.|Burada bir sonraki son tarihi, aylık maliyetlerini ve yakında ödenecekleri görürsün.
+Neuen Vertrag anlegen|Add a new contract|Добавить новый договор|Yeni sözleşme ekle
+Tippe hier, um ein Abo, einen Vertrag oder eine Ratenzahlung einzutragen – mit der Schnell-Eingabe sogar in einer Zeile.|Tap here to add a subscription, contract or instalment plan – with quick entry even in a single line.|Нажми здесь, чтобы добавить подписку, договор или рассрочку – с быстрым вводом даже одной строкой.|Abonelik, sözleşme veya taksit eklemek için buraya dokun – hızlı girişle tek satırda bile.
+Suchen & sortieren|Search & sort|Поиск и сортировка|Ara ve sırala
+Finde jeden Vertrag in Sekunden und sortiere nach Frist, Preis oder Name.|Find any contract in seconds and sort by deadline, price or name.|Находи любой договор за секунды и сортируй по сроку, цене или названию.|Her sözleşmeyi saniyeler içinde bul, son tarihe, fiyata veya ada göre sırala.
+Übersicht & Statistik|Overview & statistics|Обзор и статистика|Genel bakış ve istatistik
+Kosten pro Tag, Monat und Jahr, nach Kategorie und mit 12-Monats-Prognose.|Costs per day, month and year, by category and with a 12-month forecast.|Расходы в день, месяц и год, по категориям и с прогнозом на 12 месяцев.|Günlük, aylık ve yıllık maliyetler, kategoriye göre ve 12 aylık tahminle.
+Alle Fristen, Zahlungen und Raten auf einen Blick.|All deadlines, payments and instalments at a glance.|Все сроки, платежи и взносы с первого взгляда.|Tüm son tarihler, ödemeler ve taksitler bir bakışta.
+Lege fest, wann du erinnert wirst – so verpasst du keine Kündigungsfrist mehr.|Choose when you get reminded – so you never miss a cancellation deadline again.|Выбери, когда получать напоминания, – и ты больше не пропустишь срок расторжения.|Ne zaman hatırlatılacağını belirle – böylece hiçbir iptal süresini kaçırmazsın.
+Einstellungen, Farben, Hintergrundbild, Konto, Hilfe und Neuigkeiten.|Settings, colours, background image, account, help and news.|Настройки, цвета, фон, аккаунт, помощь и новости.|Ayarlar, renkler, arka plan resmi, hesap, yardım ve yenilikler.
+Dein Helper|Your Helper|Твой помощник|Yardımcın
+Eine Frage? Der Helper antwortet sofort und bringt dich direkt an die richtige Stelle.|Got a question? The Helper answers instantly and takes you straight to the right place.|Есть вопрос? Помощник ответит сразу и приведёт в нужное место.|Bir sorun mu var? Yardımcı hemen cevaplar ve seni doğrudan doğru yere götürür.
+Sprache|Language|Язык|Dil
+Wechsle jederzeit zwischen Deutsch, English, Русский und Türkçe.|Switch anytime between Deutsch, English, Русский and Türkçe.|Переключайся в любой момент между Deutsch, English, Русский и Türkçe.|Deutsch, English, Русский ve Türkçe arasında istediğin zaman geçiş yap.
+Tutorial|Tutorial|Обучение|Eğitim
+Die wichtigsten Funktionen in 30 Sekunden|The key features in 30 seconds|Главные функции за 30 секунд|30 saniyede en önemli özellikler
+Hintergrundbild|Background image|Фоновое изображение|Arka plan resmi
+Ein Bild hinter der App anzeigen|Show an image behind the app|Показывать изображение за приложением|Uygulamanın arkasında bir resim göster
+Bild wählen|Choose image|Выбрать изображение|Resim seç
+Eigenes Bild|Own image|Своё фото|Kendi resmin
+Eigenes Bild hochladen|Upload your own image|Загрузить своё фото|Kendi resmini yükle
+Anderes Bild hochladen|Upload another image|Загрузить другое фото|Başka resim yükle
+Eigenes Bild entfernen|Remove own image|Удалить своё фото|Kendi resmini kaldır
+Abschwächen|Soften|Приглушить|Soluklaştır
+Weichzeichnen|Blur|Размытие|Bulanıklaştır
+Farben, Karten und Design bleiben wie gewohnt. Eigene Bilder werden nur auf diesem Gerät gespeichert.|Colours, cards and design stay as usual. Your own images are only stored on this device.|Цвета, карточки и дизайн остаются прежними. Свои фото хранятся только на этом устройстве.|Renkler, kartlar ve tasarım her zamanki gibi kalır. Kendi resimlerin yalnızca bu cihazda saklanır.
+Das Bild ist zu groß. Bitte wähle ein kleineres.|The image is too large. Please choose a smaller one.|Изображение слишком большое. Выбери поменьше.|Resim çok büyük. Lütfen daha küçük bir tane seç.
+Dieses Bild kann nicht geöffnet werden.|This image can't be opened.|Это изображение не открывается.|Bu resim açılamıyor.
+Aurora|Aurora|Северное сияние|Kutup ışıkları
+Abendrot|Sunset|Закат|Gün batımı
+Berge|Mountains|Горы|Dağlar
+Sternennacht|Starry night|Звёздная ночь|Yıldızlı gece
+Pastell|Pastel|Пастель|Pastel
+Bokeh|Bokeh|Боке|Bokeh
+Welle|Wave|Волна|Dalga
+Geführte Tour nach der Registrierung|Guided tour after sign-up|Пошаговый тур после регистрации|Kayıttan sonra rehberli tur
+Tutorial jederzeit unter Mehr erneut starten|Restart the tutorial anytime under More|Обучение можно снова запустить в разделе Ещё|Eğitimi Daha fazla altından istediğin zaman yeniden başlat
+Hintergrundbilder: 8 Motive oder eigenes Foto|Background images: 8 designs or your own photo|Фоновые изображения: 8 мотивов или своё фото|Arka plan resimleri: 8 tasarım veya kendi fotoğrafın
+Hintergrund abschwächen und weichzeichnen|Soften and blur the background|Приглушение и размытие фона|Arka planı soluklaştır ve bulanıklaştır
 Sehr langsam|Very slow|Очень медленно|Çok yavaş
 Sehr schnell|Very fast|Очень быстро|Çok hızlı
 Blitzschnell|Lightning fast|Молниеносно|Şimşek hızında
