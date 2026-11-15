@@ -1,84 +1,198 @@
 <!DOCTYPE html>
 <html lang="de"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f1020">
 <title>AboWächter Admin</title>
+<script>try{var __t=localStorage.getItem("aw_admin_theme");if(__t==="dark"||__t==="light")document.documentElement.setAttribute("data-theme",__t)}catch(e){}</script>
 <style>
-:root{--bg:#f3f4fa;--card:#fff;--tx:#17182b;--mu:#6c6f8a;--bd:#e5e7f2;--ac:#5b5bd6;--red:#c4262e;--redbg:#fde8ea;--ok:#1f7a45;--okbg:#e2f5ea;--amb:#8f5b00;--ambbg:#fff1d0}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1020;--card:#191a2e;--tx:#eef0ff;--mu:#9a9dc0;--bd:#2a2c47;--ac:#8b8bff;--red:#ffb4b8;--redbg:#4b1d22;--ok:#9ae6b8;--okbg:#17382a;--amb:#ffd990;--ambbg:#4a3813}}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:760px;margin:0 auto;padding:16px}
-h1{font-size:22px;margin:4px 0}h2{font-size:17px;margin:0 0 10px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px}
+:root{--bg:#f3f4fa;--card:#fff;--tx:#17182b;--mu:#6c6f8a;--bd:#e5e7f2;--ac:#5b5bd6;--ac2:#8b5cf6;--red:#c4262e;--redbg:#fde8ea;--amb:#8f5b00;--ambbg:#fff1d0;--ok:#1f7a45;--okbg:#e2f5ea;--sh:0 4px 18px rgba(40,40,100,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1020;--card:#191a2e;--tx:#eef0ff;--mu:#9a9dc0;--bd:#2a2c47;--ac:#8b8bff;--ac2:#b08cff;--red:#ffb4b8;--redbg:#4b1d22;--amb:#ffd990;--ambbg:#4a3813;--ok:#9ae6b8;--okbg:#17382a;--sh:0 4px 18px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#0f1020;--card:#191a2e;--tx:#eef0ff;--mu:#9a9dc0;--bd:#2a2c47;--ac:#8b8bff;--ac2:#b08cff;--red:#ffb4b8;--redbg:#4b1d22;--amb:#ffd990;--ambbg:#4a3813;--ok:#9ae6b8;--okbg:#17382a;--sh:0 4px 18px rgba(0,0,0,.35)}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation;overscroll-behavior:none}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:96px;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}
+main{max-width:860px;margin:0 auto;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px))}
+h1{font-size:24px;font-weight:700;margin:0}h2{font-size:17px;font-weight:600;margin:0 0 12px}
 .mu{color:var(--mu);font-size:13px}
-input{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px;margin:6px 0}
-button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
-.pri{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:600}
-.dang{background:var(--redbg);color:var(--red);border-color:var(--red)}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.stats div{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center}.stats b{display:block;font-size:20px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#5b5bd6,#8b5cf6 55%,#c026d3);color:#fff;border-radius:22px;padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
+.hero .mu{color:rgba(255,255,255,.85)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);transform:translateX(-130%);animation:shine 7s ease-in-out 1.2s infinite}
+@keyframes shine{0%{transform:translateX(-130%)}28%,100%{transform:translateX(130%)}}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.row{display:flex;gap:10px;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.stats div{background:rgba(255,255,255,.16);border-radius:14px;padding:10px 6px;text-align:center}.stats b{display:block;font-size:20px}.stats span{font-size:12px;opacity:.9}
 @media (max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
-.u{cursor:pointer}.u:hover{border-color:var(--ac)}
-.badge{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap}
-.red{background:var(--redbg);color:var(--red)}.ok{background:var(--okbg);color:var(--ok)}.amb{background:var(--ambbg);color:var(--amb)}
-.kv{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--bd)}.kv:last-child{border:0}
-table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:6px 4px;border-bottom:1px solid var(--bd)}
-.note{border-left:4px solid var(--ac);background:var(--card);padding:10px 12px;border-radius:0 12px 12px 0;margin-bottom:12px;font-size:14px}
-.msg{color:var(--red);margin:8px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media (max-width:640px){.grid2{grid-template-columns:1fr}}
+input,select,textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:11px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:0}
+textarea{resize:vertical;min-height:80px}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;color:var(--tx);transition:transform .12s,background-color .2s}button:active{transform:scale(.97)}
+.pri{width:100%;padding:13px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;font-weight:600}
+.sec{padding:11px 14px;background:transparent;border:1px solid var(--bd)}
+.dang{padding:11px 14px;background:var(--redbg);color:var(--red);border:1px solid transparent}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;background:#fff;color:#1f1f1f;border:1px solid #dadce0;font-weight:600}
+.acts{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin:10px 0 4px}.chips>*{flex:none}
+.chip{background:var(--card);border:1px solid var(--bd);padding:7px 13px;border-radius:99px;white-space:nowrap;font-size:13px}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.chip b{margin-left:6px;opacity:.75}
+.seg{display:flex;background:var(--bg);border-radius:14px;padding:4px}.seg button{flex:1;background:transparent;padding:9px;color:var(--mu);font-weight:600}.seg button.on{background:var(--card);color:var(--ac);box-shadow:var(--sh)}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.red{background:var(--redbg);color:var(--red)}.ok{background:var(--okbg);color:var(--ok)}.amb{background:var(--ambbg);color:var(--amb)}.gr{background:var(--bg);color:var(--mu)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}.kv:last-child{border:0}.kv>span:last-child{text-align:right}
+.av{flex:none;width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:17px}
+.av.big{width:64px;height:64px;border-radius:20px;font-size:26px;border:2px solid rgba(255,255,255,.5)}
+.u{display:flex;gap:12px;align-items:center;padding:12px;border-radius:14px;cursor:pointer;transition:background-color .15s}.u:hover{background:var(--bg)}
+.u .inf{flex:1;min-width:0}.u .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.u .em{font-size:13px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u .side{text-align:right;font-size:12px;color:var(--mu);display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.grp{font-size:13px;font-weight:700;color:var(--ac);padding:10px 12px 2px;position:sticky;top:0;background:var(--card);z-index:1}
+.abc{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.abc button{width:30px;height:30px;padding:0;border-radius:9px;background:var(--bg);font-size:13px;font-weight:600;color:var(--mu)}
+.abc button.has{color:var(--tx)}.abc button.on{background:var(--ac);color:#fff}.abc button:disabled{opacity:.3}
+.bars rect{transform-box:fill-box;transform-origin:bottom;animation:barUp .7s cubic-bezier(.2,.9,.25,1.08) both}@keyframes barUp{from{transform:scaleY(0)}}
+.hb{height:10px;border-radius:99px;background:var(--bg);overflow:hidden;margin:4px 0 10px}.hb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ac),var(--ac2));animation:grow .8s cubic-bezier(.2,.9,.25,1) both}@keyframes grow{from{width:0!important}}
+.split{display:flex;height:14px;border-radius:99px;overflow:hidden;margin:8px 0}.split i{display:block;height:100%}
+.empty{text-align:center;color:var(--mu);padding:26px 0}
+.note{border-left:4px solid var(--ac);background:var(--card);padding:10px 12px;border-radius:0 12px 12px 0;margin-bottom:14px;font-size:14px;box-shadow:var(--sh)}
+.sk{height:64px;border-radius:14px;background:linear-gradient(90deg,var(--card),var(--bd),var(--card));background-size:200% 100%;animation:sk 1.2s linear infinite;margin-bottom:10px}@keyframes sk{to{background-position:-200% 0}}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:11px 18px;border-radius:99px;font-size:14px;font-weight:600;box-shadow:var(--sh);z-index:80;animation:tIn .35s cubic-bezier(.2,1.3,.4,1) both;max-width:88vw;text-align:center}
+@keyframes tIn{from{opacity:0;transform:translate(-50%,20px)}}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;background:var(--card);border-top:1px solid var(--bd);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:50}
+nav .in{display:flex;width:100%;max-width:560px}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:transparent;padding:6px 0;font-size:12px;color:var(--mu);position:relative}
+nav button svg{position:relative;z-index:1;transition:transform .25s}nav button span{position:relative;z-index:1}
+nav button.on{color:var(--ac);font-weight:600}nav button.on svg{transform:translateY(-1px) scale(1.12)}
+nav button.on::before{content:"";position:absolute;top:3px;left:50%;width:46px;height:30px;margin-left:-23px;border-radius:99px;background:var(--ac);opacity:.16}
+.vin{animation:vin .4s cubic-bezier(.2,.9,.25,1.08) both}@keyframes vin{from{opacity:0;transform:translateY(16px) scale(.98)}}
+.stag>*{animation:vin .45s cubic-bezier(.2,.9,.25,1.08) both}.stag>*:nth-child(2){animation-delay:.05s}.stag>*:nth-child(3){animation-delay:.1s}.stag>*:nth-child(4){animation-delay:.15s}.stag>*:nth-child(5){animation-delay:.2s}.stag>*:nth-child(n+6){animation-delay:.25s}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="einstellungen.js"></script>
 </head>
-<body><main id="app"></main>
+<body><main id="app"></main><nav id="nav" style="display:none"></nav>
 <script>
 var $=function(i){return document.getElementById(i)};
 function h(t,c,x,k){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;(k||[]).forEach(function(y){if(y)e.appendChild(y)});return e}
-function d(x){return x?new Date(x).toLocaleString("de-DE"):"–"}
+function d(x){return x?new Date(x).toLocaleString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}):"–"}
+function dd(x){return x?new Date(x).toLocaleDateString("de-DE"):"–"}
 function eur(n){return (+n||0).toLocaleString("de-DE",{minimumFractionDigits:2,maximumFractionDigits:2})+" €"}
-var USERS=[],SEL=null,Q="",MSG="",INFO="",DEL=false,ME=null,auth=null,db=null;
+function rel(t){if(!t)return "nie";var s=(Date.now()-t)/1000;if(s<60)return "gerade eben";if(s<3600)return "vor "+Math.floor(s/60)+" Min.";if(s<86400)return "vor "+Math.floor(s/3600)+" Std.";var dy=Math.floor(s/86400);return dy===1?"gestern":dy<30?"vor "+dy+" Tagen":dd(t)}
+function av(n,big){var hs=0,s=String(n||"?");for(var i=0;i<s.length;i++)hs=(hs*31+s.charCodeAt(i))%360;var a=h("div","av"+(big?" big":""),(s.trim()[0]||"?").toUpperCase());a.style.background="hsl("+hs+" 62% 52%)";return a}
+var PAY={"täglich":1,"wöchentlich":7,"alle 2 Wochen":14,"monatlich":30.4375,"vierteljährlich":91.3125,"halbjährlich":182.625,"jährlich":365.25,"Fester Tag im Monat":30.4375};
+function imon(i){if(i.x)return 0;if(i.rt==="R"){var paid=(i.pays||[]).reduce(function(s,p){return s+(+p.a||0)},0);if(paid>=(i.tot||0)&&i.tot)return 0}var per=i.p==="Eigener Rhythmus"?Math.max(1,i.c||7):(PAY[i.p]||30.4375);return (+i.k||0)/per*30.4375/(i.sh>1?i.sh:1)}
+function umon(u){return (u.items||[]).reduce(function(s,i){return s+imon(i)},0)}
+function uname(u){return String(u.user||(u.email||"").split("@")[0]||"(ohne Namen)")}
+function L1(u){var c=uname(u).trim().charAt(0).toUpperCase();return /[A-ZÄÖÜ]/.test(c)?(c==="Ä"?"A":c==="Ö"?"O":c==="Ü"?"U":c):"#"}
+var S={view:"dash",sel:null,q:"",sort:"az",filt:"all",letter:"",cq:"",users:null,err:"",me:null,loading:false,loadedAt:0,del:false,vk:null},auth=null,db=null,TT=null;
 function cfgOk(){try{return !!(window.firebase&&window.FIREBASE_CONFIG&&FIREBASE_CONFIG.apiKey&&!/HIER/.test(FIREBASE_CONFIG.apiKey))}catch(e){return false}}
 function errTxt(e){var c=(e&&e.code)||"";return ({"auth/invalid-credential":"E-Mail oder Passwort stimmt nicht.","auth/wrong-password":"E-Mail oder Passwort stimmt nicht.","auth/user-not-found":"E-Mail oder Passwort stimmt nicht.","auth/popup-closed-by-user":"Anmeldung abgebrochen.","auth/unauthorized-domain":"Diese Adresse ist in Firebase nicht freigegeben (Authorized domains).","permission-denied":"Keine Berechtigung."})[c]||("Fehler: "+((e&&e.message)||e))}
-async function load(){MSG="";INFO="Lade Konten …";render();
-try{var s=await db.collection("users").get();USERS=s.docs.map(function(x){return Object.assign({id:x.id},x.data())});USERS.sort(function(a,b){return (b.lastLogin||0)-(a.lastLogin||0)});INFO=""}
-catch(e){USERS=null;INFO="";MSG=e&&e.code==="permission-denied"?"Kein Admin-Zugriff für "+(ME&&ME.email)+". Trage genau diese Gmail-Adresse in den Firestore-Regeln bei isAdmin() ein und veröffentliche die Regeln.":errTxt(e)}
-render()}
-function loginCard(){var c=h("div","card");c.appendChild(h("h2",null,"Admin-Anmeldung"));
-var g=h("button","pri","Mit Google anmelden");g.onclick=function(){var p=new firebase.auth.GoogleAuthProvider();auth.signInWithPopup(p).catch(function(e){MSG=errTxt(e);render()})};c.appendChild(g);
-c.appendChild(h("p","mu","oder mit E-Mail und Passwort:"));var m=h("input");m.type="email";m.placeholder="E-Mail";var p=h("input");p.type="password";p.placeholder="Passwort";c.appendChild(m);c.appendChild(p);
-var b=h("button",null,"Anmelden");b.onclick=function(){auth.signInWithEmailAndPassword(m.value.trim(),p.value).catch(function(e){MSG=errTxt(e);render()})};c.appendChild(b);return c}
-function stats(){var w=h("div","stats"),wk=Date.now()-7*864e5,act=0,ct=0,bl=0;USERS.forEach(function(u){if((u.lastLogin||0)>wk)act++;ct+=(u.items||[]).length;if(u.blocked)bl++});
-[[USERS.length,"Konten"],[act,"aktiv (7 Tage)"],[ct,"Verträge gesamt"],[bl,"gesperrt"]].forEach(function(t){w.appendChild(h("div",null,null,[h("b",null,String(t[0])),h("span","mu",t[1])]))});return w}
-function listView(a){var n=h("div","note");n.textContent="Passwörter sind verschlüsselt gespeichert und für niemanden sichtbar, auch nicht für dich. Für Support: Konto öffnen und „Passwort-Reset-Mail senden“ tippen. Der Nutzer legt dann selbst ein neues Passwort fest.";a.appendChild(n);
-a.appendChild(stats());var c=h("div","card"),q=h("input");q.id="q";q.placeholder="Suchen nach Name oder E-Mail";q.value=Q;q.oninput=function(){Q=q.value;render();var z=$("q");z.focus();z.setSelectionRange(Q.length,Q.length)};c.appendChild(q);a.appendChild(c);
-var ql=Q.toLowerCase(),l=USERS.filter(function(u){return !ql||((u.user||"")+" "+(u.email||"")).toLowerCase().indexOf(ql)>-1});
-l.forEach(function(u){var r=h("div","card u",null,[h("div","top",null,[h("div",null,null,[h("b",null,u.user||"(ohne Namen)"),h("div","mu",u.email||u.id)]),h("span","badge "+(u.blocked?"red":"ok"),u.blocked?"gesperrt":"aktiv")]),h("div","mu",(u.provider==="google.com"?"Google":"E-Mail")+" · "+(u.items||[]).length+" Verträge · letzte Anmeldung "+d(u.lastLogin))]);r.onclick=function(){SEL=u.id;DEL=false;MSG="";INFO="";render();window.scrollTo(0,0)};a.appendChild(r)});
-if(!l.length)a.appendChild(h("p","mu","Keine Konten gefunden."))}
-function detail(a,u){var bk=h("button",null,"‹ Zurück zur Liste");bk.onclick=function(){SEL=null;DEL=false;render()};a.appendChild(bk);a.appendChild(h("div",null,null,[]));
-var c=h("div","card");c.style.marginTop="12px";c.appendChild(h("div","top",null,[h("h2",null,u.user||"(ohne Namen)"),h("span","badge "+(u.blocked?"red":"ok"),u.blocked?"gesperrt":"aktiv")]));
-var p=u.profile||{};[["E-Mail",u.email],["Nutzer-ID",u.id],["Anmeldung über",u.provider==="google.com"?"Google":"E-Mail und Passwort"],["Registriert",d(u.created)],["Letzte Anmeldung",d(u.lastLogin)],["Zuletzt gespeichert",d(u.updated)],["Nutzungsbedingungen",p.eula?"zugestimmt am "+d(p.eula):"nicht zugestimmt"],["Verträge",String((u.items||[]).length)],["Notizen",String((u.notes||[]).length)+" (Inhalt aus Datenschutzgründen ausgeblendet)"],["App-PIN aktiv",p.pin?"ja":"nein"]].forEach(function(r){c.appendChild(h("div","kv",null,[h("span","mu",r[0]),h("span",null,r[1]||"–")]))});
-a.appendChild(c);
-var t=h("div","card");t.appendChild(h("h2",null,"Verträge"));var it=u.items||[];
-if(it.length){var tb=h("table"),hd=h("tr");["Name","Betrag","Rhythmus","Kündigen bis / Status"].forEach(function(x){hd.appendChild(h("th",null,x))});tb.appendChild(hd);
-it.forEach(function(i){var r=h("tr");[i.n,eur(i.k),i.p==="Eigener Rhythmus"?"alle "+(i.c||7)+" Tage":(i.p||"monatlich"),(i.rt==="R"?"Ratenzahlung · ":"")+(i.x?"gekündigt":(i.d||"–"))].forEach(function(x){r.appendChild(h("td",null,x))});tb.appendChild(r)});t.appendChild(tb)}
-else t.appendChild(h("p","mu","Keine Verträge."));a.appendChild(t);
-var ac=h("div","card");ac.appendChild(h("h2",null,"Aktionen"));var row=h("div","row");
-var r1=h("button","pri","Passwort-Reset-Mail senden");r1.onclick=function(){if(!u.email||u.provider==="google.com"){INFO="Dieses Konto nutzt Google-Anmeldung. Ein Passwort gibt es dort nicht.";render();return}auth.sendPasswordResetEmail(u.email).then(function(){INFO="Reset-Mail an "+u.email+" gesendet.";render()},function(e){MSG=errTxt(e);render()})};row.appendChild(r1);
-var r2=h("button",u.blocked?null:"dang",u.blocked?"Entsperren":"Sperren");r2.onclick=function(){db.collection("users").doc(u.id).update({blocked:!u.blocked}).then(function(){u.blocked=!u.blocked;INFO=u.blocked?"Konto gesperrt.":"Konto entsperrt.";render()},function(e){MSG=errTxt(e);render()})};row.appendChild(r2);
-var r3=h("button",null,"Daten kopieren (Auskunft)");r3.onclick=function(){var x=JSON.stringify(u,null,2);try{navigator.clipboard.writeText(x).then(function(){INFO="Daten kopiert. Du kannst sie dem Nutzer als Auskunft schicken.";render()})}catch(e){INFO="Kopieren nicht möglich.";render()}};row.appendChild(r3);
-var r4=h("button","dang",DEL?"Wirklich alle Daten löschen? Nochmal tippen":"Daten löschen");r4.onclick=function(){if(!DEL){DEL=true;render();return}db.collection("users").doc(u.id).delete().then(function(){USERS=USERS.filter(function(x){return x.id!==u.id});SEL=null;DEL=false;INFO="Daten gelöscht. Das Login selbst löschst du in der Firebase-Konsole unter Authentication.";render()},function(e){MSG=errTxt(e);render()})};row.appendChild(r4);
-ac.appendChild(row);ac.appendChild(h("p","mu","Sperren verhindert die Nutzung der App. Für eine harte Sperre zusätzlich in der Firebase-Konsole unter Authentication beim Nutzer „Konto deaktivieren“ wählen."));a.appendChild(ac)}
-function render(){var a=$("app");a.textContent="";
-a.appendChild(h("div","top",null,[h("h1",null,"AboWächter Admin"),ME?h("div","row",null,[h("span","mu",ME.email),(function(){var b=h("button",null,"Neu laden");b.onclick=load;return b})(),(function(){var b=h("button",null,"Abmelden");b.onclick=function(){auth.signOut()};return b})()]):null]));
-if(!cfgOk()){var c=h("div","card");c.appendChild(h("h2",null,"Noch nicht eingerichtet"));c.appendChild(h("p",null,"Trage zuerst deine Firebase-Daten in einstellungen.js ein."));a.appendChild(c);return}
-if(MSG)a.appendChild(h("div","msg",MSG));if(INFO)a.appendChild(h("div","note",INFO));
-if(!ME){a.appendChild(loginCard());return}
-if(!USERS)return;
-var u=SEL&&USERS.filter(function(x){return x.id===SEL})[0];if(u)detail(a,u);else listView(a)}
-if(cfgOk()){firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.firestore();auth.onAuthStateChanged(function(u){ME=u;if(u)load();else{USERS=[];SEL=null;render()}})}
+function toast(t){var o=document.querySelector(".toast");if(o)o.remove();var x=h("div","toast",t);document.body.appendChild(x);clearTimeout(TT);TT=setTimeout(function(){x.remove()},2600)}
+function dl(name,mime,text){var b=new Blob([text],{type:mime}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove()},1500);toast("Datei wurde erstellt.")}
+async function load(){S.loading=true;S.err="";render();
+try{var s=await db.collection("users").get();S.users=s.docs.map(function(x){return Object.assign({id:x.id},x.data())});S.loadedAt=Date.now()}
+catch(e){S.users=null;S.err=e&&e.code==="permission-denied"?"Kein Admin-Zugriff für "+(S.me&&S.me.email)+". Trage genau diese Gmail-Adresse in den Firestore-Regeln bei isAdmin() ein und veröffentliche die Regeln.":errTxt(e)}
+S.loading=false;render()}
+function upd(u,o,msg){return db.collection("users").doc(u.id).update(o).then(function(){Object.assign(u,o);toast(msg);render()},function(e){toast(errTxt(e))})}
+/* ---------- Kennzahlen ---------- */
+function kpis(){var U=S.users||[],now=Date.now(),wk=now-7*864e5,mo=now-30*864e5,r={n:U.length,act:0,neu:0,ct:0,bl:0,vol:0,g:0};
+U.forEach(function(u){if((u.lastLogin||0)>wk)r.act++;if((u.created||0)>mo)r.neu++;r.ct+=(u.items||[]).length;if(u.blocked)r.bl++;r.vol+=umon(u);if(u.provider==="google.com")r.g++});r.avg=r.n?r.ct/r.n:0;return r}
+function regBars(){var U=S.users||[],t=new Date(),out=[];for(var m=5;m>=0;m--){var f=new Date(t.getFullYear(),t.getMonth()-m,1),l=new Date(t.getFullYear(),t.getMonth()-m+1,1),c=U.filter(function(u){return u.created>=f.getTime()&&u.created<l.getTime()}).length;out.push({m:f,v:c})}
+var mx=Math.max.apply(null,out.map(function(x){return x.v}))||1,W=300,H=110,bw=W/6,s='<svg viewBox="0 0 '+W+' '+(H+34)+'" width="100%" class="bars">';
+out.forEach(function(p,i){var bh=Math.max(3,Math.round(p.v/mx*H)),x=i*bw+8;s+='<rect x="'+x+'" y="'+(H-bh+14)+'" width="'+(bw-16)+'" height="'+bh+'" rx="6" style="fill:var(--ac);animation-delay:'+(i*0.06)+'s"/><text x="'+(x+(bw-16)/2)+'" y="'+(H-bh+9)+'" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--tx)">'+p.v+'</text><text x="'+(x+(bw-16)/2)+'" y="'+(H+30)+'" text-anchor="middle" font-size="11" style="fill:var(--mu)">'+p.m.toLocaleDateString("de-DE",{month:"short"}).replace(".","")+'</text>'});
+var w=h("div");w.innerHTML=s+"</svg>";return w}
+function topList(key){var m={};(S.users||[]).forEach(function(u){(u.items||[]).forEach(function(i){if(i.x)return;var k=key==="n"?String(i.n||"").trim():String(i.g||"Sonstiges");if(!k)return;var id=k.toLowerCase();if(!m[id])m[id]={t:k,c:0};m[id].c++})});
+return Object.keys(m).map(function(k){return m[k]}).sort(function(a,b){return b.c-a.c||a.t.localeCompare(b.t)}).slice(0,6)}
+function barsList(c,l){if(!l.length){c.appendChild(h("div","mu","Noch keine Daten."));return}var mx=l[0].c;l.forEach(function(x){c.appendChild(h("div","top",null,[h("span",null,x.t),h("b",null,String(x.c))]));var b=h("div","hb"),i=h("i");i.style.width=Math.round(x.c/mx*100)+"%";b.appendChild(i);c.appendChild(b)})}
+/* ---------- Ansichten ---------- */
+function vDash(box){var k=kpis(),hero=h("div","hero");
+hero.appendChild(h("div","top",null,[h("div",null,null,[h("div","mu","Admin-Übersicht"),h("h1",null,"AboWächter")]),h("span","badge",null)]));hero.lastChild.lastChild.textContent="Stand "+new Date(S.loadedAt).toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});hero.lastChild.lastChild.style.cssText="background:rgba(255,255,255,.22);color:#fff";
+var st=h("div","stats");[[k.n,"Konten"],[k.act,"aktiv (7 Tage)"],[k.neu,"neu (30 Tage)"],[k.bl,"gesperrt"]].forEach(function(t){st.appendChild(h("div",null,null,[h("b",null,String(t[0])),h("span",null,t[1])]))});hero.appendChild(st);box.appendChild(hero);
+var g=h("div","grid2"),c1=h("div","card");c1.appendChild(h("h2",null,"Neue Konten pro Monat"));c1.appendChild(regBars());g.appendChild(c1);
+var c2=h("div","card");c2.appendChild(h("h2",null,"Nutzung"));[["Verträge gesamt",String(k.ct)],["Ø Verträge pro Konto",k.avg.toLocaleString("de-DE",{maximumFractionDigits:1})],["Verwaltetes Volumen",eur(k.vol)+" / Monat"]].forEach(function(r){c2.appendChild(h("div","kv",null,[h("span","mu",r[0]),h("b",null,r[1])]))});
+c2.appendChild(h("div","mu","Anmeldeart"));var sp=h("div","split"),gi=h("i"),ei=h("i"),gp=k.n?k.g/k.n*100:0;gi.style.cssText="width:"+gp+"%;background:#4285f4";ei.style.cssText="width:"+(100-gp)+"%;background:var(--ac2)";sp.appendChild(gi);sp.appendChild(ei);c2.appendChild(sp);
+c2.appendChild(h("div","top",null,[h("span","mu","● Google "+k.g),h("span","mu","● E-Mail "+(k.n-k.g))]));c2.querySelectorAll(".top .mu")[0].style.color="#4285f4";g.appendChild(c2);box.appendChild(g);
+var g2=h("div","grid2"),c3=h("div","card");c3.appendChild(h("h2",null,"Beliebteste Abos"));barsList(c3,topList("n"));g2.appendChild(c3);
+var c4=h("div","card");c4.appendChild(h("h2",null,"Top-Kategorien"));barsList(c4,topList("g"));g2.appendChild(c4);box.appendChild(g2);
+var c5=h("div","card");c5.appendChild(h("div","top",null,[h("h2",null,"Zuletzt aktiv"),(function(){var b=h("button","sec","Alle Konten");b.onclick=function(){go("users")};return b})()]));
+(S.users||[]).slice().sort(function(a,b){return (b.lastLogin||0)-(a.lastLogin||0)}).slice(0,5).forEach(function(u){c5.appendChild(urow(u))});if(!(S.users||[]).length)c5.appendChild(h("div","empty","Noch keine Konten."));box.appendChild(c5)}
+function urow(u){var r=h("div","u",null,[av(uname(u)),h("div","inf",null,[h("div","nm",uname(u)),h("div","em",u.email||u.id)])]),sd=h("div","side");
+var bg=h("div","row");bg.style.gap="4px";if(u.blocked)bg.appendChild(h("span","badge red","gesperrt"));if(u.provider==="google.com")bg.appendChild(h("span","badge gr","Google"));if(u.adminNote)bg.appendChild(h("span","badge amb","Notiz"));sd.appendChild(bg);
+sd.appendChild(h("span",null,(function(n){return n+(n===1?" Vertrag":" Verträge")})((u.items||[]).length)+" · "+rel(u.lastLogin)));r.appendChild(sd);r.onclick=function(){S.sel=u.id;S.del=false;S.cq="";go("detail")};return r}
+function filtered(){var q=S.q.toLowerCase().trim(),wk=Date.now()-7*864e5;return (S.users||[]).filter(function(u){
+if(q&&(uname(u)+" "+(u.email||"")).toLowerCase().indexOf(q)<0)return false;if(S.letter&&L1(u)!==S.letter)return false;
+switch(S.filt){case "act":return (u.lastLogin||0)>wk;case "bl":return !!u.blocked;case "g":return u.provider==="google.com";case "m":return u.provider!=="google.com";case "none":return !(u.items||[]).length;case "note":return !!u.adminNote}return true})}
+function sortU(l){var f={az:function(a,b){return uname(a).localeCompare(uname(b),"de",{sensitivity:"base"})},za:function(a,b){return uname(b).localeCompare(uname(a),"de",{sensitivity:"base"})},neu:function(a,b){return (b.created||0)-(a.created||0)},login:function(a,b){return (b.lastLogin||0)-(a.lastLogin||0)},vt:function(a,b){return (b.items||[]).length-(a.items||[]).length},vol:function(a,b){return umon(b)-umon(a)}}[S.sort];return l.sort(f)}
+function vUsers(box){var U=S.users||[],c=h("div","card"),q=h("input");q.id="q";q.placeholder="Name oder E-Mail suchen";q.value=S.q;q.setAttribute("autocomplete","off");
+q.oninput=function(){S.q=q.value;render(true);var z=$("q");z.focus();z.setSelectionRange(S.q.length,S.q.length)};
+var so=h("select");[["az","Name A–Z"],["za","Name Z–A"],["neu","Neueste zuerst"],["login","Letzte Anmeldung"],["vt","Meiste Verträge"],["vol","Höchstes Volumen"]].forEach(function(o){var op=h("option",null,o[1]);op.value=o[0];if(S.sort===o[0])op.selected=true;so.appendChild(op)});so.onchange=function(){S.sort=so.value;render(true)};so.style.maxWidth="45%";
+c.appendChild(h("div","row",null,[q,so]));
+var wk=Date.now()-7*864e5,cnt={all:U.length,act:U.filter(function(u){return (u.lastLogin||0)>wk}).length,bl:U.filter(function(u){return u.blocked}).length,g:U.filter(function(u){return u.provider==="google.com"}).length,none:U.filter(function(u){return !(u.items||[]).length}).length,note:U.filter(function(u){return !!u.adminNote}).length};cnt.m=U.length-cnt.g;
+var ch=h("div","chips");[["all","Alle"],["act","Aktiv 7 Tage"],["bl","Gesperrt"],["g","Google"],["m","E-Mail"],["none","Ohne Verträge"],["note","Mit Notiz"]].forEach(function(f){var b=h("button","chip"+(S.filt===f[0]?" on":""),f[1]);b.appendChild(h("b",null,String(cnt[f[0]])));b.onclick=function(){S.filt=f[0];render(true)};ch.appendChild(b)});c.appendChild(ch);
+var has={};U.forEach(function(u){has[L1(u)]=1});var ab=h("div","abc");"ABCDEFGHIJKLMNOPQRSTUVWXYZ#".split("").forEach(function(l){var b=h("button",(has[l]?"has":"")+(S.letter===l?" on":""),l);b.disabled=!has[l];b.onclick=function(){S.letter=S.letter===l?"":l;if(S.letter&&S.sort!=="az"&&S.sort!=="za")S.sort="az";render(true)};ab.appendChild(b)});c.appendChild(ab);box.appendChild(c);
+var l=sortU(filtered()),lc=h("div","card");lc.style.padding="6px";
+lc.appendChild(h("div","top",null,[h("span","mu",l.length+" von "+U.length+" Konten"+(S.letter?" · Buchstabe "+S.letter:"")),(S.q||S.letter||S.filt!=="all")?(function(){var b=h("button","chip","Filter zurücksetzen");b.onclick=function(){S.q="";S.letter="";S.filt="all";render(true)};return b})():null]));lc.firstChild.style.padding="6px 8px";
+var grp=S.sort==="az"||S.sort==="za",last=null;l.forEach(function(u){if(grp){var g=L1(u);if(g!==last){lc.appendChild(h("div","grp",g));last=g}}lc.appendChild(urow(u))});
+if(!l.length)lc.appendChild(h("div","empty","Keine Konten gefunden."));box.appendChild(lc)}
+function vDetail(box){var u=(S.users||[]).filter(function(x){return x.id===S.sel})[0];if(!u){go("users");return}
+var bk=h("button","sec","‹ Zurück zur Liste");bk.onclick=function(){go("users")};bk.style.marginBottom="12px";box.appendChild(bk);
+var hero=h("div","hero"),p=u.profile||{};hero.appendChild(h("div","row",null,[av(uname(u),true),h("div",null,null,[h("h1",null,uname(u)),h("div","mu",u.email||u.id)])]));
+var bg=h("div","row");bg.style.cssText="gap:6px;margin-top:12px;flex-wrap:wrap";[[u.blocked?"Gesperrt":"Aktiv"],[u.provider==="google.com"?"Google":"E-Mail"],[p.eula?"Bedingungen akzeptiert":"Bedingungen offen"]].forEach(function(t){var b=h("span","badge",t[0]);b.style.cssText="background:rgba(255,255,255,.22);color:#fff";bg.appendChild(b)});hero.appendChild(bg);
+var st=h("div","stats");[[(u.items||[]).length,"Verträge"],[(u.notes||[]).length,"Notizen"],[eur(umon(u)),"pro Monat"],[rel(u.lastLogin),"letzte Anmeldung"]].forEach(function(t){st.appendChild(h("div",null,null,[h("b",null,String(t[0])),h("span",null,t[1])]))});st.querySelectorAll("b")[2].style.fontSize="15px";st.querySelectorAll("b")[3].style.fontSize="14px";hero.appendChild(st);box.appendChild(hero);
+var g=h("div","grid2"),c1=h("div","card");c1.appendChild(h("h2",null,"Profil"));
+[["Nutzer-ID",u.id],["Registriert",d(u.created)],["Letzte Anmeldung",d(u.lastLogin)],["Zuletzt gespeichert",d(u.updated)],["Nutzungsbedingungen",p.eula?"zugestimmt am "+dd(p.eula):"nicht zugestimmt"],["App-PIN aktiv",p.pin?"ja":"nein"],["Sprache",(p.lang||"–")],["Sparziel",p.goal?eur(p.goal):"–"]].forEach(function(r){c1.appendChild(h("div","kv",null,[h("span","mu",r[0]),h("span",null,r[1])]))});g.appendChild(c1);
+var c2=h("div","card");c2.appendChild(h("h2",null,"Support-Notiz"));c2.appendChild(h("div","mu","Nur für dich sichtbar, nicht für den Nutzer."));var ta=h("textarea");ta.value=u.adminNote||"";ta.placeholder="z. B. Kontakt am 15.11. wegen Passwort";ta.maxLength=1000;ta.style.marginTop="8px";c2.appendChild(ta);
+var sb=h("button","pri","Notiz speichern");sb.style.marginTop="10px";sb.onclick=function(){upd(u,{adminNote:ta.value.trim(),adminNoteAt:Date.now()},"Notiz gespeichert.")};c2.appendChild(sb);if(u.adminNoteAt)c2.appendChild(h("div","mu","Zuletzt geändert: "+d(u.adminNoteAt)));g.appendChild(c2);box.appendChild(g);
+var ac=h("div","card");ac.appendChild(h("h2",null,"Aktionen"));var A=h("div","acts");
+function ab(t,cls,fn){var b=h("button",cls,t);b.onclick=fn;A.appendChild(b);return b}
+ab("Passwort-Reset-Mail","sec",function(){if(u.provider==="google.com"){toast("Google-Konto: Es gibt kein Passwort zum Zurücksetzen.");return}auth.sendPasswordResetEmail(u.email).then(function(){toast("Reset-Mail an "+u.email+" gesendet.")},function(e){toast(errTxt(e))})});
+ab(u.blocked?"Entsperren":"Sperren",u.blocked?"sec":"dang",function(){upd(u,{blocked:!u.blocked},u.blocked?"Konto entsperrt.":"Konto gesperrt.")});
+ab("E-Mail schreiben","sec",function(){location.href="mailto:"+u.email+"?subject="+encodeURIComponent("AboWächter Support")});
+ab("Daten kopieren","sec",function(){try{navigator.clipboard.writeText(JSON.stringify(u,null,2)).then(function(){toast("Daten kopiert.")})}catch(e){toast("Kopieren nicht möglich.")}});
+ab("Als JSON herunterladen","sec",function(){dl("abowaechter-"+u.id+".json","application/json",JSON.stringify(u,null,2))});
+ab(S.del?"Wirklich löschen? Nochmal tippen":"Daten löschen","dang",function(){if(!S.del){S.del=true;render(true);return}db.collection("users").doc(u.id).delete().then(function(){S.users=S.users.filter(function(x){return x.id!==u.id});S.del=false;toast("Daten gelöscht.");go("users")},function(e){toast(errTxt(e))})});
+ac.appendChild(A);ac.appendChild(h("p","mu","Passwörter sind verschlüsselt und für niemanden sichtbar. Für eine harte Sperre zusätzlich in der Firebase-Konsole unter Authentication beim Nutzer „Konto deaktivieren“ wählen."));box.appendChild(ac);
+var vc=h("div","card"),it=u.items||[];vc.appendChild(h("div","top",null,[h("h2",null,"Verträge ("+it.length+")"),h("span","mu",eur(umon(u))+" / Monat")]));
+if(it.length>4){var cq=h("input");cq.id="cq";cq.placeholder="Vertrag suchen";cq.value=S.cq;cq.oninput=function(){S.cq=cq.value;render(true);var z=$("cq");z.focus();z.setSelectionRange(S.cq.length,S.cq.length)};cq.style.marginBottom="8px";vc.appendChild(cq)}
+var ql=S.cq.toLowerCase(),vl=it.filter(function(i){return !ql||String(i.n).toLowerCase().indexOf(ql)>-1}).sort(function(a,b){return String(a.n).localeCompare(String(b.n),"de")});
+vl.forEach(function(i){var dl0=i.d?Math.round((new Date(i.d+"T00:00:00")-new Date().setHours(0,0,0,0))/864e5):null,bd=i.x?["gekündigt","red"]:i.tr&&new Date(i.tr)>=new Date(new Date().toDateString())?["Testphase","amb"]:i.rt==="R"?["Ratenzahlung","gr"]:dl0!=null&&dl0>=0?["Frist in "+dl0+" Tagen",dl0<=7?"red":dl0<=30?"amb":"ok"]:["aktiv","ok"];
+var r=h("div","u",null,[av(i.n),h("div","inf",null,[h("div","nm",i.n),h("div","em",eur(i.k)+" · "+(i.p==="Eigener Rhythmus"?"alle "+(i.c||7)+" Tage":(i.p||"monatlich"))+" · "+(i.g||"Sonstiges")+(i.sh>1?" · geteilt ÷"+i.sh:""))]),h("span","badge "+bd[1],bd[0])]);r.style.cursor="default";vc.appendChild(r)});
+if(!vl.length)vc.appendChild(h("div","empty","Keine Verträge."));box.appendChild(vc)}
+function vMore(box){var c=h("div","card");c.appendChild(h("h2",null,"Admin-Konto"));c.appendChild(h("div","row",null,[av(S.me.email),h("div",null,null,[h("b",null,S.me.displayName||"Admin"),h("div","mu",S.me.email)])]));box.appendChild(c);
+var t=h("div","card");t.appendChild(h("h2",null,"Darstellung"));var sg=h("div","seg"),cur=(function(){try{return localStorage.getItem("aw_admin_theme")||"auto"}catch(e){return "auto"}})();
+[["auto","Auto"],["light","Hell"],["dark","Dunkel"]].forEach(function(o){var b=h("button",cur===o[0]?"on":"",o[1]);b.onclick=function(){try{localStorage.setItem("aw_admin_theme",o[0])}catch(e){}if(o[0]==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",o[0]);render(true)};sg.appendChild(b)});t.appendChild(sg);box.appendChild(t);
+var x=h("div","card");x.appendChild(h("h2",null,"Daten"));var A=h("div","acts");
+function ab(tx,cls,fn){var b=h("button",cls,tx);b.onclick=fn;A.appendChild(b)}
+ab("Alle Konten als CSV","sec",function(){var q=function(v){v=String(v==null?"":v);return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v},rows=[["Name","E-Mail","Anmeldung","Registriert","Letzte Anmeldung","Verträge","Volumen pro Monat","Gesperrt","Support-Notiz"]];
+sortU((S.users||[]).slice()).forEach(function(u){rows.push([uname(u),u.email,u.provider==="google.com"?"Google":"E-Mail",dd(u.created),dd(u.lastLogin),(u.items||[]).length,eur(umon(u)),u.blocked?"ja":"nein",u.adminNote||""])});dl("abowaechter-konten.csv","text/csv;charset=utf-8","﻿"+rows.map(function(r){return r.map(q).join(";")}).join("\r\n"))});
+ab("Neu laden","sec",function(){load()});
+ab("App öffnen","sec",function(){window.open("./","_blank")});
+ab("Firebase-Konsole","sec",function(){window.open("https://console.firebase.google.com/project/"+FIREBASE_CONFIG.projectId+"/authentication/users","_blank")});
+x.appendChild(A);box.appendChild(x);
+var o=h("button","dang","Abmelden");o.style.width="100%";o.onclick=function(){auth.signOut()};box.appendChild(o)}
+function loginView(a){var hero=h("div","hero");hero.style.textAlign="center";hero.innerHTML='<svg width="64" height="64" viewBox="0 0 512 512" style="margin-bottom:8px"><rect width="512" height="512" rx="112" fill="rgba(255,255,255,.22)"/><rect x="116" y="140" width="280" height="260" rx="40" fill="#fff"/><path d="M116 180a40 40 0 0 1 40-40h200a40 40 0 0 1 40 40v40H116z" fill="#e4e1ff"/><rect x="176" y="104" width="28" height="64" rx="14" fill="#fff"/><rect x="308" y="104" width="28" height="64" rx="14" fill="#fff"/><path d="M186 306l48 48 94-100" fill="none" stroke="#5b5bd6" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+hero.appendChild(h("h1",null,"AboWächter Admin"));hero.appendChild(h("div","mu","Nur für Administratoren"));a.appendChild(hero);
+var c=h("div","card"),g=h("button","gbtn");g.innerHTML='<svg width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';
+g.appendChild(h("span",null,"Mit Google anmelden"));g.onclick=function(){auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){toast(errTxt(e))})};c.appendChild(g);
+c.appendChild(h("div","mu","oder mit E-Mail und Passwort"));c.lastChild.style.cssText="text-align:center;margin:14px 0 4px";var m=h("input");m.type="email";m.placeholder="E-Mail";var p=h("input");p.type="password";p.placeholder="Passwort";p.style.marginTop="8px";c.appendChild(m);c.appendChild(p);
+var b=h("button","pri","Anmelden");b.style.marginTop="12px";b.onclick=function(){auth.signInWithEmailAndPassword(m.value.trim(),p.value).catch(function(e){toast(errTxt(e))})};c.appendChild(b);a.appendChild(c)}
+var ICO={dash:"M4 13h6V4H4zM14 20h6v-9h-6zM4 20h6v-3H4zM14 7h6V4h-6z",users:"M9 11a4 4 0 100-8 4 4 0 000 8M2 21a7 7 0 0114 0M17 11a3 3 0 100-6M22 21a6 6 0 00-5-5.9",more:"M5 12h.01M12 12h.01M19 12h.01"};
+function navBar(){var n=$("nav");n.textContent="";n.style.display=S.me&&S.users?"flex":"none";var w=h("div","in");
+[["dash","Übersicht"],["users","Konten"],["more","Mehr"]].forEach(function(t){var on=S.view===t[0]||(t[0]==="users"&&S.view==="detail"),b=h("button",on?"on":"");b.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="'+ICO[t[0]]+'"/></svg>';b.appendChild(h("span",null,t[1]));b.onclick=function(){go(t[0])};w.appendChild(b)});n.appendChild(w)}
+function go(v){S.view=v;S.del=false;render();window.scrollTo(0,0)}
+function render(keep){var a=$("app");a.textContent="";
+if(!cfgOk()){var c=h("div","card");c.appendChild(h("h2",null,"Noch nicht eingerichtet"));c.appendChild(h("p",null,"Trage zuerst deine Firebase-Daten in einstellungen.js ein."));a.appendChild(c);navBar();return}
+if(!S.me){loginView(a);navBar();return}
+if(S.loading&&!S.users){for(var i=0;i<5;i++)a.appendChild(h("div","sk"));navBar();return}
+if(S.err){var e=h("div","card");e.appendChild(h("h2",null,"Kein Zugriff"));e.appendChild(h("p",null,S.err));var r=h("button","sec","Erneut versuchen");r.onclick=load;e.appendChild(r);var o=h("button","dang","Abmelden");o.style.marginLeft="8px";o.onclick=function(){auth.signOut()};e.appendChild(o);a.appendChild(e);navBar();return}
+if(!S.users){navBar();return}
+var box=h("div");a.appendChild(box);({dash:vDash,users:vUsers,detail:vDetail,more:vMore})[S.view](box);
+var vk=S.view+":"+(S.sel||"");if(vk!==S.vk&&!keep){box.classList.add("vin");box.classList.add("stag")}S.vk=vk;navBar()}
+if(cfgOk()){firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.firestore();auth.onAuthStateChanged(function(u){S.me=u;if(u)load();else{S.users=null;S.view="dash";render()}})}
 render();
 </script>
 </body></html>
