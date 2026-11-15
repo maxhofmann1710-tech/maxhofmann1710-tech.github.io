@@ -197,6 +197,26 @@ body.hasbg{background:transparent!important}body.hasbg #app .empty,body.hasbg .f
 @keyframes wIn{from{opacity:0;transform:translateY(30px) scale(.94)}}
 .we{font-size:76px;margin-bottom:14px}.wt{font-size:22px;font-weight:600;opacity:.9}.wv{font-size:44px;font-weight:800;line-height:1.15;margin:10px 0;word-break:break-word}.ws{font-size:18px;opacity:.88}
 .wbtn{margin-top:22px;background:#fff;color:#4f46e5;font-weight:700;padding:14px 22px;border-radius:99px;font-size:16px}
+#trb{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:10px;z-index:45;width:46px;height:46px;border-radius:50%;padding:0;background:rgba(20,18,40,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.25);box-shadow:0 6px 18px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;animation:pop calc(.45s*var(--at)) var(--ae) both}
+#trb .trr{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}#trb .trbg{fill:none;stroke:rgba(255,255,255,.2);stroke-width:3}#trb .trfg{fill:none;stroke:#fbbf24;stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .6s}
+#trb .tri{font-size:21px;line-height:1}#trb .trl{position:absolute;bottom:-4px;right:-4px;min-width:20px;height:20px;border-radius:99px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid var(--card)}
+#trb.on{box-shadow:0 0 0 3px #fbbf24}#trb:active{transform:scale(.92)}
+.hero .top{padding-right:46px}
+.hchips{display:flex;gap:8px;overflow-x:auto;margin:0 0 12px;padding-bottom:2px}.hchips>*{flex:none}.hchip{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:8px 14px;font-size:14px;box-shadow:var(--sh)}.hchip b{font-weight:700}
+.qact{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}.qa{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:12px 4px;box-shadow:var(--sh)}.qa .qe{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;background:linear-gradient(135deg,color-mix(in srgb,var(--hg1) 18%,transparent),color-mix(in srgb,var(--hg2) 18%,transparent))}.qa .ql{font-size:12px;font-weight:600;color:var(--tx)}
+.wk h2{margin:0}.wkr{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0 8px}.wkd{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0;border-radius:14px;background:var(--bg);cursor:pointer;min-height:84px}.wkd.now{background:linear-gradient(135deg,var(--hg1),var(--hg2));color:#fff}.wkd.now .wkn,.wkd.now .wks{color:rgba(255,255,255,.85)}.wkn{font-size:11px;color:var(--mu);text-transform:uppercase}.wkd b{font-size:17px}.wkdots{display:flex;gap:3px;min-height:7px}.wkdots i{width:7px;height:7px;border-radius:50%;background:var(--hg1)}.wkd.now .wkdots i.p{background:#fff}.wkdots i.d{background:var(--red)}.wks{font-size:10px;color:var(--mu);font-weight:600;min-height:12px}
+.qmini{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:12px 14px;margin:0 0 14px;box-shadow:var(--sh);cursor:pointer}.qmini .qe{font-size:26px}.qmt{flex:1;display:flex;flex-direction:column}.qring{--p:0;width:46px;height:46px;border-radius:50%;background:conic-gradient(var(--hg1) calc(var(--p)*1%),var(--bg) 0);display:flex;align-items:center;justify-content:center}.qring span{width:36px;height:36px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.qrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}.qrow .qi{font-size:20px}.qrow .qt{flex:1}.qrow .qx{font-size:12px;font-weight:700;color:var(--hg1)}.qrow.ok .qt{text-decoration:line-through;color:var(--mu)}.qrow.ok .qx{color:var(--ok)}
+.emp{text-align:center}.emp svg{margin:6px auto 4px;display:block}.chips.wrapc{flex-wrap:wrap;justify-content:center;overflow:visible}
+.gauge{display:flex;justify-content:center;color:var(--tx)}.gfg{transition:stroke-dashoffset 1s var(--ae)}.glab{text-align:center;font-weight:700;margin:-4px 0 10px}.gtip{font-size:14px;padding:8px 12px;background:var(--bg);border-radius:12px;margin-top:6px}
+.cres{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--bg);display:flex;flex-direction:column;gap:4px}.cres b{font-size:17px;color:var(--hg1)}
+.wish .top b:last-child{color:var(--hg1)}
+.lvc{background:linear-gradient(135deg,var(--hg1),var(--hg2));color:#fff;border:0}.lvc .mu{color:rgba(255,255,255,.85)}.lvc .bar{background:rgba(255,255,255,.25)}.lvc .fill{background:#fff}.lvt{display:flex;align-items:center;gap:14px}.lvt b{font-size:22px}.lvb{width:58px;height:58px;border-radius:18px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;border:2px solid rgba(255,255,255,.4)}
+.lvs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.lvs div{background:rgba(255,255,255,.16);border-radius:14px;padding:10px 4px;text-align:center}.lvs b{display:block;font-size:18px}.lvs span{font-size:12px;opacity:.9}
+.rarl{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.rar{font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid}
+.r_c{--rc:#8b93a7}.r_r{--rc:#3b82f6}.r_e{--rc:#a855f7}.r_l{--rc:#f59e0b}.rar{color:var(--rc);border-color:var(--rc)}
+.ach{position:relative;overflow:hidden}.ach.on{border-color:var(--rc);box-shadow:0 6px 18px rgba(0,0,0,.08),inset 0 0 0 1px var(--rc)}.ach.on.r_l{background:linear-gradient(160deg,color-mix(in srgb,#f59e0b 14%,var(--card)),var(--card))}.ach.on.r_e{background:linear-gradient(160deg,color-mix(in srgb,#a855f7 12%,var(--card)),var(--card))}.ach .ar{font-size:10px;font-weight:700;color:var(--rc);margin-top:6px;text-transform:uppercase;letter-spacing:.4px}.ach.on .adt{color:var(--rc)}
+#achp.r_l{background:linear-gradient(135deg,#f59e0b,#ef4444)}#achp.r_e{background:linear-gradient(135deg,#7c3aed,#db2777)}#achp.r_r{background:linear-gradient(135deg,#2563eb,#7c3aed)}
 #offp{position:fixed;left:0;right:0;margin:0 auto;width:max-content;top:calc(8px + env(safe-area-inset-top,0px));z-index:60;background:var(--ambbg);color:var(--amb);border:1px solid var(--bd);padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.18);pointer-events:none;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis;animation:pop calc(.42s*var(--at)) var(--ae) both}
 .spd{display:flex;align-items:center;gap:10px}.spd input{flex:1}.spd b{min-width:46px;text-align:right}.spdl{display:flex;justify-content:space-between;align-items:center;margin:2px 0 8px}.spprev{display:flex;gap:6px;height:48px;align-items:flex-end;margin:6px 0 10px;padding:8px;border-radius:12px;background:var(--bg)}.spprev i{flex:1;border-radius:6px;background:linear-gradient(180deg,var(--ac),var(--ac2));height:100%;transform-origin:bottom}.spprev.go i{animation:spPrev calc(.7s*var(--at)) var(--ae) both}.spprev.go i:nth-child(2){animation-delay:calc(var(--sd)*1)}.spprev.go i:nth-child(3){animation-delay:calc(var(--sd)*2)}.spprev.go i:nth-child(4){animation-delay:calc(var(--sd)*3)}.spprev.go i:nth-child(5){animation-delay:calc(var(--sd)*4)}.spprev.go i:nth-child(6){animation-delay:calc(var(--sd)*5)}@keyframes spPrev{from{transform:scaleY(.08);opacity:.3}to{transform:none;opacity:1}}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation;overscroll-behavior:none}
@@ -379,7 +399,7 @@ var NEW=false,OPEN=null,DEL=null,EDIT=null,UNL=false,PAYS={"täglich":1,"wöchen
 function cs(){return UI.cur||"€"}
 function dd(i){return i.p==="Eigener Rhythmus"?Math.max(1,i.c||7):(PAYS[i.p]||30.4375)}
 function mon(i){return i.rt==="R"&&rOpen(i)<=0?0:i.k/dd(i)*30.4375/(i.sh>1?i.sh:1)}
-var SUB=null,HC="Erste Schritte",HQ="",NOTES=[],NQ="",NF="Alle",NE=null,NDEL=null,VER="1.9",QK=[["Netflix","Streaming","monatlich"],["Spotify","Musik","monatlich"],["Fitnessstudio","Fitness","monatlich"],["Handyvertrag","Handy & Internet","monatlich"],["Haftpflicht","Versicherung","jährlich"],["Strom","Wohnen & Energie","monatlich"]];
+var SUB=null,HC="Erste Schritte",HQ="",NOTES=[],NQ="",NF="Alle",NE=null,NDEL=null,VER="2.0",QK=[["Netflix","Streaming","monatlich"],["Spotify","Musik","monatlich"],["Fitnessstudio","Fitness","monatlich"],["Handyvertrag","Handy & Internet","monatlich"],["Haftpflicht","Versicherung","jährlich"],["Strom","Wohnen & Energie","monatlich"]];
 var EULA=["1. Nutzungsrecht: Du erhältst ein einfaches, nicht übertragbares Recht, AboWächter privat zu nutzen.","2. Urheberrecht: Die App, ihr Design und ihr Quelltext sind urheberrechtlich geschützt. Kopieren, Nachbauen, Weiterverkaufen und das Entfernen von Urheberhinweisen oder Wasserzeichen sind nicht erlaubt.","3. Inhalte: Du bist für deine Eingaben verantwortlich. Beleidigungen, Hass, Rassismus und rechtswidrige Inhalte sind verboten und werden gefiltert.","4. Keine Gewähr: Du trägst Fristen und Beträge selbst ein. Erinnerungen können ausfallen. Prüfe wichtige Fristen immer zusätzlich im Vertrag. Für verpasste Kündigungen wird nicht gehaftet, außer bei Vorsatz und grober Fahrlässigkeit.","5. Datenspeicherung: Deine Daten liegen nur lokal auf deinem Gerät. Löschst du Browserdaten oder die App, sind sie weg. Sichere sie regelmäßig.","6. Änderungen: Funktionen und diese Bedingungen können sich ändern. Bei wesentlichen Änderungen wirst du erneut um Zustimmung gebeten.","7. Beendigung: Du kannst dein Konto jederzeit löschen. Bei Verstößen kann die Nutzung beendet werden.","8. Recht: Es gilt deutsches Recht, soweit zwingende Verbraucherschutzvorschriften nichts anderes bestimmen."];
 var PRIV=["Es werden keine Daten an einen Server gesendet. E-Mail, Nutzername, Verträge und Notizen bleiben auf deinem Gerät. Passwort und PIN werden nur als Hash gespeichert. Benachrichtigungen nutzen die Funktion deines Browsers."];
 var RIGHTS=["Auskunft und Export: Mehr, Einstellungen, Daten.","Berichtigung: Verträge und Notizen kannst du jederzeit bearbeiten.","Löschung: Mehr, Konto, Konto und Daten löschen.","Widerruf der Zustimmung: Unten auf dieser Seite. Danach wirst du abgemeldet und musst erneut zustimmen.","Keine Weitergabe: Deine Daten werden nicht an Dritte übermittelt."];
@@ -391,7 +411,7 @@ var HELP={"Erste Schritte":[["Was kann der Helper?","Er beantwortet Fragen zur A
 "Design":[["Wie ändere ich die Farben?","Mehr, Einstellungen: Farbrad, Vorlagen, Helligkeit, Intensität und farbiger Hintergrund."]],
 "Konto & Sicherheit":[["Was macht die App-PIN?","Sie sperrt die App beim Öffnen. Du legst sie unter Mehr, Konto fest."],["Passwort vergessen?","Es gibt keine Zurücksetzen-Mail, weil das Konto nur auf deinem Gerät liegt. Lege notfalls ein neues Konto an."]],
 "Daten & Datenschutz":[["Wo liegen meine Daten?","Nur auf deinem Gerät. Sichere sie unter Mehr, Einstellungen, Daten."],["Wie lösche ich alles?","Mehr, Konto, Konto und Daten löschen."]]};
-var LOG=[["1.9","15.11.2026",["„Angemeldet bleiben“ beim Login","Tasten in der kräftigen App-Farbe, auch mit Hintergrundbild","Spar-Check mit Nutzungs-Bewertung und Sparpotenzial","20 Erfolge zum Freischalten und Tages-Serien","Jahresrückblick als Story und Teilen-Karte","Löschen rückgängig machen","Kosten in Arbeitszeit, Zahltag-Countdown und Was-wäre-wenn-Rechner","Hinweis auf heutige und morgige Abbuchungen","Täglicher Spartipp"]],["1.8","15.11.2026",["Geführte Tour nach der Registrierung","Tutorial jederzeit unter Mehr erneut starten","Hintergrundbilder: 8 Motive oder eigenes Foto","Hintergrund abschwächen und weichzeichnen"]],["1.7","15.11.2026",["Komplett offline nutzbar","Offline-Änderungen werden automatisch in die Cloud geladen","Schnellerer Start mit gespeicherten Daten","Animationsgeschwindigkeit genauer, mit Vorschau und Stufen","Bis zu 5× schnellere Animationen"]],["1.6","15.11.2026",["Testphasen mit Erinnerung","Abos teilen: nur dein Anteil zählt","Kündigungstag-Rechner","Anbieter-Kontakt mit Kündigung per E-Mail","Diagramme: 12-Monats-Ausgaben und Kategorien","Sparziel und Preisänderungen","Export als Tabelle und Kalender","Animationsgeschwindigkeit einstellbar","Vibration beim Tippen","Berechtigungen für Mitteilungen und Mikrofon","Fühlt sich an wie eine echte App: kein Zoomen, kein Neuladen"]],["1.5.1","15.11.2026",["Neuigkeiten bei jedem Start, in den Einstellungen abschaltbar","Kategorien wieder gut lesbar","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.5","15.11.2026",["Neuigkeiten-Fenster nach Updates","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.4","15.11.2026",["Ladebildschirm beim Start","Animierte Übergänge zwischen den Seiten","Animationen unter Einstellungen, Leistung abschaltbar"]],["1.3","14.11.2026",["Helper vereint Hilfe und Aufgaben","Vollbild ohne farbige Leisten"]],["1.2","14.11.2026",["Anmeldung mit Google oder E-Mail","Daten in der Cloud, auf allen Geräten gleich","Passwort vergessen per E-Mail","KI-Agent jetzt kostenlos für alle","Benachrichtigungen auf Android"]],["1.1","14.11.2026",["Vier Sprachen mit Sprachknopf auf jeder Seite","Schnell-Eingabe mit Vorschau, Raten und Preis-Erkennung","Neues Logo und installierbare App"]],["1.0","13.11.2026",["Notizblock mit Farben, Anheften, Archiv und Suche","Alternative Zahlungstermine mit festem Zahltag und Enddatum","Hilfe-Center mit Themen und Suche","Nutzungsbedingungen mit Zustimmung im Konto","Neues Menü Mehr, Update-Log und Wasserzeichen"]],["0.9","13.11.2026",["Farbrad, Vorlagen und Helligkeit","Eigene Zahlungsrhythmen und Zahlungskalender","Verträge bearbeiten, Favoriten, Duplizieren","App-PIN und Passwort ändern"]],["0.8","13.11.2026",["Registrieren und Anmelden","Erinnerungen vor der Frist","Inhaltsfilter gegen Beleidigungen","Übersicht mit Budget"]]];
+var LOG=[["2.0","15.11.2026",["Pokal-Knopf oben rechts auf jeder Seite","82 Erfolge in 4 Seltenheitsstufen, auch geheime","Level und XP mit Aufstiegs-Feier","Täglich 3 neue Tagesaufgaben","Neue Startseite: Schnellaktionen, Wochenleiste und Status","Abo-Score mit Tipps","5 Rechner: Monat/Jahr, Teilen, Preis pro Nutzung, Inflation, Sparziel","Wunschliste mit Spar-Fortschritt"]],["1.9","15.11.2026",["„Angemeldet bleiben“ beim Login","Tasten in der kräftigen App-Farbe, auch mit Hintergrundbild","Spar-Check mit Nutzungs-Bewertung und Sparpotenzial","20 Erfolge zum Freischalten und Tages-Serien","Jahresrückblick als Story und Teilen-Karte","Löschen rückgängig machen","Kosten in Arbeitszeit, Zahltag-Countdown und Was-wäre-wenn-Rechner","Hinweis auf heutige und morgige Abbuchungen","Täglicher Spartipp"]],["1.8","15.11.2026",["Geführte Tour nach der Registrierung","Tutorial jederzeit unter Mehr erneut starten","Hintergrundbilder: 8 Motive oder eigenes Foto","Hintergrund abschwächen und weichzeichnen"]],["1.7","15.11.2026",["Komplett offline nutzbar","Offline-Änderungen werden automatisch in die Cloud geladen","Schnellerer Start mit gespeicherten Daten","Animationsgeschwindigkeit genauer, mit Vorschau und Stufen","Bis zu 5× schnellere Animationen"]],["1.6","15.11.2026",["Testphasen mit Erinnerung","Abos teilen: nur dein Anteil zählt","Kündigungstag-Rechner","Anbieter-Kontakt mit Kündigung per E-Mail","Diagramme: 12-Monats-Ausgaben und Kategorien","Sparziel und Preisänderungen","Export als Tabelle und Kalender","Animationsgeschwindigkeit einstellbar","Vibration beim Tippen","Berechtigungen für Mitteilungen und Mikrofon","Fühlt sich an wie eine echte App: kein Zoomen, kein Neuladen"]],["1.5.1","15.11.2026",["Neuigkeiten bei jedem Start, in den Einstellungen abschaltbar","Kategorien wieder gut lesbar","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.5","15.11.2026",["Neuigkeiten-Fenster nach Updates","Stärkere Animationen mit Effekten","Animations-Intensität einstellbar"]],["1.4","15.11.2026",["Ladebildschirm beim Start","Animierte Übergänge zwischen den Seiten","Animationen unter Einstellungen, Leistung abschaltbar"]],["1.3","14.11.2026",["Helper vereint Hilfe und Aufgaben","Vollbild ohne farbige Leisten"]],["1.2","14.11.2026",["Anmeldung mit Google oder E-Mail","Daten in der Cloud, auf allen Geräten gleich","Passwort vergessen per E-Mail","KI-Agent jetzt kostenlos für alle","Benachrichtigungen auf Android"]],["1.1","14.11.2026",["Vier Sprachen mit Sprachknopf auf jeder Seite","Schnell-Eingabe mit Vorschau, Raten und Preis-Erkennung","Neues Logo und installierbare App"]],["1.0","13.11.2026",["Notizblock mit Farben, Anheften, Archiv und Suche","Alternative Zahlungstermine mit festem Zahltag und Enddatum","Hilfe-Center mit Themen und Suche","Nutzungsbedingungen mit Zustimmung im Konto","Neues Menü Mehr, Update-Log und Wasserzeichen"]],["0.9","13.11.2026",["Farbrad, Vorlagen und Helligkeit","Eigene Zahlungsrhythmen und Zahlungskalender","Verträge bearbeiten, Favoriten, Duplizieren","App-PIN und Passwort ändern"]],["0.8","13.11.2026",["Registrieren und Anmelden","Erinnerungen vor der Frist","Inhaltsfilter gegen Beleidigungen","Übersicht mit Budget"]]];
 function wm(){}
 function eulaView(){var a=$("app");a.textContent="";var c=h("div","card");c.appendChild(h("h2",null,"Nutzungsbedingungen"));
 c.appendChild(h("div","mu","Bitte lies die Bedingungen und bestätige sie, um die App zu nutzen."));
@@ -418,7 +438,7 @@ function viewAb(box){var c=h("div","card");c.appendChild(h("h2",null,"Über AboW
 [["Version",VER],["Speicherort",CLOUD?"Dein Konto (Google Firebase)":"Nur dieses Gerät"],["Urheberrecht","© 2026 AboWächter"]].forEach(function(r){c.appendChild(h("div","kv",null,[h("span","mu",r[0]),h("span",null,r[1])]))});
 c.appendChild(h("p","mu","Alle Rechte vorbehalten. Kopieren, Nachbauen und Weitergeben der App sind nicht erlaubt. Am Ende jeder Seite steht das Logo mit Name und Version."));box.appendChild(c)}
 function viewMore(box){
-var T={ai:["Helper","Fragen, Menüs und Aufgaben",viewAg],perm:["Berechtigungen","Benachrichtigungen, Mikrofon, Speicher",viewPerm],mem:["AboWächter Plus",TRIAL+" Tage kostenlos testen",viewMem],set:["Einstellungen","Design, Budget, Währung, Daten",viewD],acc:["Konto & Sicherheit","Profil, PIN, Passwort, Zustimmung",function(b){viewK(b);sec(b)}],ach:["Erfolge","Abzeichen sammeln und Serien halten",viewAch],wrap:["Jahresrückblick","Dein Abo-Jahr als Story",null],share:["Teilen-Karte","Deine Abo-Bilanz als Bild teilen",null],tour:["Tutorial","Die wichtigsten Funktionen in 30 Sekunden",null],help:["Hilfe","Antworten nach Themen",viewHelp],law:["Rechtliches","Bedingungen, Datenschutz, Rechte",viewLaw],log:["Neuigkeiten","Update-Log",viewLog],ab:["Über die App","Version und Urheberrecht",viewAb]};
+var T={ai:["Helper","Fragen, Menüs und Aufgaben",viewAg],perm:["Berechtigungen","Benachrichtigungen, Mikrofon, Speicher",viewPerm],mem:["AboWächter Plus",TRIAL+" Tage kostenlos testen",viewMem],set:["Einstellungen","Design, Budget, Währung, Daten",viewD],acc:["Konto & Sicherheit","Profil, PIN, Passwort, Zustimmung",function(b){viewK(b);sec(b)}],ach:["Erfolge","Abzeichen sammeln und Serien halten",viewAch],calc:["Rechner","5 praktische Rechner rund ums Sparen",viewCalc],wish:["Wunschliste","Wofür sparst du?",viewWish],wrap:["Jahresrückblick","Dein Abo-Jahr als Story",null],share:["Teilen-Karte","Deine Abo-Bilanz als Bild teilen",null],tour:["Tutorial","Die wichtigsten Funktionen in 30 Sekunden",null],help:["Hilfe","Antworten nach Themen",viewHelp],law:["Rechtliches","Bedingungen, Datenschutz, Rechte",viewLaw],log:["Neuigkeiten","Update-Log",viewLog],ab:["Über die App","Version und Urheberrecht",viewAb]};
 if(!ABO_AKTIV)delete T.mem;if(SUB&&T[SUB]){var bk=h("button","sec","‹ Zurück");bk.style.margin="0 0 12px";bk.onclick=function(){SUB=null;note="";armed=false;render()};box.appendChild(bk);T[SUB][2](box);return}
 Object.keys(T).forEach(function(k){var c=h("div","card row",null,[h("div","info",null,[h("div","name",T[k][0]),h("div","mu",T[k][1])]),h("span","mu","›")]);c.style.cursor="pointer";c.onclick=function(){if(k==="tour"){SUB=null;startTour();return}if(k==="wrap"){showWrap();return}if(k==="share"){shareCard();return}SUB=k;render()};box.appendChild(c)})}
 var NC=["Gelb","Grün","Blau","Rosa","Grau"],NH={"Gelb":48,"Grün":140,"Blau":215,"Rosa":335,"Grau":0};
@@ -1043,6 +1063,7 @@ var TSTEPS=[
 {sel:"nav button:nth-child(3)",t:"Kalender",x:"Alle Fristen, Zahlungen und Raten auf einen Blick."},
 {sel:"nav button:nth-child(5)",t:"Erinnerungen",x:"Lege fest, wann du erinnert wirst – so verpasst du keine Kündigungsfrist mehr."},
 {sel:"nav button:nth-child(6)",t:"Mehr",x:"Einstellungen, Farben, Hintergrundbild, Konto, Hilfe und Neuigkeiten."},
+{sel:"#trb",t:"Erfolge & Level",x:"Hier oben findest du jederzeit deine Erfolge, dein Level und die Tagesaufgaben. Sammle XP!"},
 {sel:".fab",t:"Dein Helper",x:"Eine Frage? Der Helper antwortet sofort und bringt dich direkt an die richtige Stelle."},
 {sel:"#lgb",t:"Sprache",x:"Wechsle jederzeit zwischen Deutsch, English, Русский und Türkçe."},
 {m:"e"}];
@@ -1135,7 +1156,7 @@ function delItem(it){var ix=items.indexOf(it);if(ix<0)return;items.splice(ix,1);
 /* Nutzung bewerten */
 var USE=[["d","Täglich"],["w","Wöchentlich"],["s","Selten"],["n","Nie"]];
 function usageRow(c,it){if(it.rt==="R")return;var w=h("div");w.style.margin="10px 0 4px";w.appendChild(h("div","mu","Wie oft nutzt du das?"));var r=h("div","chips");
-USE.forEach(function(u){var b=h("button","chip"+(it.use===u[0]?" on":""),u[1]);b.onclick=function(ev){ev.stopPropagation();it.use=it.use===u[0]?"":u[0];save();render();achCheck()};r.appendChild(b)});w.appendChild(r);c.appendChild(w)}
+USE.forEach(function(u){var b=h("button","chip"+(it.use===u[0]?" on":""),u[1]);b.onclick=function(ev){ev.stopPropagation();it.use=it.use===u[0]?"":u[0];save();render();qEv("rate");achCheck()};r.appendChild(b)});w.appendChild(r);c.appendChild(w)}
 /* Gespart */
 function savList(){var m=me();return (m&&m.sav)||[]}
 function markCancel(it,on){var m=me();m.sav=(m.sav||[]).filter(function(s){return s.id!==it.id});if(on)m.sav.push({id:it.id,n:it.n,m:Math.round(mon(it)*100)/100,d:it.d||iso(new Date())});saveAcc()}
@@ -1226,8 +1247,210 @@ function finCard(box){var m=me(),c=h("div","card");c.appendChild(h("h2",null,"Fi
 c.appendChild(h("label",null,TF("Stundenlohn netto ({c})",{c:cs()})));var w=h("input");w.type="number";w.inputMode="decimal";w.min="0";w.step="0.5";w.placeholder="z. B. 15";w.value=m.wage||"";w.onchange=function(){var v=parseFloat(String(w.value).replace(",","."));m.wage=v>0?Math.round(v*100)/100:0;saveAcc();achCheck()};c.appendChild(w);
 c.appendChild(h("label",null,"Zahltag (Tag im Monat)"));var p=h("select"),o0=h("option",null,"Kein Zahltag");o0.value="";p.appendChild(o0);for(var d=1;d<=31;d++){var o=h("option",null,d+".");o.value=d;if(m.payday===d)o.selected=true;p.appendChild(o)}p.onchange=function(){m.payday=+p.value||0;saveAcc()};c.appendChild(p);box.appendChild(c)}
 
+
+/* ===== v2.0: Erfolge XL, Level, Tagesaufgaben, Pokal-Knopf, Startseite, Abo-Score, Rechner, Wunschliste ===== */
+var RAR={c:["Gewöhnlich",10,"#8b93a7"],r:["Rar",25,"#3b82f6"],e:["Episch",50,"#a855f7"],l:["Legendär",100,"#f59e0b"]};
+var ACAT=[["start","Start"],["vt","Verträge"],["spar","Sparen"],["treu","Treue"],["ent","Entdecker"],["meis","Meister"],["geh","Geheim"]];
+function cnt(f){return items.filter(f).length}
+function catsUsed(){var o={};items.forEach(function(i){o[i.g]=1});return Object.keys(o).length}
+function paysN(){return items.reduce(function(a,i){return a+((i.pays||[]).length)},0)}
+function daysSince(t){return t?Math.floor((Date.now()-t)/864e5):0}
+function stk(){var m=me();return (m.stk&&m.stk.n)||0}
+function achN(){var m=me();return Object.keys(m.ach||{}).filter(function(k){return ACHX[k]}).length}
+/* [id,Icon,Titel,Beschreibung(Vorlage),{Werte},Seltenheit,Kategorie,Test,geheim] */
+var ACH2=[
+["first","📝","Erster Eintrag","Lege deinen ersten Vertrag an",0,"c","start",function(){return mx()>=1}],
+["tour","🎓","Durchblicker","Das Tutorial abgeschlossen",0,"c","start",function(){return !!me().tour}],
+["notif","🔔","Immer informiert","Erinnerungen eingeschaltet",0,"c","start",function(){return !!me().notif}],
+["helper","🤖","Neugierig","Den Helper benutzt",0,"c","start",function(){return !!me().ev_ag}],
+["q1","✅","Fleißig","{n} Tagesaufgabe erledigt",{n:1},"c","start",function(){return (me().qn||0)>=1}],
+["n3","🗂️","Startklar","{n} Verträge eingetragen",{n:3},"c","vt",function(){return mx()>=3}],
+["five","📚","Sammler","{n} Verträge eingetragen",{n:5},"c","vt",function(){return mx()>=5}],
+["ten","🏛️","Vertragsprofi","{n} Verträge eingetragen",{n:10},"r","vt",function(){return mx()>=10}],
+["n15","🗄️","Archivar","{n} Verträge eingetragen",{n:15},"r","vt",function(){return mx()>=15}],
+["n25","🏢","Bürokrat","{n} Verträge eingetragen",{n:25},"e","vt",function(){return mx()>=25}],
+["n50","🏰","Vertragsimperium","{n} Verträge eingetragen",{n:50},"l","vt",function(){return mx()>=50}],
+["cat3","🧩","Vielseitig","{n} verschiedene Kategorien genutzt",{n:3},"c","vt",function(){return catsUsed()>=3}],
+["cat5","🎛️","Allrounder","{n} verschiedene Kategorien genutzt",{n:5},"r","vt",function(){return catsUsed()>=5}],
+["cat8","👑","Kategorienkönig","{n} verschiedene Kategorien genutzt",{n:8},"e","vt",function(){return catsUsed()>=8}],
+["fav","❤️","Liebling","Einen Vertrag als Favorit markiert",0,"c","vt",function(){return items.some(function(i){return i.f})}],
+["shr","🤝","Teamplayer","Ein Abo mit anderen geteilt",0,"c","vt",function(){return items.some(function(i){return i.sh>1})}],
+["trial","🧪","Probierer","Eine Testphase eingetragen",0,"c","vt",function(){return items.some(function(i){return !!i.tr})}],
+["rate","💳","Abzahler","Eine Ratenzahlung angelegt",0,"c","vt",function(){return items.some(function(i){return i.rt==="R"})}],
+["rate3","🤹","Ratenjongleur","{n} Ratenzahlungen gleichzeitig",{n:3},"r","vt",function(){return cnt(function(i){return i.rt==="R"})>=3}],
+["paid","🏁","Schuldenfrei","Eine Ratenzahlung komplett abbezahlt",0,"r","vt",function(){return items.some(function(i){return i.rt==="R"&&rOpen(i)<=0})}],
+["paid3","🗡️","Schuldenkiller","{n} Ratenzahlungen abbezahlt",{n:3},"e","vt",function(){return cnt(function(i){return i.rt==="R"&&rOpen(i)<=0})>=3}],
+["pay1","🧾","Zahltag","Erste Zahlung eingetragen",0,"c","vt",function(){return paysN()>=1}],
+["pay10","📒","Buchhalter","{n} Zahlungen eingetragen",{n:10},"r","vt",function(){return paysN()>=10}],
+["pay50","🏦","Kassenwart","{n} Zahlungen eingetragen",{n:50},"e","vt",function(){return paysN()>=50}],
+["cancel","✂️","Abo-Killer","Ersten Vertrag gekündigt",0,"c","spar",function(){return savList().length>=1||items.some(function(i){return i.x})}],
+["cancel3","🧹","Aufräumer","{n} Verträge gekündigt",{n:3},"r","spar",function(){return savList().length>=3}],
+["c5","🍃","Minimalist","{n} Verträge gekündigt",{n:5},"e","spar",function(){return savList().length>=5}],
+["c10","⚔️","Kündigungsmeister","{n} Verträge gekündigt",{n:10},"l","spar",function(){return savList().length>=10}],
+["s50","🐷","Sparschwein","{n} € pro Jahr gespart",{n:50},"c","spar",function(){return savedYear()>=50}],
+["save100","💰","Sparfuchs","{n} € pro Jahr gespart",{n:100},"r","spar",function(){return savedYear()>=100}],
+["s250","💎","Sparprofi","{n} € pro Jahr gespart",{n:250},"e","spar",function(){return savedYear()>=250}],
+["s500","🤑","Sparkönig","{n} € pro Jahr gespart",{n:500},"e","spar",function(){return savedYear()>=500}],
+["s1000","🏆","Sparlegende","{n} € pro Jahr gespart",{n:1000},"l","spar",function(){return savedYear()>=1000}],
+["rate1","🪞","Selbstreflexion","Ein Abo nach Nutzung bewertet",0,"c","spar",function(){return cnt(function(i){return !!i.use})>=1}],
+["rated","⭐","Ehrlich zu dir","{n} Abos nach Nutzung bewertet",{n:3},"c","spar",function(){return cnt(function(i){return !!i.use})>=3}],
+["rall","🔍","Voll im Bilde","Alle Abos bewertet (mind. 5)",0,"r","spar",function(){var a=items.filter(function(i){return !i.x&&i.rt!=="R"});return a.length>=5&&a.every(function(i){return !!i.use})}],
+["budget","🎯","Budget-Boss","Ein Monatsbudget festgelegt",0,"c","spar",function(){return me().budget>0}],
+["inb","🧘","Im Rahmen","Unter deinem Monatsbudget geblieben",0,"r","spar",function(){var m=me();return m.budget>0&&msum()>0&&msum()<=m.budget}],
+["goal","🎯","Zielstrebig","Ein Sparziel festgelegt",0,"c","spar",function(){return me().goal>0}],
+["score80","🩺","Finanz-Ass","Abo-Score von 80 oder mehr",0,"e","spar",function(){return aboScore().s>=80}],
+["wish","🌠","Träumer","Etwas auf die Wunschliste gesetzt",0,"c","spar",function(){return (me().wish||[]).length>=1}],
+["calc","🧮","Rechenkünstler","Einen Rechner benutzt",0,"c","spar",function(){return !!me().ev_calc}],
+["streak3","🕯️","Am Ball","{n} Tage in Folge vorbeigeschaut",{n:3},"c","treu",function(){return stk()>=3}],
+["streak","🔥","Dranbleiber","{n} Tage in Folge vorbeigeschaut",{n:7},"r","treu",function(){return stk()>=7}],
+["st14","🌟","Gewohnheitstier","{n} Tage in Folge vorbeigeschaut",{n:14},"e","treu",function(){return stk()>=14}],
+["st30","☄️","Unaufhaltsam","{n} Tage in Folge vorbeigeschaut",{n:30},"l","treu",function(){return stk()>=30}],
+["d7","📆","Eine Woche dabei","Seit 7 Tagen mit dabei",0,"c","treu",function(){return daysSince(me().eula)>=7}],
+["d30","🗓️","Ein Monat dabei","Seit 30 Tagen mit dabei",0,"r","treu",function(){return daysSince(me().eula)>=30}],
+["d365","🎂","Ein Jahr dabei","Seit einem Jahr mit dabei",0,"l","treu",function(){return daysSince(me().eula)>=365}],
+["q10","🎯","Aufgabenjäger","{n} Tagesaufgaben erledigt",{n:10},"r","treu",function(){return (me().qn||0)>=10}],
+["q50","🏅","Questmeister","{n} Tagesaufgaben erledigt",{n:50},"e","treu",function(){return (me().qn||0)>=50}],
+["qall","🌈","Perfekter Tag","Alle Tagesaufgaben an einem Tag",0,"r","treu",function(){return (me().qall||0)>=1}],
+["style","🎨","Stilikone","Ein Hintergrundbild aktiviert",0,"c","ent",function(){return !!UI.bgOn}],
+["photo","📸","Fotograf","Ein eigenes Hintergrundbild gewählt",0,"r","ent",function(){return UI.bgId==="custom"&&!!UI.bgOn}],
+["dark","🌑","Dunkle Seite","Den dunklen Modus gewählt",0,"c","ent",function(){return UI.theme==="dark"}],
+["hue","🌈","Farbenfroh","Die App-Farbe geändert",0,"c","ent",function(){return UI.hue!==255}],
+["pin","🔐","Tresor","Eine App-PIN festgelegt",0,"r","ent",function(){return !!me().pin}],
+["early","⏰","Vorausschauend","Eine frühe Vorwarnung eingestellt",0,"c","ent",function(){var m=me();return m.lead2>m.lead}],
+["world","🌍","Weltenbummler","Die Sprache gewechselt",0,"c","ent",function(){return !!UI.lang&&UI.lang!=="de"}],
+["poly","🗣️","Polyglott","Alle 4 Sprachen ausprobiert",0,"e","ent",function(){return Object.keys(me().langs||{}).length>=4}],
+["wage","⏱️","Zeit ist Geld","Deinen Stundenlohn eingetragen",0,"c","ent",function(){return me().wage>0}],
+["payday","💶","Gehaltsprofi","Deinen Zahltag eingetragen",0,"c","ent",function(){return me().payday>0}],
+["wrap","🎬","Rückblicker","Den Jahresrückblick angesehen",0,"c","ent",function(){return !!me().wrapSeen}],
+["share","📣","Botschafter","Eine Teilen-Karte erstellt",0,"r","ent",function(){return !!me().shared}],
+["note","🗒️","Notizprofi","Erste Notiz geschrieben",0,"c","ent",function(){return NOTES.length>=1}],
+["note5","✍️","Schreiberling","{n} Notizen geschrieben",{n:5},"r","ent",function(){return NOTES.length>=5}],
+["note20","📜","Chronist","{n} Notizen geschrieben",{n:20},"e","ent",function(){return NOTES.length>=20}],
+["cal","📅","Planer","Den Kalender geöffnet",0,"c","ent",function(){return !!me().ev_c}],
+["stats","📊","Analyst","Die Übersicht geöffnet",0,"c","ent",function(){return !!me().ev_u}],
+["lv5","🚀","Aufsteiger","Level {n} erreicht",{n:5},"r","meis",function(){return lvlOf(xpTotal()).n>=5}],
+["lv10","🛸","Experte","Level {n} erreicht",{n:10},"e","meis",function(){return lvlOf(xpTotal()).n>=10}],
+["lv20","🪐","Großmeister","Level {n} erreicht",{n:20},"l","meis",function(){return lvlOf(xpTotal()).n>=20}],
+["a10","🥉","Trophäenjäger","{n} Erfolge freigeschaltet",{n:10},"r","meis",function(){return achN()>=10}],
+["a25","🥈","Sammelwut","{n} Erfolge freigeschaltet",{n:25},"e","meis",function(){return achN()>=25}],
+["a50","🥇","Komplettist","{n} Erfolge freigeschaltet",{n:50},"l","meis",function(){return achN()>=50}],
+["owl","🦉","Nachteule","Die App nach Mitternacht geöffnet",0,"r","geh",function(){var x=new Date().getHours();return x<4},1],
+["bird","🐦","Frühaufsteher","Die App vor 7 Uhr morgens geöffnet",0,"r","geh",function(){var x=new Date().getHours();return x>=5&&x<7},1],
+["wknd","🛋️","Wochenend-Planer","Am Wochenende vorbeigeschaut",0,"c","geh",function(){var x=new Date().getDay();return x===0||x===6},1],
+["ny","🎆","Neujahrsvorsatz","Am 1. Januar vorbeigeschaut",0,"e","geh",function(){var x=new Date();return x.getMonth()===0&&x.getDate()===1},1],
+["xmas","🎄","Weihnachtswunder","An Weihnachten vorbeigeschaut",0,"e","geh",function(){var x=new Date();return x.getMonth()===11&&x.getDate()>=24&&x.getDate()<=26},1],
+["click","👆","Klickfreudig","Den Pokal-Knopf 7× schnell angetippt",0,"r","geh",function(){return !!me().ev_click},1],
+["fri13","🐈‍⬛","Glückspilz","An einem Freitag, dem 13., vorbeigeschaut",0,"l","geh",function(){var x=new Date();return x.getDay()===5&&x.getDate()===13},1]
+];
+var ACHX={};ACH2.forEach(function(a){ACHX[a[0]]=a});
+function mx(){var m=me(),n=Math.max(items.length,m.mx||0);if(n>(m.mx||0)){m.mx=n}return n}
+function xpTotal(){var m=me(),x=m.qxp||0;Object.keys(m.ach||{}).forEach(function(k){var a=ACHX[k];if(a)x+=RAR[a[5]][1]});return x}
+var LVN=["Neuling","Sparschüler","Abo-Entdecker","Fristen-Wächter","Abo-Detektiv","Finanzfuchs","Spar-Stratege","Vertrags-Ninja","Budget-Meister","Abo-Bezwinger","Sparmeister","Finanz-Guru","Abo-Legende"];
+function lvlOf(xp){var n=1;while(xp>=25*n*(n+1))n++;var lo=25*(n-1)*n,hi=25*n*(n+1);return {n:n,name:LVN[Math.min(n-1,LVN.length-1)],lo:lo,hi:hi,p:(xp-lo)/(hi-lo),xp:xp}}
+function achTest(id){var a=ACHX[id];try{return a?!!a[7]():false}catch(e){return false}}
+function achDesc(a){return a[4]?TF(a[3],a[4]):L(a[3])}
+function achCheck(){var m=me();if(!m||!m.eula)return;m.ach=m.ach||{};var first=!m.achInit,nw=[];
+for(var pass=0;pass<2;pass++)ACH2.forEach(function(a){if(!m.ach[a[0]]&&achTest(a[0])){m.ach[a[0]]=Date.now();nw.push(a)}});
+var lv=lvlOf(xpTotal()).n;if(first){m.achInit=1;m.lvl=lv;saveAcc();trophy();return}
+var ch=nw.length>0;nw.forEach(function(a){ACHQ.push([a[1],L("Erfolg freigeschaltet!")+" · +"+RAR[a[5]][1]+" XP",L(a[2]),a[5]])});
+if(lv>(m.lvl||1)){ACHQ.push(["⬆️",L("Level aufgestiegen!"),TF("Level {n} · {t}",{n:lv,t:L(lvlOf(xpTotal()).name)}),"l"]);m.lvl=lv;ch=true}
+if(ch)saveAcc();achShow();trophy()}
+function achShow(){if($("achp")||!ACHQ.length||$("tour")||$("wrap"))return;var a=ACHQ.shift(),p=document.createElement("div");p.id="achp";p.setAttribute("data-nt","1");p.className="r_"+(a[3]||"c");p.innerHTML='<div class="ai"></div><div><div class="al"></div><div class="at"></div></div>';p.querySelector(".ai").textContent=a[0];p.querySelector(".al").textContent=a[1];p.querySelector(".at").textContent=a[2];
+p.onclick=function(){p.remove();openAch()};document.body.appendChild(p);if(UI.vib!==false&&navigator.vibrate){try{navigator.vibrate([10,40,10])}catch(x){}}if(UI.anim!==false&&UI.ai!=="d")confetti(p);
+setTimeout(function(){if(p.parentNode){p.classList.add("out");setTimeout(function(){p.remove();achShow()},350)}},3000)}
+function openAch(){tab="d";SUB="ach";NEW=false;EDIT=null;render();window.scrollTo(0,0)}
+/* Tagesaufgaben */
+var QP=[["open","👋","App öffnen"],["t_u","📊","Übersicht ansehen"],["t_c","📅","Kalender ansehen"],["rate","⭐","Ein Abo nach Nutzung bewerten"],["note","🗒️","Eine Notiz schreiben"],["add","➕","Einen Vertrag eintragen"],["ach","🏆","Deine Erfolge ansehen"],["calc","🧮","Einen Rechner benutzen"],["t_b","🔔","Erinnerungen prüfen"],["pay","🧾","Eine Zahlung eintragen"],["wish","🌠","Die Wunschliste ansehen"],["t_ag","🤖","Den Helper fragen"]];
+function dHash(s){var x=0;for(var i=0;i<s.length;i++)x=(x*31+s.charCodeAt(i))>>>0;return x}
+function todayQ(){var d=iso(new Date()),h0=dHash(d+(CUR||"")),pool=QP.slice(1),out=[QP[0]];while(out.length<3){var k=h0%pool.length;out.push(pool.splice(k,1)[0]);h0=dHash(String(h0)+"x")}return out}
+function qState(){var m=me(),d=iso(new Date());if(!m.dq||m.dq.d!==d)m.dq={d:d,done:[]};return m.dq}
+function qEv(id){var m=me();if(!m||!m.eula||!CUR)return;var ch=false,k=/^t_(u|c|ag)$/.test(id)?"ev_"+id.slice(2):id==="calc"?"ev_calc":null;if(k&&!m[k]){m[k]=1;ch=true}
+var st=qState(),q=todayQ(),hit=q.filter(function(x){return x[0]===id})[0];
+if(hit&&st.done.indexOf(id)<0){st.done.push(id);m.qn=(m.qn||0)+1;m.qxp=(m.qxp||0)+15;ch=true;var all=st.done.length>=3&&q.every(function(x){return st.done.indexOf(x[0])>-1});if(all){m.qxp+=25;m.qall=(m.qall||0)+1}
+if(id!=="open")snack((all?"🌈 "+L("Alle Tagesaufgaben erledigt!")+" +40 XP":"✅ "+L("Tagesaufgabe erledigt")+" · +15 XP")+" · "+L(hit[2]))}
+if(ch){saveAcc();setTimeout(achCheck,200)}}
+function questCard(box,mini){var q=todayQ(),st=qState(),n=q.filter(function(x){return st.done.indexOf(x[0])>-1}).length,c=h("div","card qcard");
+var hd=h("div","top",null,[h("h2",null,"Tagesaufgaben"),h("span","badge "+(n===3?"ok":"amb"),n+" / 3")]);c.appendChild(hd);var pb=h("div","bar"),pf=h("div","fill");pf.style.width=Math.round(n/3*100)+"%";pb.style.margin="2px 0 8px";pb.appendChild(pf);c.appendChild(pb);
+q.forEach(function(x){var ok=st.done.indexOf(x[0])>-1,r=h("div","qrow"+(ok?" ok":""));r.appendChild(h("span","qi",ok?"✅":x[1]));r.appendChild(h("span","qt",x[2]));r.appendChild(h("span","qx","+15 XP"));c.appendChild(r)});
+c.appendChild(h("div","mu",n===3?"Super! Morgen gibt es neue Aufgaben.":"Alle 3 erledigt = +25 XP Bonus"));if(mini){c.style.cursor="pointer";c.onclick=openAch}box.appendChild(c)}
+/* Pokal-Knopf */
+var TCL=[];
+function trophy(){var b=$("trb"),show=!!(CUR&&ACC[CUR]&&me().eula&&(!me().pin||UNL)&&!(CLOUD&&AUTHWAIT));if(!show){if(b)b.remove();return}
+if(!b){b=document.createElement("button");b.id="trb";b.setAttribute("aria-label","Erfolge");b.setAttribute("data-nt","1");b.innerHTML='<svg viewBox="0 0 48 48" class="trr"><circle cx="24" cy="24" r="21" class="trbg"/><circle cx="24" cy="24" r="21" class="trfg"/></svg><span class="tri">🏆</span><span class="trl"></span>';
+b.onclick=function(){var now=Date.now();TCL=TCL.filter(function(t){return now-t<3000});TCL.push(now);if(TCL.length>=7&&!me().ev_click){me().ev_click=1;saveAcc();achCheck()}openAch()};document.body.appendChild(b)}
+var lv=lvlOf(xpTotal()),c=2*Math.PI*21;b.querySelector(".trfg").style.strokeDasharray=c;b.querySelector(".trfg").style.strokeDashoffset=c*(1-lv.p);b.querySelector(".trl").textContent=lv.n;b.classList.toggle("on",SUB==="ach")}
+/* Startseite */
+function homeTop(box){var m=me(),lv=lvlOf(xpTotal());
+var ch=h("div","hchips");[["⭐",L("Level")+" "+lv.n,openAch],["🔥",stk()===1?L("1 Tag"):TF("{n} Tage",{n:stk()}),openAch],["🏆",achN()+"/"+ACH2.length,openAch],["💰",fmt(savedYear())+" "+cs(),function(){tab="u";render();window.scrollTo(0,0)}]].forEach(function(t){var b=h("button","hchip");b.appendChild(h("span",null,t[0]));b.appendChild(h("b",null,t[1]));b.onclick=t[2];ch.appendChild(b)});box.appendChild(ch);
+var qa=h("div","qact");[["➕","Neu",function(){NEW=true;render();window.scrollTo(0,0)}],["📅","Kalender",function(){tab="c";render();window.scrollTo(0,0)}],["📊","Statistik",function(){tab="u";render();window.scrollTo(0,0)}],["🏆","Erfolge",openAch],["🧮","Rechner",function(){tab="d";SUB="calc";render();window.scrollTo(0,0)}],["🌠","Wünsche",function(){tab="d";SUB="wish";render();window.scrollTo(0,0)}],["🎬","Rückblick",function(){showWrap()}],["🔔","Erinnern",function(){tab="b";render();window.scrollTo(0,0)}]].forEach(function(t){var b=h("button","qa");b.appendChild(h("span","qe",t[0]));b.appendChild(h("span","ql",t[1]));b.onclick=t[2];qa.appendChild(b)});box.appendChild(qa);
+weekStrip(box);questMini(box)}
+function questMini(box){var q=todayQ(),st=qState(),n=q.filter(function(x){return st.done.indexOf(x[0])>-1}).length;if(n>=3&&UI.qHide===iso(new Date()))return;var c=h("div","qmini");c.appendChild(h("span","qe","🎯"));var tx=h("div","qmt");tx.appendChild(h("b",null,TF("Tagesaufgaben {n}/3",{n:n})));var nx=q.filter(function(x){return st.done.indexOf(x[0])<0})[0];tx.appendChild(h("span","mu",nx?L(nx[2]):L("Alles erledigt – stark!")));c.appendChild(tx);
+var ring=h("div","qring");ring.style.setProperty("--p",Math.round(n/3*100));ring.appendChild(h("span",null,n+"/3"));c.appendChild(ring);c.onclick=openAch;box.appendChild(c)}
+function weekStrip(box){var t=new Date();t.setHours(0,0,0,0);var ev=evs(6),c=h("div","card wk");c.appendChild(h("div","top",null,[h("h2",null,"Deine Woche"),h("span","mu",fmt(ev.reduce(function(a,x){return a+(+x.i.k||0)},0))+" "+cs())]));var row=h("div","wkr");
+for(var k=0;k<7;k++){var d=new Date(t);d.setDate(d.getDate()+k);var de=ev.filter(function(x){return x.d.getTime()===d.getTime()}),dl=items.filter(function(i){return !i.x&&i.rt!=="R"&&i.d===iso(d)}),col=h("div","wkd"+(k===0?" now":"")+(de.length||dl.length?" has":""));
+col.appendChild(h("span","wkn",d.toLocaleDateString(LC(),{weekday:"short"}).replace(".","")));col.appendChild(h("b",null,String(d.getDate())));var dots=h("span","wkdots");de.slice(0,3).forEach(function(){dots.appendChild(h("i","p"))});dl.slice(0,2).forEach(function(){dots.appendChild(h("i","d"))});col.appendChild(dots);
+col.appendChild(h("span","wks",de.length?fmt(de.reduce(function(a,x){return a+(+x.i.k||0)},0)).replace(/,00$/,""):""));(function(d,de,dl){col.onclick=function(){if(!de.length&&!dl.length){snack(L("An diesem Tag ist nichts fällig."));return}snack(d.toLocaleDateString(LC(),{weekday:"long",day:"numeric",month:"long"})+": "+de.map(function(x){return x.i.n+" "+fmt(x.i.k)+" "+cs()}).concat(dl.map(function(i){return "⚠️ "+i.n})).join(" · "))}})(d,de,dl);row.appendChild(col)}
+c.appendChild(row);c.appendChild(h("div","mu","● Zahlung   ● Kündigungsfrist"));c.lastChild.innerHTML='<span style="color:var(--hg1)">●</span> '+L("Zahlung")+' &nbsp; <span style="color:var(--red)">●</span> '+L("Kündigungsfrist");box.appendChild(c)}
+function emptyHome(box){if(items.length)return;var c=h("div","card emp");c.innerHTML='<svg width="120" height="96" viewBox="0 0 120 96"><rect x="14" y="14" width="92" height="74" rx="14" fill="var(--bg)" stroke="var(--bd)" stroke-width="2"/><rect x="28" y="6" width="8" height="18" rx="4" fill="var(--hg1)"/><rect x="84" y="6" width="8" height="18" rx="4" fill="var(--hg1)"/><path d="M14 34h92" stroke="var(--bd)" stroke-width="2"/><circle cx="60" cy="60" r="16" fill="var(--hg1)" opacity=".15"/><path d="M52 60l6 6 12-13" fill="none" stroke="var(--hg1)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+c.appendChild(h("h2",null,"Leg los mit deinem ersten Abo"));c.appendChild(h("p","mu","Tippe auf ein beliebtes Abo oder lege einen eigenen Vertrag an. Danach behält AboWächter alle Fristen für dich im Blick."));
+var ch=h("div","chips wrapc");[["Netflix","Streaming","monatlich","🎬"],["Spotify","Musik","monatlich","🎵"],["Disney+","Streaming","monatlich","🏰"],["Amazon Prime","Shopping","jährlich","📦"],["Fitnessstudio","Fitness","monatlich","💪"],["Handyvertrag","Handy & Internet","monatlich","📱"],["Strom","Wohnen & Energie","monatlich","⚡"],["Haftpflicht","Versicherung","jährlich","🛡️"]].forEach(function(t){var b=h("button","chip",t[3]+" "+t[0]);b.onclick=function(){NEW=true;render();window.scrollTo(0,0);setTimeout(function(){try{fillTpl({n:t[0],g:t[1],p:t[2]})}catch(e){}},50)};ch.appendChild(b)});c.appendChild(ch);
+var b=h("button","pri","+ Eigenen Vertrag anlegen");b.onclick=function(){NEW=true;render();window.scrollTo(0,0)};c.appendChild(b);box.appendChild(c)}
+/* Abo-Score */
+function aboScore(){var m=me(),a=items.filter(function(i){return !i.x&&i.rt!=="R"}),s=50,tips=[];
+if(!items.length)return {s:0,tips:[L("Lege deine ersten Verträge an.")]};
+var rated=a.filter(function(i){return !!i.use}).length;if(a.length){s+=Math.round(15*rated/a.length);if(rated<a.length)tips.push(L("Bewerte alle Abos nach Nutzung."))}
+var unused=a.filter(function(i){return i.use==="n"}).length;s-=unused*8;if(unused)tips.push(TF("Kündige {n} ungenutzte Abos.",{n:unused}));
+if(m.notif)s+=10;else tips.push(L("Schalte Erinnerungen ein."));
+if(m.budget>0){s+=8;if(msum()>m.budget){s-=15;tips.push(L("Du liegst über deinem Budget."))}}else tips.push(L("Lege ein Monatsbudget fest."));
+s+=Math.min(12,savList().length*4);var late=a.filter(function(i){var d=days(i.d);return d>=0&&d<=7}).length;if(late){s-=5;tips.push(L("Prüfe die Fristen der nächsten 7 Tage."))}
+if(m.goal>0)s+=5;return {s:Math.max(0,Math.min(100,s)),tips:tips.slice(0,3)}}
+function scoreCard(box){if(!items.length)return;var r=aboScore(),c=h("div","card scr");c.appendChild(h("h2",null,"Dein Abo-Score"));var col=r.s>=80?"#16a34a":r.s>=55?"#f59e0b":"#e11d48",lb=r.s>=80?"Ausgezeichnet":r.s>=55?"Gut, da geht noch was":"Hier lässt sich sparen";
+var A=Math.PI*80,w=h("div","gauge");w.innerHTML='<svg viewBox="0 0 200 116" width="220"><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="var(--bg)" stroke-width="18" stroke-linecap="round"/><path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="'+col+'" stroke-width="18" stroke-linecap="round" stroke-dasharray="'+A+'" stroke-dashoffset="'+(A*(1-r.s/100))+'" class="gfg"/><text x="100" y="92" text-anchor="middle" font-size="40" font-weight="800" fill="currentColor">'+r.s+'</text><text x="100" y="112" text-anchor="middle" font-size="12" fill="var(--mu)">/ 100</text></svg>';c.appendChild(w);
+c.appendChild(h("div","glab",lb));c.lastChild.style.color=col;r.tips.forEach(function(t){c.appendChild(h("div","gtip","💡 "+t))});box.appendChild(c)}
+/* Rechner */
+function viewCalc(box){qEv("calc");function card(t,sub){var c=h("div","card");c.appendChild(h("h2",null,t));if(sub)c.appendChild(h("div","mu",sub));box.appendChild(c);return c}
+function num(c,lab,v,id){c.appendChild(h("label",null,lab));var i=h("input");i.type="number";i.inputMode="decimal";i.step="0.01";i.value=v;i.id=id;c.appendChild(i);return i}
+function out(c){var o=h("div","cres");c.appendChild(o);return o}
+function v(i){return parseFloat(String(i.value).replace(",","."))||0}
+var c1=card("Monats- oder Jahresabo?","Was ist günstiger?"),a1=num(c1,"Preis pro Monat",9.99,"c1a"),b1=num(c1,"Preis pro Jahr",99,"c1b"),o1=out(c1);
+function f1(){var m12=v(a1)*12,y=v(b1),d=m12-y;o1.innerHTML="";o1.appendChild(h("div",null,TF("12 × monatlich: {a} {c}",{a:fmt(m12),c:cs()})));o1.appendChild(h("b",null,d>0?TF("Jahresabo spart {d} {c} ({p} %)",{d:fmt(d),c:cs(),p:Math.round(d/m12*100)}):d<0?TF("Monatlich ist {d} {c} günstiger",{d:fmt(-d),c:cs()}):L("Beide kosten gleich viel")))}
+a1.oninput=b1.oninput=f1;f1();
+var c2=card("Abo teilen","Wie viel zahlt jede Person?"),a2=num(c2,"Gesamtpreis pro Monat",17.99,"c2a"),b2=num(c2,"Anzahl Personen",4,"c2b"),o2=out(c2);
+function f2(){var n=Math.max(1,Math.round(v(b2))),p=v(a2)/n;o2.innerHTML="";o2.appendChild(h("b",null,TF("{p} {c} pro Person und Monat",{p:fmt(p),c:cs()})));o2.appendChild(h("div",null,TF("Ersparnis pro Person: {s} {c} im Jahr",{s:fmt((v(a2)-p)*12),c:cs()})))}a2.oninput=b2.oninput=f2;f2();
+var c3=card("Preis pro Nutzung","Lohnt sich dein Abo wirklich?"),a3=num(c3,"Preis pro Monat",29.9,"c3a"),b3=num(c3,"Nutzungen pro Monat",4,"c3b"),o3=out(c3);
+function f3(){var n=v(b3),p=n>0?v(a3)/n:0;o3.innerHTML="";o3.appendChild(h("b",null,n>0?TF("{p} {c} pro Nutzung",{p:fmt(p),c:cs()}):L("Bei 0 Nutzungen ist jeder Cent zu viel.")));o3.appendChild(h("div",null,n>0&&p>10?L("Eher teuer – prüfe eine Alternative."):n>0&&p>3?L("Geht so – nutze es öfter oder vergleiche."):n>0?L("Lohnt sich!"):""))}a3.oninput=b3.oninput=f3;f3();
+var c4=card("Inflation","Was kostet dein Abo in einigen Jahren?"),a4=num(c4,"Preis heute pro Monat",12.99,"c4a"),b4=num(c4,"Preissteigerung pro Jahr (%)",5,"c4b"),y4=num(c4,"Jahre",5,"c4c"),o4=out(c4);
+function f4(){var p=v(a4)*Math.pow(1+v(b4)/100,Math.max(0,v(y4)));o4.innerHTML="";o4.appendChild(h("b",null,TF("In {y} Jahren: {p} {c} pro Monat",{y:Math.round(v(y4)),p:fmt(p),c:cs()})));o4.appendChild(h("div",null,TF("Das sind {d} {c} mehr im Jahr.",{d:fmt((p-v(a4))*12),c:cs()})))}a4.oninput=b4.oninput=y4.oninput=f4;f4();
+var c5=card("Sparziel-Rechner","Wie lange brauchst du?"),a5=num(c5,TF("Ziel in {c}",{c:cs()}),500,"c5a"),b5=num(c5,"Sparrate pro Monat",50,"c5b"),o5=out(c5);
+function f5(){var r=v(b5),n=r>0?Math.ceil(v(a5)/r):0,d=new Date();d.setMonth(d.getMonth()+n);o5.innerHTML="";o5.appendChild(h("b",null,r>0?TF("{n} Monate – erreicht im {d}",{n:n,d:d.toLocaleDateString(LC(),{month:"long",year:"numeric"})}):L("Gib eine Sparrate ein.")))}a5.oninput=b5.oninput=f5;f5()}
+/* Wunschliste */
+function viewWish(box){qEv("wish");var m=me();m.wish=m.wish||[];var pot=items.filter(function(i){return !i.x&&i.rt!=="R"&&(i.use==="s"||i.use==="n")}).reduce(function(a,i){return a+mon(i)},0);
+var c=h("div","card");c.appendChild(h("h2",null,"Wunschliste"));c.appendChild(h("p","mu","Was möchtest du dir gönnen? Wir zeigen dir, wie schnell du es mit gekündigten oder ungenutzten Abos zusammen hast."));
+var n=h("input");n.placeholder=L("z. B. Kopfhörer");n.maxLength=40;var p=h("input");p.type="number";p.inputMode="decimal";p.placeholder=L("Preis");p.style.marginTop="8px";c.appendChild(n);c.appendChild(p);var e=h("div","err");c.appendChild(e);
+var b=h("button","pri","Zur Wunschliste hinzufügen");b.onclick=function(){var t=n.value.trim(),k=parseFloat(String(p.value).replace(",","."));if(!t){e.textContent=L("Bitte einen Namen eingeben.");return}if(!(k>0)){e.textContent=L("Bitte einen Preis eingeben.");return}if(typeof bad==="function"&&bad(t)){e.textContent=L(MSG);return}m.wish.push({id:Date.now(),n:t,k:k,d:Date.now()});saveAcc();render();achCheck()};c.appendChild(b);box.appendChild(c);
+var sm=savList().reduce(function(a,x){return a+x.m},0)+pot,info=h("div","card");info.appendChild(h("div","kv",null,[h("span",null,"Dein Sparpotenzial pro Monat"),h("b",null,fmt(sm)+" "+cs())]));info.appendChild(h("div","mu","Gekündigte Abos plus selten oder nie genutzte Abos."));box.appendChild(info);
+if(!m.wish.length){box.appendChild(h("div","empty","Noch keine Wünsche. Was hättest du gern? 🌠"));return}
+m.wish.forEach(function(w){var cc=h("div","card wish"),mo=sm>0?Math.ceil(w.k/sm):0;cc.appendChild(h("div","top",null,[h("b",null,"🌠 "+w.n),h("b",null,fmt(w.k)+" "+cs())]));
+var pr=h("div","bar"),pf=h("div","fill");var have=savedSoFar();pf.style.width=Math.min(100,Math.round(have/w.k*100))+"%";pr.style.margin="8px 0";pr.appendChild(pf);cc.appendChild(pr);
+cc.appendChild(h("div","mu",sm>0?(mo<=1?L("Mit deinem Sparpotenzial schon in einem Monat drin!"):TF("Mit deinem Sparpotenzial in {n} Monaten erreichbar.",{n:mo})):L("Bewerte oder kündige Abos, um Sparpotenzial freizuschalten.")));
+var x=h("button","sec","Entfernen");x.style.marginTop="8px";x.onclick=function(){m.wish=m.wish.filter(function(z){return z.id!==w.id});saveAcc();render()};cc.appendChild(x);box.appendChild(cc)})}
+/* Erfolge-Seite */
+var AF="all";
+function viewAch(box){qEv("ach");var m=me();m.ach=m.ach||{};var lv=lvlOf(xpTotal()),n=achN();
+var hero=h("div","card lvc");hero.appendChild(h("div","lvt",null,[h("div","lvb",String(lv.n)),h("div",null,null,[h("div","mu","Level"),h("b",null,L(lv.name))])]));
+var pb=h("div","bar"),pf=h("div","fill");pf.style.width=Math.round(lv.p*100)+"%";pb.style.margin="12px 0 6px";pb.appendChild(pf);hero.appendChild(pb);
+hero.appendChild(h("div","top",null,[h("span","mu",TF("{x} XP",{x:lv.xp})),h("span","mu",TF("noch {x} XP bis Level {n}",{x:lv.hi-lv.xp,n:lv.n+1}))]));
+var st=h("div","lvs");[[n+"/"+ACH2.length,"Erfolge"],[String(stk()),"Tage in Folge"],[String(m.qn||0),"Aufgaben"]].forEach(function(t){st.appendChild(h("div",null,null,[h("b",null,t[0]),h("span",null,t[1])]))});hero.appendChild(st);box.appendChild(hero);
+questCard(box);
+var fc=h("div","chips");[["all","Alle"],["on","Freigeschaltet"],["off","Offen"]].concat(ACAT).forEach(function(f){var b=h("button","chip"+(AF===f[0]?" on":""),f[1]);b.onclick=function(){AF=f[0];render(true)};fc.appendChild(b)});box.appendChild(fc);
+var rl=h("div","rarl");Object.keys(RAR).forEach(function(k){var s=h("span","rar r_"+k,L(RAR[k][0])+" · "+RAR[k][1]+" XP");rl.appendChild(s)});box.appendChild(rl);
+var g=h("div","achg");ACH2.filter(function(a){var on=!!m.ach[a[0]];return AF==="all"||(AF==="on"&&on)||(AF==="off"&&!on)||a[6]===AF}).forEach(function(a){var on=!!m.ach[a[0]],sec=a[8]&&!on,c=h("div","ach r_"+a[5]+(on?" on":""));
+c.appendChild(h("div","ai",on?a[1]:sec?"❓":"🔒"));c.appendChild(h("div","at",sec?"???":a[2]));c.appendChild(h("div","ad",sec?L("Geheimer Erfolg"):achDesc(a)));c.appendChild(h("div","ar",L(RAR[a[5]][0])+" · +"+RAR[a[5]][1]+" XP"));if(on)c.appendChild(h("div","adt",new Date(m.ach[a[0]]).toLocaleDateString(LC())));g.appendChild(c)});
+box.appendChild(g)}
+
+var _cm0=commit;commit=function(o){var nw=!EDIT;_cm0(o);if(nw)qEv("add")};var _pi0=payIt;payIt=function(){var r=_pi0.apply(this,arguments);qEv("pay");return r};var _ns0=nsave;nsave=function(){_ns0();qEv("note")};
 function offPill(){var e=$("offp"),need=!!CUR&&(!ONLINE||OFFNOSDK);if(!need){if(e)e.remove();return}if(!e){e=document.createElement("div");e.id="offp";e.setAttribute("data-nt","1");document.body.appendChild(e)}var t=L(isDirty()?"Offline · Änderungen werden später hochgeladen":"Offline · Die App funktioniert trotzdem");if(e.textContent!==t)e.textContent=t}
-function render(){render0();trAll();langUI();postAnim();offPill();try{if(CUR&&ACC[CUR]&&me().eula){streak();achCheck()}}catch(e){}if(!(CLOUD&&AUTHWAIT))hideSplash();if(!$("splash"))maybeWhatsNew()}
+function render(){render0();trAll();langUI();postAnim();offPill();try{if(CUR&&ACC[CUR]&&me().eula&&!(CLOUD&&AUTHWAIT)){var m9=me();streak();if(!m9.langs||!m9.langs[UI.lang||"de"]){m9.langs=m9.langs||{};m9.langs[UI.lang||"de"]=1;saveAcc()}qEv("open");if(/^(u|c|b|ag)$/.test(tab)&&!SUB)qEv("t_"+tab);achCheck()}trophy()}catch(e){}if(!(CLOUD&&AUTHWAIT))hideSplash();if(!$("splash"))maybeWhatsNew()}
 function logoSvg(n){return '<svg width="'+n+'" height="'+n+'" viewBox="0 0 512 512"><defs><linearGradient id="lgx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b5bd6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#lgx)"/><rect x="116" y="140" width="280" height="260" rx="40" fill="#fff"/><path d="M116 180a40 40 0 0 1 40-40h200a40 40 0 0 1 40 40v40H116z" fill="#e4e1ff"/><rect x="176" y="104" width="28" height="64" rx="14" fill="#fff"/><rect x="308" y="104" width="28" height="64" rx="14" fill="#fff"/><path d="M186 306l48 48 94-100" fill="none" stroke="#5b5bd6" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/></svg>'}
 function notice(c){if(UI.lang&&UI.lang!=="de")c.appendChild(h("p","mu","Die Übersetzung dient der Orientierung. Rechtlich maßgeblich ist die deutsche Fassung."))}
 var WORDS=["Fester Tag im Monat", "Steuern & Gebühren", "Handy & Internet", "Wohnen & Energie", "Eigener Rhythmus", "vierteljährlich", "Möbel & Technik", "alle 2 Wochen", "halbjährlich", "Versicherung", "wöchentlich", "Handy-Raten", "monatlich", "Ratenkauf", "Sonstiges", "jährlich", "Finanzen", "täglich", "Bildung", "Kredit", "Musik"];
@@ -1965,6 +2188,252 @@ Löschen rückgängig machen|Undo delete|Отмена удаления|Silmeyi g
 Kosten in Arbeitszeit, Zahltag-Countdown und Was-wäre-wenn-Rechner|Costs in working hours, payday countdown and what-if calculator|Расходы в рабочих часах, отсчёт до зарплаты и калькулятор «что если»|Çalışma saati olarak maliyet, maaş günü sayacı ve ya şöyle olsaydı hesaplayıcısı
 Hinweis auf heutige und morgige Abbuchungen|Notice for today's and tomorrow's debits|Уведомление о списаниях сегодня и завтра|Bugün ve yarınki çekimler için uyarı
 Täglicher Spartipp|Daily saving tip|Ежедневный совет по экономии|Günlük tasarruf ipucu
+1 Tag|1 day|1 день|1 gün
+Rar|Rare|Редкий|Nadir
+Neuling|Newbie|Новичок|Acemi
+Sparschüler|Saving student|Ученик экономии|Tasarruf öğrencisi
+Abo-Entdecker|Subscription explorer|Исследователь подписок|Abonelik kaşifi
+Fristen-Wächter|Deadline guardian|Страж сроков|Süre bekçisi
+Abo-Detektiv|Subscription detective|Детектив подписок|Abonelik dedektifi
+Finanzfuchs|Finance fox|Финансовый лис|Finans tilkisi
+Spar-Stratege|Saving strategist|Стратег экономии|Tasarruf stratejisti
+Vertrags-Ninja|Contract ninja|Ниндзя договоров|Sözleşme ninjası
+Budget-Meister|Budget master|Мастер бюджета|Bütçe ustası
+Abo-Bezwinger|Subscription conqueror|Покоритель подписок|Abonelik fatihi
+Sparmeister|Saving master|Мастер экономии|Tasarruf ustası
+Finanz-Guru|Finance guru|Финансовый гуру|Finans gurusu
+Abo-Legende|Subscription legend|Легенда подписок|Abonelik efsanesi
++ Eigenen Vertrag anlegen|+ Add your own contract|+ Добавить свой договор|+ Kendi sözleşmeni ekle
+12 × monatlich: {a} {c}|12 × monthly: {a} {c}|12 × ежемесячно: {a} {c}|12 × aylık: {a} {c}
+Abo teilen|Share a subscription|Разделить подписку|Aboneliği paylaş
+Abo-Score von 80 oder mehr|Subscription score of 80 or more|Оценка подписок 80 или выше|80 veya üzeri abonelik puanı
+Alle 4 Sprachen ausprobiert|Tried all 4 languages|Опробованы все 4 языка|4 dilin hepsi denendi
+Alle Abos bewertet (mind. 5)|Rated all subscriptions (at least 5)|Оценены все подписки (минимум 5)|Tüm abonelikler değerlendirildi (en az 5)
+Alle Tagesaufgaben an einem Tag|All daily tasks in one day|Все задания за один день|Bir günde tüm görevler
+Alle Tagesaufgaben erledigt!|All daily tasks done!|Все задания дня выполнены!|Tüm günlük görevler tamam!
+Alles erledigt – stark!|All done – great!|Всё сделано – отлично!|Hepsi tamam – harika!
+Allrounder|All-rounder|Универсал|Her işin ustası
+Am 1. Januar vorbeigeschaut|Visited on 1 January|Заходил 1 января|1 Ocak'ta uğradın
+Am Ball|On the ball|В деле|Takipte
+Am Wochenende vorbeigeschaut|Visited on the weekend|Заходил в выходные|Hafta sonu uğradın
+An Weihnachten vorbeigeschaut|Visited at Christmas|Заходил на Рождество|Noel'de uğradın
+An diesem Tag ist nichts fällig.|Nothing is due on this day.|В этот день ничего не нужно платить.|Bu gün ödenecek bir şey yok.
+An einem Freitag, dem 13., vorbeigeschaut|Visited on a Friday the 13th|Заходил в пятницу, 13-го|13'ü Cuma günü uğradın
+Analyst|Analyst|Аналитик|Analist
+Anzahl Personen|Number of people|Количество людей|Kişi sayısı
+Archivar|Archivist|Архивариус|Arşivci
+Aufgabenjäger|Task hunter|Охотник за заданиями|Görev avcısı
+Aufsteiger|Climber|Восходящая звезда|Yükselen
+Bei 0 Nutzungen ist jeder Cent zu viel.|With 0 uses, every cent is too much.|При 0 использований каждый цент лишний.|0 kullanımda her kuruş fazladır.
+Beide kosten gleich viel|Both cost the same|Оба стоят одинаково|İkisi de aynı fiyatta
+Bewerte alle Abos nach Nutzung.|Rate all subscriptions by usage.|Оцени все подписки по использованию.|Tüm abonelikleri kullanıma göre değerlendir.
+Bewerte oder kündige Abos, um Sparpotenzial freizuschalten.|Rate or cancel subscriptions to unlock savings potential.|Оценивай или расторгай подписки, чтобы открыть потенциал экономии.|Tasarruf potansiyelini açmak için abonelikleri değerlendir veya iptal et.
+Bitte einen Preis eingeben.|Please enter a price.|Пожалуйста, введи цену.|Lütfen bir fiyat gir.
+Buchhalter|Bookkeeper|Бухгалтер|Muhasebeci
+Bürokrat|Bureaucrat|Бюрократ|Bürokrat
+Chronist|Chronicler|Летописец|Tarihçi
+Das sind {d} {c} mehr im Jahr.|That's {d} {c} more per year.|Это на {d} {c} больше в год.|Bu yılda {d} {c} daha fazla.
+Dein Abo-Score|Your subscription score|Твоя оценка подписок|Abonelik puanın
+Dein Sparpotenzial pro Monat|Your monthly savings potential|Твой потенциал экономии в месяц|Aylık tasarruf potansiyelin
+Deine Woche|Your week|Твоя неделя|Haftan
+Deinen Zahltag eingetragen|Entered your payday|Указан день зарплаты|Maaş gününü girdin
+Den Helper benutzt|Used the Helper|Использован помощник|Yardımcıyı kullandın
+Den Kalender geöffnet|Opened the calendar|Открыт календарь|Takvimi açtın
+Den Pokal-Knopf 7× schnell angetippt|Tapped the trophy button 7× quickly|Быстро нажал на кубок 7 раз|Kupa düğmesine 7 kez hızlıca dokundun
+Den dunklen Modus gewählt|Chose dark mode|Выбрана тёмная тема|Karanlık modu seçtin
+Die App vor 7 Uhr morgens geöffnet|Opened the app before 7 am|Приложение открыто до 7 утра|Uygulamayı sabah 7'den önce açtın
+Die App-Farbe geändert|Changed the app colour|Изменён цвет приложения|Uygulama rengini değiştirdin
+Die Übersicht geöffnet|Opened the overview|Открыт обзор|Genel bakışı açtın
+Du liegst über deinem Budget.|You're over your budget.|Ты превышаешь бюджет.|Bütçeni aşıyorsun.
+Dunkle Seite|Dark side|Тёмная сторона|Karanlık taraf
+Eher teuer – prüfe eine Alternative.|Rather expensive – check an alternative.|Дороговато – поищи альтернативу.|Oldukça pahalı – bir alternatife bak.
+Ein Abo mit anderen geteilt|Shared a subscription with others|Подписка разделена с другими|Bir aboneliği başkalarıyla paylaştın
+Ein Abo nach Nutzung bewertet|Rated a subscription by usage|Подписка оценена по использованию|Bir aboneliği kullanıma göre değerlendirdin
+Ein Jahr dabei|One year in|Год с нами|Bir yıldır burada
+Ein Monat dabei|One month in|Месяц с нами|Bir aydır burada
+Ein Sparziel festgelegt|Set a savings goal|Установлена цель накоплений|Bir tasarruf hedefi belirledin
+Ein eigenes Hintergrundbild gewählt|Chose your own background image|Выбрано своё фоновое фото|Kendi arka plan resmini seçtin
+Eine App-PIN festgelegt|Set an app PIN|Установлен PIN приложения|Bir uygulama PIN'i belirledin
+Eine Testphase eingetragen|Added a free trial|Добавлен пробный период|Bir deneme süresi ekledin
+Eine Woche dabei|One week in|Неделя с нами|Bir haftadır burada
+Eine frühe Vorwarnung eingestellt|Set an early warning|Установлено раннее предупреждение|Erken uyarı ayarladın
+Einen Rechner benutzt|Used a calculator|Использован калькулятор|Bir hesaplayıcı kullandın
+Einen Vertrag als Favorit markiert|Marked a contract as favourite|Договор отмечен как избранный|Bir sözleşmeyi favori yaptın
+Entdecker|Explorer|Исследователь|Kaşif
+Entfernen|Remove|Удалить|Kaldır
+Episch|Epic|Эпический|Destansı
+Erinnern|Remind|Напомнить|Hatırlat
+Ersparnis pro Person: {s} {c} im Jahr|Savings per person: {s} {c} per year|Экономия на человека: {s} {c} в год|Kişi başı tasarruf: yılda {s} {c}
+Erste Zahlung eingetragen|Entered the first payment|Внесён первый платёж|İlk ödeme girildi
+Etwas auf die Wunschliste gesetzt|Added something to the wish list|Добавлено желание в список|İstek listesine bir şey eklendi
+Experte|Expert|Эксперт|Uzman
+Farbenfroh|Colourful|Яркий|Renkli
+Finanz-Ass|Finance ace|Финансовый ас|Finans ası
+Fleißig|Hard-working|Трудолюбивый|Çalışkan
+Fotograf|Photographer|Фотограф|Fotoğrafçı
+Freigeschaltet|Unlocked|Открыто|Açılmış
+Frühaufsteher|Early bird|Жаворонок|Erkenci
+Gehaltsprofi|Payday pro|Профи зарплаты|Maaş uzmanı
+Geheim|Secret|Секрет|Gizli
+Geheimer Erfolg|Secret achievement|Секретное достижение|Gizli başarı
+Geht so – nutze es öfter oder vergleiche.|So-so – use it more or compare.|Так себе – пользуйся чаще или сравни.|İdare eder – daha sık kullan veya karşılaştır.
+Gekündigte Abos plus selten oder nie genutzte Abos.|Cancelled subscriptions plus rarely or never used ones.|Расторгнутые подписки плюс редко или никогда не используемые.|İptal edilen abonelikler artı nadiren veya hiç kullanılmayanlar.
+Gesamtpreis pro Monat|Total price per month|Общая цена в месяц|Aylık toplam fiyat
+Gewohnheitstier|Creature of habit|Человек привычки|Alışkanlık insanı
+Gewöhnlich|Common|Обычный|Sıradan
+Gib eine Sparrate ein.|Enter a savings rate.|Введи сумму накоплений.|Bir tasarruf miktarı gir.
+Glückspilz|Lucky one|Везунчик|Şanslı
+Großmeister|Grandmaster|Гроссмейстер|Büyük usta
+Im Rahmen|Within limits|В рамках|Sınırlar içinde
+In {y} Jahren: {p} {c} pro Monat|In {y} years: {p} {c} per month|Через {y} лет: {p} {c} в месяц|{y} yıl sonra: ayda {p} {c}
+Inflation|Inflation|Инфляция|Enflasyon
+Jahre|Years|Годы|Yıl
+Jahresabo spart {d} {c} ({p} %)|Annual plan saves {d} {c} ({p} %)|Годовая подписка экономит {d} {c} ({p} %)|Yıllık abonelik {d} {c} tasarruf sağlar (%{p})
+Kassenwart|Treasurer|Казначей|Veznedar
+Kategorienkönig|Category king|Король категорий|Kategori kralı
+Klickfreudig|Click-happy|Любитель кликать|Tıklama meraklısı
+Komplettist|Completionist|Перфекционист|Tamamlayıcı
+Kündige {n} ungenutzte Abos.|Cancel {n} unused subscriptions.|Расторгни неиспользуемые подписки: {n}.|Kullanılmayan {n} aboneliği iptal et.
+Kündigungsfrist|Cancellation deadline|Срок расторжения|İptal süresi
+Kündigungsmeister|Cancellation master|Мастер расторжений|İptal ustası
+Leg los mit deinem ersten Abo|Get started with your first subscription|Начни с первой подписки|İlk aboneliğinle başla
+Lege deine ersten Verträge an.|Add your first contracts.|Добавь первые договоры.|İlk sözleşmelerini ekle.
+Lege ein Monatsbudget fest.|Set a monthly budget.|Установи месячный бюджет.|Aylık bir bütçe belirle.
+Legendär|Legendary|Легендарный|Efsanevi
+Level|Level|Уровень|Seviye
+Level aufgestiegen!|Level up!|Новый уровень!|Seviye atladın!
+Level {n} erreicht|Reached level {n}|Достигнут уровень {n}|{n}. seviyeye ulaşıldı
+Level {n} · {t}|Level {n} · {t}|Уровень {n} · {t}|Seviye {n} · {t}
+Liebling|Favourite|Любимчик|Gözde
+Lohnt sich dein Abo wirklich?|Is your subscription really worth it?|Твоя подписка действительно окупается?|Aboneliğin gerçekten değiyor mu?
+Lohnt sich!|Worth it!|Окупается!|Değer!
+Meister|Master|Мастер|Usta
+Minimalist|Minimalist|Минималист|Minimalist
+Mit deinem Sparpotenzial in {n} Monaten erreichbar.|Reachable in {n} months with your savings potential.|С твоим потенциалом экономии достижимо за {n} мес.|Tasarruf potansiyelinle {n} ayda ulaşılabilir.
+Mit deinem Sparpotenzial schon in einem Monat drin!|Within reach in just one month with your savings potential!|С твоим потенциалом экономии – уже через месяц!|Tasarruf potansiyelinle sadece bir ayda!
+Monatlich ist {d} {c} günstiger|Monthly is {d} {c} cheaper|Ежемесячно дешевле на {d} {c}|Aylık {d} {c} daha ucuz
+Monats- oder Jahresabo?|Monthly or annual plan?|Ежемесячная или годовая подписка?|Aylık mı yıllık mı?
+Neu|New|Новое|Yeni
+Neugierig|Curious|Любопытный|Meraklı
+Neujahrsvorsatz|New Year's resolution|Новогоднее обещание|Yeni yıl kararı
+Noch keine Wünsche. Was hättest du gern? 🌠|No wishes yet. What would you like? 🌠|Пока нет желаний. Чего бы тебе хотелось? 🌠|Henüz istek yok. Ne isterdin? 🌠
+Nutzungen pro Monat|Uses per month|Использований в месяц|Aylık kullanım
+Offen|Open|Открытые|Açık
+Perfekter Tag|Perfect day|Идеальный день|Mükemmel gün
+Planer|Planner|Планировщик|Planlayıcı
+Polyglott|Polyglot|Полиглот|Çok dilli
+Preis|Price|Цена|Fiyat
+Preis heute pro Monat|Price today per month|Цена сегодня в месяц|Bugünkü aylık fiyat
+Preis pro Jahr|Price per year|Цена в год|Yıllık fiyat
+Preis pro Monat|Price per month|Цена в месяц|Aylık fiyat
+Preis pro Nutzung|Price per use|Цена за использование|Kullanım başına fiyat
+Preissteigerung pro Jahr (%)|Price increase per year (%)|Рост цены в год (%)|Yıllık fiyat artışı (%)
+Probierer|Tester|Испытатель|Deneyici
+Prüfe die Fristen der nächsten 7 Tage.|Check the deadlines of the next 7 days.|Проверь сроки на ближайшие 7 дней.|Önümüzdeki 7 günün sürelerini kontrol et.
+Questmeister|Quest master|Мастер заданий|Görev ustası
+Ratenjongleur|Instalment juggler|Жонглёр рассрочками|Taksit hokkabazı
+Rechenkünstler|Number cruncher|Мастер расчётов|Hesap ustası
+Rechner|Calculators|Калькуляторы|Hesaplayıcılar
+Rückblick|Review|Обзор|Özet
+Sammelwut|Collecting craze|Страсть к коллекциям|Koleksiyon tutkusu
+Schalte Erinnerungen ein.|Turn on reminders.|Включи напоминания.|Hatırlatıcıları aç.
+Schreiberling|Scribbler|Писатель|Yazar
+Schuldenkiller|Debt killer|Убийца долгов|Borç avcısı
+Seit 30 Tagen mit dabei|With us for 30 days|С нами 30 дней|30 gündür bizimle
+Seit 7 Tagen mit dabei|With us for 7 days|С нами 7 дней|7 gündür bizimle
+Seit einem Jahr mit dabei|With us for a year|С нами год|Bir yıldır bizimle
+Selbstreflexion|Self-reflection|Самоанализ|Öz değerlendirme
+Sparen|Saving|Экономия|Tasarruf
+Sparkönig|Saving king|Король экономии|Tasarruf kralı
+Sparlegende|Saving legend|Легенда экономии|Tasarruf efsanesi
+Sparprofi|Saving pro|Профи экономии|Tasarruf uzmanı
+Sparrate pro Monat|Savings per month|Накопления в месяц|Aylık tasarruf
+Sparschwein|Piggy bank|Копилка|Kumbara
+Sparziel-Rechner|Savings goal calculator|Калькулятор цели накоплений|Tasarruf hedefi hesaplayıcısı
+Start|Start|Старт|Başlangıç
+Startklar|Ready to go|Готов к старту|Başlamaya hazır
+Statistik|Statistics|Статистика|İstatistik
+Tagesaufgabe erledigt|Daily task done|Задание дня выполнено|Günlük görev tamam
+Tagesaufgaben|Daily tasks|Задания дня|Günlük görevler
+Tagesaufgaben {n}/3|Daily tasks {n}/3|Задания дня {n}/3|Günlük görevler {n}/3
+Teamplayer|Team player|Командный игрок|Takım oyuncusu
+Tippe auf ein beliebtes Abo oder lege einen eigenen Vertrag an. Danach behält AboWächter alle Fristen für dich im Blick.|Tap a popular subscription or add your own contract. AboWächter then keeps track of all deadlines for you.|Нажми на популярную подписку или добавь свой договор. AboWächter будет следить за всеми сроками.|Popüler bir aboneliğe dokun veya kendi sözleşmeni ekle. AboWächter tüm süreleri senin için takip eder.
+Tresor|Vault|Сейф|Kasa
+Treue|Loyalty|Верность|Sadakat
+Trophäenjäger|Trophy hunter|Охотник за трофеями|Kupa avcısı
+Träumer|Dreamer|Мечтатель|Hayalperest
+Unaufhaltsam|Unstoppable|Неудержимый|Durdurulamaz
+Unter deinem Monatsbudget geblieben|Stayed under your monthly budget|Уложился в месячный бюджет|Aylık bütçenin altında kaldın
+Vertragsimperium|Contract empire|Империя договоров|Sözleşme imparatorluğu
+Verträge|Contracts|Договоры|Sözleşmeler
+Vielseitig|Versatile|Разносторонний|Çok yönlü
+Voll im Bilde|Fully informed|В полном курсе|Her şeyden haberdar
+Vorausschauend|Forward-thinking|Предусмотрительный|İleri görüşlü
+Was ist günstiger?|Which is cheaper?|Что дешевле?|Hangisi daha ucuz?
+Was kostet dein Abo in einigen Jahren?|What will your subscription cost in a few years?|Сколько будет стоить подписка через несколько лет?|Aboneliğin birkaç yıl sonra ne kadar olacak?
+Was möchtest du dir gönnen? Wir zeigen dir, wie schnell du es mit gekündigten oder ungenutzten Abos zusammen hast.|What would you like to treat yourself to? We show you how fast you'll have it with cancelled or unused subscriptions.|Чем хочешь себя порадовать? Покажем, как быстро накопишь за счёт расторгнутых или неиспользуемых подписок.|Kendine ne almak istersin? İptal edilen veya kullanılmayan aboneliklerle ne kadar sürede biriktireceğini gösteriyoruz.
+Weihnachtswunder|Christmas miracle|Рождественское чудо|Noel mucizesi
+Wie lange brauchst du?|How long will it take?|Сколько тебе нужно времени?|Ne kadar sürer?
+Wie viel zahlt jede Person?|How much does each person pay?|Сколько платит каждый?|Kişi başı ne kadar ödenir?
+Wochenend-Planer|Weekend planner|Планировщик выходных|Hafta sonu planlayıcı
+Wunschliste|Wish list|Список желаний|İstek listesi
+Wünsche|Wishes|Желания|İstekler
+Zahltag|Payday|День выплат|Ödeme günü
+Zahlung|Payment|Платёж|Ödeme
+Ziel in {c}|Goal in {c}|Цель в {c}|Hedef ({c})
+Zielstrebig|Goal-oriented|Целеустремлённый|Hedef odaklı
+Zur Wunschliste hinzufügen|Add to wish list|Добавить в список желаний|İstek listesine ekle
+noch {x} XP bis Level {n}|{x} XP to level {n}|ещё {x} XP до уровня {n}|{n}. seviyeye {x} XP kaldı
+z. B. Kopfhörer|e.g. headphones|напр. наушники|örn. kulaklık
+{n} Abos nach Nutzung bewertet|Rated {n} subscriptions by usage|Оценено подписок по использованию: {n}|{n} abonelik kullanıma göre değerlendirildi
+{n} Erfolge freigeschaltet|Unlocked {n} achievements|Открыто достижений: {n}|{n} başarı açıldı
+{n} Monate – erreicht im {d}|{n} months – reached in {d}|{n} мес. – цель в {d}|{n} ay – {d} içinde ulaşılır
+{n} Notizen geschrieben|Wrote {n} notes|Написано заметок: {n}|{n} not yazıldı
+{n} Ratenzahlungen abbezahlt|Paid off {n} instalment plans|Выплачено рассрочек: {n}|{n} taksit planı ödendi
+{n} Ratenzahlungen gleichzeitig|{n} instalment plans at once|Рассрочек одновременно: {n}|Aynı anda {n} taksit planı
+{n} Tage|{n} days|{n} дн.|{n} gün
+{n} Tage in Folge vorbeigeschaut|Visited {n} days in a row|Заходил {n} дней подряд|{n} gün art arda uğradın
+{n} Tagesaufgabe erledigt|Completed {n} daily task|Выполнено заданий дня: {n}|{n} günlük görev tamamlandı
+{n} Tagesaufgaben erledigt|Completed {n} daily tasks|Выполнено заданий дня: {n}|{n} günlük görev tamamlandı
+{n} Verträge eingetragen|Added {n} contracts|Добавлено договоров: {n}|{n} sözleşme eklendi
+{n} Verträge gekündigt|Cancelled {n} contracts|Расторгнуто договоров: {n}|{n} sözleşme iptal edildi
+{n} Zahlungen eingetragen|Entered {n} payments|Внесено платежей: {n}|{n} ödeme girildi
+{n} verschiedene Kategorien genutzt|Used {n} different categories|Использовано разных категорий: {n}|{n} farklı kategori kullanıldı
+{n} € pro Jahr gespart|Saved {n} € per year|Сэкономлено {n} € в год|Yılda {n} € tasarruf
+{p} {c} pro Nutzung|{p} {c} per use|{p} {c} за использование|Kullanım başına {p} {c}
+{p} {c} pro Person und Monat|{p} {c} per person and month|{p} {c} на человека в месяц|Kişi başı aylık {p} {c}
+App öffnen|Open the app|Открыть приложение|Uygulamayı aç
+Übersicht ansehen|View the overview|Посмотреть обзор|Genel bakışa göz at
+Kalender ansehen|View the calendar|Посмотреть календарь|Takvime göz at
+Ein Abo nach Nutzung bewerten|Rate a subscription by usage|Оценить подписку по использованию|Bir aboneliği kullanıma göre değerlendir
+Eine Notiz schreiben|Write a note|Написать заметку|Bir not yaz
+Einen Vertrag eintragen|Add a contract|Добавить договор|Bir sözleşme ekle
+Deine Erfolge ansehen|View your achievements|Посмотреть достижения|Başarılarına göz at
+Einen Rechner benutzen|Use a calculator|Воспользоваться калькулятором|Bir hesaplayıcı kullan
+Erinnerungen prüfen|Check reminders|Проверить напоминания|Hatırlatıcıları kontrol et
+Eine Zahlung eintragen|Enter a payment|Внести платёж|Bir ödeme gir
+Die Wunschliste ansehen|View the wish list|Посмотреть список желаний|İstek listesine göz at
+Den Helper fragen|Ask the Helper|Спросить помощника|Yardımcıya sor
+Ausgezeichnet|Excellent|Отлично|Mükemmel
+Gut, da geht noch was|Good, but there's room to improve|Хорошо, но можно лучше|İyi, ama daha iyi olabilir
+Hier lässt sich sparen|There's money to save here|Здесь можно сэкономить|Burada tasarruf edilebilir
+Super! Morgen gibt es neue Aufgaben.|Great! New tasks tomorrow.|Супер! Завтра будут новые задания.|Harika! Yarın yeni görevler var.
+Alle 3 erledigt = +25 XP Bonus|All 3 done = +25 XP bonus|Все 3 выполнены = бонус +25 XP|3'ü de tamam = +25 XP bonus
+{x} XP|{x} XP|{x} XP|{x} XP
+Tage in Folge|days in a row|дней подряд|gün art arda
+Aufgaben|Tasks|Задания|Görevler
+Erfolge & Level|Achievements & level|Достижения и уровень|Başarılar ve seviye
+Hier oben findest du jederzeit deine Erfolge, dein Level und die Tagesaufgaben. Sammle XP!|Up here you'll always find your achievements, level and daily tasks. Collect XP!|Здесь наверху всегда твои достижения, уровень и задания дня. Собирай XP!|Burada üstte her zaman başarılarını, seviyeni ve günlük görevlerini bulursun. XP topla!
+5 praktische Rechner rund ums Sparen|5 handy calculators all about saving|5 полезных калькуляторов для экономии|Tasarruf için 5 pratik hesaplayıcı
+Wofür sparst du?|What are you saving for?|На что ты копишь?|Ne için biriktiriyorsun?
+Pokal-Knopf oben rechts auf jeder Seite|Trophy button top right on every page|Кнопка-кубок справа вверху на каждой странице|Her sayfada sağ üstte kupa düğmesi
+82 Erfolge in 4 Seltenheitsstufen, auch geheime|82 achievements in 4 rarity tiers, including secret ones|82 достижения в 4 уровнях редкости, есть и секретные|4 nadirlik seviyesinde 82 başarı, gizliler dahil
+Level und XP mit Aufstiegs-Feier|Levels and XP with level-up celebration|Уровни и XP с празднованием|Seviye atlama kutlamalı seviyeler ve XP
+Täglich 3 neue Tagesaufgaben|3 new daily tasks every day|Каждый день 3 новых задания|Her gün 3 yeni günlük görev
+Neue Startseite: Schnellaktionen, Wochenleiste und Status|New home screen: quick actions, week strip and status|Новый главный экран: быстрые действия, неделя и статус|Yeni ana ekran: hızlı işlemler, hafta şeridi ve durum
+Abo-Score mit Tipps|Subscription score with tips|Оценка подписок с советами|İpuçlarıyla abonelik puanı
+5 Rechner: Monat/Jahr, Teilen, Preis pro Nutzung, Inflation, Sparziel|5 calculators: month/year, sharing, price per use, inflation, savings goal|5 калькуляторов: месяц/год, раздел, цена за использование, инфляция, цель|5 hesaplayıcı: ay/yıl, paylaşım, kullanım başı fiyat, enflasyon, tasarruf hedefi
+Wunschliste mit Spar-Fortschritt|Wish list with savings progress|Список желаний с прогрессом экономии|Tasarruf ilerlemeli istek listesi
 Willkommen bei AboWächter!|Welcome to AboWächter!|Добро пожаловать в AboWächter!|AboWächter'a hoş geldin!
 In 30 Sekunden zeigen wir dir das Wichtigste. Du kannst die Tour jederzeit überspringen.|In 30 seconds we'll show you the essentials. You can skip the tour at any time.|За 30 секунд покажем самое важное. Тур можно пропустить в любой момент.|30 saniyede en önemli şeyleri gösteriyoruz. Turu istediğin zaman atlayabilirsin.
 Tour starten|Start tour|Начать тур|Turu başlat
@@ -2097,7 +2566,7 @@ if(nx){x.appendChild(h("div","mu","Nächste Frist"));x.appendChild(h("div","name
 else x.appendChild(h("div","mu","Noch keine Verträge eingetragen."));
 hero.appendChild(x);hero.appendChild(stats());a.appendChild(hero);
 var bn=bwBanner();if(bn)a.appendChild(bn);if(tab==="v")dueBanner(a);var box=h("div");box.id="vbox";a.appendChild(box);
-({v:function(b){viewV(b);tipCard(b)},u:function(b){viewU(b);sparCheck(b);paydayCard(b);workCard(b);chartCard(b);goalCard(b);priceCard(b);investCard(b);extraU(b);rateCard(b);payCard(b);memAd(b)},c:viewC,ag:viewAg,b:viewB,n:viewN,d:viewMore,k:function(b){viewK(b);sec(b)}})[tab](box);
+({v:function(b){if(!NEW&&!EDIT)homeTop(b);viewV(b);if(!NEW&&!EDIT)emptyHome(b);tipCard(b)},u:function(b){scoreCard(b);viewU(b);sparCheck(b);paydayCard(b);workCard(b);chartCard(b);goalCard(b);priceCard(b);investCard(b);extraU(b);rateCard(b);payCard(b);memAd(b)},c:viewC,ag:viewAg,b:viewB,n:viewN,d:viewMore,k:function(b){viewK(b);sec(b)}})[tab](box);
 a.appendChild(foot());if(tab!=="ag")a.appendChild(fab());a.appendChild(tabs())}
 if(CUR&&ACC[CUR]){ensure(ACC[CUR]);items=rd("aw_d_"+CUR,[]);NOTES=rd("aw_n_"+CUR,[]);TPLS=rd("aw_t_"+CUR,[])}
 applyUI();
